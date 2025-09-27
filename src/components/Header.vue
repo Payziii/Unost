@@ -12,7 +12,7 @@ let isAnimating = false;
 const typeWriter = async (element, titlesArray, speed = 100) => {
   if (isAnimating) return;
   isAnimating = true;
-  
+  let count = 0;
   while (true) {
     const text = titlesArray[Math.floor(Math.random() * titlesArray.length)];
     
@@ -23,12 +23,14 @@ const typeWriter = async (element, titlesArray, speed = 100) => {
     
     await new Promise(resolve => setTimeout(resolve, 2000));
     
+    if(count > 1) break;
     for (let i = text.length; i >= 0; i--) {
       element.textContent = text.substring(0, i);
       await new Promise(resolve => setTimeout(resolve, 50));
     }
     
     await new Promise(resolve => setTimeout(resolve, 50));
+    count++;
   }
 };
 
@@ -66,18 +68,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.main {
-  min-height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .header {
   width: 100%;
   height: 150px;
   background: linear-gradient(90deg,var(--orange) 0%, var(--soft-orange) 50%, var(--orange) 100%);
+  margin-bottom: 20px;
 }
 
 .upper {

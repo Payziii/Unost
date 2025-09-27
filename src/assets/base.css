@@ -1,6 +1,7 @@
 :root {
   --black: #29292b;
-  --orange: #ff6600;
+  --soft-black: #262626;
+  --orange: #ff4800; /* #ff6600 */
   --soft-orange: #e68033;
   --white: #eeeeee;
 }
@@ -19,7 +20,7 @@ body {
   }
   min-height: 100vh;
   color: var(--white);
-  background: var(--black);
+  background: var(--soft-black);
   transition:
     color 0.5s,
     background-color 0.5s;
