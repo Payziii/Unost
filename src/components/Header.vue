@@ -1,5 +1,42 @@
 <script setup>
 import Button from '@/components/Button.vue';
+import { ref, onMounted } from 'vue';
+
+const titleElement = ref(null);
+const titles = [
+  "ГАПОУ СО «ВПМТТ «Юность»",
+  "ГАПОУ СО Верхнепышминский механико-технологический техникум «Юность»"
+];
+let isAnimating = false;
+
+const typeWriter = async (element, titlesArray, speed = 100) => {
+  if (isAnimating) return;
+  isAnimating = true;
+  
+  while (true) {
+    const text = titlesArray[Math.floor(Math.random() * titlesArray.length)];
+    
+    for (let i = 0; i <= text.length; i++) {
+      element.textContent = text.substring(0, i);
+      await new Promise(resolve => setTimeout(resolve, speed));
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    for (let i = text.length; i >= 0; i--) {
+      element.textContent = text.substring(0, i);
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
+};
+
+onMounted(() => {
+  if (titleElement.value) {
+    typeWriter(titleElement.value, titles, 100);
+  }
+});
 </script>
 
 <template>
@@ -7,7 +44,7 @@ import Button from '@/components/Button.vue';
       <div class="upper">
         <div class="left">
           <img src="/images/logo/logo.png" class="logo" />
-          <h1>ГАПОУ СО ВП МТТ "Юность"</h1>
+          <h1 ref="titleElement" id="title" class="typing-text"></h1>
         </div>
         <div class="right">
           <img src="/images/icons/eye.svg" class="icon" />
@@ -116,5 +153,15 @@ import Button from '@/components/Button.vue';
 
 .search:hover input::placeholder {
   color: var(--black);
+}
+
+.typing-text::after {
+  content: '|';
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 </style>
