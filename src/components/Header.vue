@@ -10,13 +10,21 @@ import Button from '@/components/Button.vue';
           <h1>ГАПОУ СО ВП МТТ "Юность"</h1>
         </div>
         <div class="right">
+          <img src="/images/icons/eye.svg" class="icon" />
           <div class="search">
             <input type="text" placeholder="Поиск..." />
           </div>
-          <Button text="Контакты" route="/contacts" />
-          <Button text="Личный кабинет" route="/login" />
         </div>
       </div>
+    <div class="navbar">
+      <Button text="Основные сведения" route="/" />
+      <Button text="Студентам" route="/news" />
+      <Button text="Абитуриентам" route="/timetable" />
+      <Button text="Структура" route="/students" />
+      <Button text="Новости" route="/applicants" />
+      <Button text="Контакты" route="/teachers" />
+      <Button text="Личный кабинет" route="/about" />
+    </div>
     </div>
 </template>
 
@@ -66,6 +74,15 @@ import Button from '@/components/Button.vue';
     align-items: center;
     gap: 10px;
   }
+}
+
+.navbar {
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .search {

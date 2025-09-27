@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h1>Home View</h1>
+  <h1>Z Z Z Z MORE Z</h1>
 </template>
 
 <style scoped>
