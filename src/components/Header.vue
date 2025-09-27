@@ -5,7 +5,7 @@ import { ref, onMounted } from 'vue';
 
 const titleElement = ref(null);
 const titles = [
-  "ГАПОУ СО «ВПМТТ «Юность»",
+  "ГАПОУ СО Верхнепышминский механико-технологический техникум «Юность»",
   "ГАПОУ СО Верхнепышминский механико-технологический техникум «Юность»"
 ];
 let isAnimating = false;
@@ -136,8 +136,8 @@ const menuItems = {
 }
 
 .upper {
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 340px;
+  padding-right: 340px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -157,7 +157,7 @@ const menuItems = {
     h1 {
       font-size: 24px;
       font-weight: 700;
-      color: var(--black);
+      color: var(--white);
     }
   }
 
@@ -169,12 +169,11 @@ const menuItems = {
 }
 
 .navbar {
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 300px;
+  padding-right: 300px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
 }
 
 .search {

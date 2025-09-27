@@ -21,7 +21,7 @@
 
 .isp3304 {
   height: 100vh;
-  background-color: var(--black);
+  background-color: var(--soft-white);
   width: 90%;
   display: flex;
   justify-content: center;

@@ -41,7 +41,7 @@ const generateRandomIcons = () => {
       rotation: Math.floor(Math.random() * 360), 
       x: x, 
       y: Math.random() * 100, 
-      side: side 
+      side: side
     }
     icons.value.push(randomIcon)
   }
@@ -72,7 +72,7 @@ onMounted(() => {
           left: `${icon.x}%`,
           top: `${icon.y}%`
         }"
-        alt="Random icon"
+        alt=""
       />
     </div>
   </div>
@@ -99,7 +99,8 @@ onMounted(() => {
   width: 40px; 
   height: 40px;
   opacity: 0.6; 
-  transform-origin: center; 
+  transform-origin: center;
+  filter: invert(90%);
   
   animation: fadeIn 1.5s ease-in-out;
 }
@@ -122,4 +123,8 @@ onMounted(() => {
     transform: rotate(var(--rotation)) scale(1); 
   }
 }
+</style>
+
+<style>
+
 </style>

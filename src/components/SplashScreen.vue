@@ -18,7 +18,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--black);
+  background-color: var(--soft-white);
   z-index: 9999;
   transition: opacity 0.5s ease-out;
 }
@@ -44,7 +44,7 @@ h1 {
 .loader {
   width: 50px;
   height: 50px;
-  border: 5px solid var(--black);
+  border: 5px solid var(--soft-white);
   border-top: 5px solid var(--orange);
   border-radius: 50%;
   animation: spin 1s linear infinite;
