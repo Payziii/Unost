@@ -25,7 +25,6 @@
   width: 90%;
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
   border-radius: 24px;
   padding: 10px;
 }

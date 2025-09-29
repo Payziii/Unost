@@ -58,7 +58,7 @@ defineProps({
 
 .dropdown-content a {
   color: var(--black);
-  padding: 12px 16px;
+  padding: 5px 16px;
   text-decoration: none;
   display: block;
   transition: background-color 0.3s;

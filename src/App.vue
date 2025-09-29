@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 import SplashScreen from './components/SplashScreen.vue'
 
 const showSplash = ref(true)
@@ -59,6 +60,7 @@ onMounted(() => {
   <div class="app-container">
     <Header/>
     <RouterView />
+    <Footer/>
     
     <div class="random-icons-container">
       <img 
