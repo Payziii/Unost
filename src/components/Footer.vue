@@ -24,6 +24,10 @@ import { ref, onMounted } from 'vue';
           <img src="/images/icons/phone.svg" class="icon" />
           <a href="tel:+73436854486">+7 (34368) 5-44-86</a>
         </div>
+        <div class="contact">
+          <img src="/images/icons/vk.svg" class="icon" />
+          <a href="https://vk.com/vpmtt">ВКонтакте</a>
+        </div>
       </div>
     </div>
   </div>
@@ -78,7 +82,7 @@ import { ref, onMounted } from 'vue';
 
 .navbar {
   display: flex;
-  align-items: center;
+  align-items: left;
   justify-content: center;
   flex-direction: column;
 

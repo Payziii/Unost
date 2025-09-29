@@ -120,9 +120,9 @@ const menuItems = {
       <DropdownMenu text="Студентам" route="/news" :items="menuItems.students" />
       <DropdownMenu text="Абитуриентам" route="/timetable" :items="menuItems.applicants" />
       <DropdownMenu text="Структура" route="/students" :items="menuItems.structure" />
-      <Button text="Новости" route="/applicants" />
-      <Button text="Контакты" route="/teachers" />
-      <Button text="Личный кабинет" route="/about" />
+      <Button text="Новости" route="/novosti" />
+      <Button text="Контакты" route="/kontakty" />
+      <Button text="Личный кабинет" route="/login" />
     </div>
   </div>
 </template>
