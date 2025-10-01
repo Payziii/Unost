@@ -4,6 +4,32 @@ import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 const slider = ref(null);
 let index = 0;
 let interval = null;
+let startX = 0;
+let isDragging = false;
+
+// переключение на следующий слайд
+const nextSlide = () => {
+  const el = slider.value;
+  if (!el) return;
+  const total = el.children.length;
+  index = (index + 1) % total;
+  el.scrollTo({
+    left: index * el.clientWidth,
+    behavior: "smooth",
+  });
+};
+
+// переключение на предыдущий слайд
+const prevSlide = () => {
+  const el = slider.value;
+  if (!el) return;
+  const total = el.children.length;
+  index = (index - 1 + total) % total;
+  el.scrollTo({
+    left: index * el.clientWidth,
+    behavior: "smooth",
+  });
+};
 
 onMounted(async () => {
   await nextTick();
@@ -12,19 +38,48 @@ onMounted(async () => {
 
   const total = el.children.length;
 
-  interval = setInterval(() => {
-    index = (index + 1) % total;
+  // автопрокрутка
+  interval = setInterval(nextSlide, 7500);
+
+  // свайп руками
+  el.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    clearInterval(interval); // пауза на время свайпа
+  });
+
+  el.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    const deltaX = e.touches[0].clientX - startX;
+    el.scrollLeft = index * el.clientWidth - deltaX;
+  });
+
+  el.addEventListener("touchend", (e) => {
+    isDragging = false;
+    const deltaX = e.changedTouches[0].clientX - startX;
+    if (Math.abs(deltaX) > 50) {
+      if (deltaX > 0) {
+        index = Math.max(0, index - 1); // свайп вправо
+      } else {
+        index = Math.min(total - 1, index + 1); // свайп влево
+      }
+    }
     el.scrollTo({
-      left: index * el.clientWidth, // считаем по ширине контейнера
-      behavior: "smooth"
+      left: index * el.clientWidth,
+      behavior: "smooth",
     });
-  }, 7500);
+
+    // возобновляем автопрокрутку
+    interval = setInterval(nextSlide, 7500);
+  });
 });
 
 onBeforeUnmount(() => {
   clearInterval(interval);
 });
 </script>
+
+
 
 
 <template>
@@ -46,23 +101,30 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </div>
-      <div class="slider" ref="slider">
-        <div class="card">
-          <img src="/images/cards/2.jpg" alt="">
-          <h3>Осень 2025 — приём документов открыт</h3>
-          <p>Узнайте условия приёма и направления обучения.</p>
-        </div>
-        <div class="card">
-          <img src="/images/cards/1.jpg" alt="">
-          <h3>Зимний набор</h3>
-          <p>Подробности о программах и датах поступления.</p>
-        </div>
-        <div class="card">
-          <img src="/images/cards/1.jpg" alt="">
-          <h3>Весенний набор</h3>
-          <p>Зарегистрируйся на экскурсию в кампус.</p>
-        </div>
-      </div>
+      <div class="slider-wrapper">
+  <div class="slider" ref="slider">
+    <div class="card">
+      <img src="/images/cards/2.jpg" alt="">
+      <h3>Осень 2025 — приём документов открыт</h3>
+      <p>Узнайте условия приёма и направления обучения.</p>
+    </div>
+    <div class="card">
+      <img src="/images/cards/1.jpg" alt="">
+      <h3>Зимний набор</h3>
+      <p>Подробности о программах и датах поступления.</p>
+    </div>
+    <div class="card">
+      <img src="/images/cards/1.jpg" alt="">
+      <h3>Весенний набор</h3>
+      <p>Зарегистрируйся на экскурсию в кампус.</p>
+    </div>
+  </div>
+
+  <!-- кнопки поверх всех карточек -->
+  <button class="nav-btn left" @click="prevSlide">‹</button>
+  <button class="nav-btn right" @click="nextSlide">›</button>
+</div>
+
 
       <!-- <a href="https://may9.ru/" target="_blank" rel="noopener">
         <img src="/images/other/may9.png">
@@ -157,13 +219,46 @@ onBeforeUnmount(() => {
 
 .slider {
   margin-top: 10px;
-  width: 40%;
   display: flex;
-  overflow-x: auto;
+  overflow-x: hidden;        /* убрал scrollbars */
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;   /* ключ для анимации */
+  scroll-behavior: smooth;
   padding: 20px 0;
+  touch-action: pan-y;       /* чтобы свайп по X не блокировал скролл по Y */
 }
+
+.slider-wrapper {
+  position: relative;
+  width: 40%;
+}
+
+.nav-btn {
+  position: absolute;
+  top: 25%;                      /* центрируем по картинке (50% карточки) */
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  color: white;
+  font-size: 32px;
+  padding: 10px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+.nav-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.nav-btn.left {
+  left: 10px;
+}
+
+.nav-btn.right {
+  right: 10px;
+}
+
 
 .card {
   min-width: 100%;
@@ -175,6 +270,8 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   height: 550px;               /* фиксируем высоту карточки (можешь поменять) */
+  scroll-snap-align: start;  /* фиксируем на карточке */
+  user-select: none; 
 }
 
 .card img {
