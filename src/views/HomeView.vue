@@ -39,7 +39,7 @@ onMounted(async () => {
   const total = el.children.length;
 
   // автопрокрутка
-  interval = setInterval(nextSlide, 7500);
+  interval = setInterval(nextSlide, 10000);
 
   // свайп руками
   el.addEventListener("touchstart", (e) => {
@@ -105,18 +105,29 @@ onBeforeUnmount(() => {
   <div class="slider" ref="slider">
     <div class="card">
       <img src="/images/cards/2.jpg" alt="">
-      <h3>Осень 2025 — приём документов открыт</h3>
-      <p>Узнайте условия приёма и направления обучения.</p>
+      <h3>3D модель Юности</h3>
+      <p>Узнайте, как выглядит учебное заведение внутри</p>
+      <div class="baton">
+        <a>Просмотреть</a>
+      </div>
     </div>
     <div class="card">
       <img src="/images/cards/1.jpg" alt="">
-      <h3>Зимний набор</h3>
-      <p>Подробности о программах и датах поступления.</p>
+      <h3>Набор 2025</h3>
+      <p>У вас есть шанс поступить к нам!</p>
+      <div class="baton">
+        <a>Подать документы</a>
+      </div>
     </div>
     <div class="card">
       <img src="/images/cards/1.jpg" alt="">
-      <h3>Весенний набор</h3>
-      <p>Зарегистрируйся на экскурсию в кампус.</p>
+      <h3>Очень интересная новость</h3>
+      <p>Данный текст можно не читать и в нем ничего нет, он лишь показывает длину описания для блока карточки и как это будет выглядеть.
+        Кстати, текст выровнен по ширине (не знаю зачем, но пусть будет). Шрифт - Rubik (не таймс нью роман 14)
+      </p>
+      <div class="baton">
+        <a>Войти в личный кабинет</a>
+      </div>
     </div>
   </div>
 
@@ -233,8 +244,11 @@ onBeforeUnmount(() => {
 }
 
 .nav-btn {
+  height: 60px;
+  width: 60px;
+  line-height: -60px;
   position: absolute;
-  top: 25%;                      /* центрируем по картинке (50% карточки) */
+  top: 20%;
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.3);
   border: none;
@@ -269,7 +283,7 @@ onBeforeUnmount(() => {
   overflow: hidden;            /* чтобы картинка не вылезала за границы */
   display: flex;
   flex-direction: column;
-  height: 550px;               /* фиксируем высоту карточки (можешь поменять) */
+  height: 450px;               /* фиксируем высоту карточки (можешь поменять) */
   scroll-snap-align: start;  /* фиксируем на карточке */
   user-select: none; 
 }
@@ -278,6 +292,7 @@ onBeforeUnmount(() => {
   height: 50%;                 /* половина высоты карточки */
   width: 100%;
   object-fit: cover;            /* обрезаем/масштабируем */
+  object-position: center bottom;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   margin: 0;                    /* убираем любые внешние отступы */
@@ -286,7 +301,28 @@ onBeforeUnmount(() => {
 
 .card h3, 
 .card p {
+  align-self: center;
   margin: 10px 15px;            /* отступы только внутри текста */
+}
+
+.card h3 {
+  font-size: 24px;
+  color: var(--black);
+}
+
+.card p {
+  text-align: justify;
+}
+
+.card .baton {
+  margin-top: auto;             /* отодвигаем кнопку вниз */
+  align-self: center;
+  margin-bottom: 20px;
+  background-color: var(--orang);
+  color: var(--black);
+  font-size: 500;
+  padding: 10px 20px;
+  border-radius: 8px;
 }
 
 </style>
