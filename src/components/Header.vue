@@ -1,5 +1,6 @@
 <script setup>
 import Button from '@/components/Button.vue';
+import Button2 from '@/components/Button2.vue';
 import DropdownMenu from '@/components/DropdownMenu.vue';
 import { ref, onMounted } from 'vue';
 
@@ -16,20 +17,20 @@ const typeWriter = async (element, titlesArray, speed = 100) => {
   let count = 0;
   while (true) {
     const text = titlesArray[Math.floor(Math.random() * titlesArray.length)];
-    
+
     for (let i = 0; i <= text.length; i++) {
       element.textContent = text.substring(0, i);
       await new Promise(resolve => setTimeout(resolve, speed));
     }
-    
+
     await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    if(count > 1) break;
+
+    if (count > 1) break;
     for (let i = text.length; i >= 0; i--) {
       element.textContent = text.substring(0, i);
       await new Promise(resolve => setTimeout(resolve, 50));
     }
-    
+
     await new Promise(resolve => setTimeout(resolve, 50));
     count++;
   }
@@ -106,23 +107,17 @@ const menuItems = {
     <div class="upper">
       <div class="left">
         <img src="/images/logo/logo.png" class="logo" />
-        <h1 ref="titleElement" id="title" class="typing-text"></h1>
-      </div>
-      <div class="right">
-        <img src="/images/icons/eye.svg" class="icon" />
-        <div class="search">
-          <input type="text" placeholder="Поиск..." />
+        <div class="texta">
+          <h1>ВПМТТ «Юность»</h1>
+          <h2>Механико-технологический техникум</h2>
         </div>
+        <Button text="О колледже" route="/novosti" />
+        <Button text="Направления" route="/novosti" />
+        <Button text="Отуденческая жизнь" route="/novosti" />
+        <Button text="Абитуриентам" route="/novosti" />
+        <Button text="Контакты" route="/novosti" />
       </div>
-    </div>
-    <div class="navbar">
-      <DropdownMenu text="Основные сведения" route="/" :items="menuItems.basicInfo" />
-      <DropdownMenu text="Студентам" route="/news" :items="menuItems.students" />
-      <DropdownMenu text="Абитуриентам" route="/timetable" :items="menuItems.applicants" />
-      <DropdownMenu text="Структура" route="/students" :items="menuItems.structure" />
-      <Button text="Новости" route="/novosti" />
-      <Button text="Контакты" route="/kontakty" />
-      <Button text="Личный кабинет" route="/login" />
+      <Button2 text="Подать заявку" route="/novosti" />
     </div>
   </div>
 </template>
@@ -130,19 +125,20 @@ const menuItems = {
 <style scoped>
 .header {
   width: 100%;
-  height: 150px;
-  background: linear-gradient(90deg,var(--orange) 0%, var(--soft-orange) 50%, var(--orange) 100%);
+  height: 75px;
+  /* background: linear-gradient(90deg, var(--orange) 0%, var(--soft-orange) 50%, var(--orange) 100%); */
+  background-color: var(--orang);
   margin-bottom: 20px;
 }
 
 .upper {
-  padding-left: 340px;
-  padding-right: 340px;
+  padding-left: 70px;
+  padding-right: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  height: 50%;
+  height: 100%;
 
   .left {
     display: flex;
@@ -155,9 +151,14 @@ const menuItems = {
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--white);
+    }
+
+    h2 {
+      font-size: 14px;
+      color: var(--white)
     }
   }
 
@@ -214,7 +215,15 @@ const menuItems = {
 }
 
 @keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 </style>

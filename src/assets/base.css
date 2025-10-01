@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 :root {
   --black: #29292b;
   --soft-black: #262626;
   --orange: #ff4800; /* #ff6600 */
   --soft-orange: #e68033;
+  --orang: #ff6f0c;
+  --yellow: #ffe9d1;
   --white: #dddddd;
   --soft-white: #e7e7e7;
 }
@@ -21,12 +25,12 @@ body {
   }
   min-height: 100vh;
   color: var(--black);
-  background: var(--white);
+  background: var(--yellow);
   transition:
     color 0.5s,
     background-color 0.5s;
   line-height: 1.6;
-  font-family:
+  /* font-family:
     Inter,
     -apple-system,
     BlinkMacSystemFont,
@@ -38,7 +42,8 @@ body {
     'Fira Sans',
     'Droid Sans',
     'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
+    font-family: "Rubik", sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

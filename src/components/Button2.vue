@@ -28,8 +28,8 @@ defineProps({
 <style scoped>
 .button {
   display: inline-block;
-  background: none;
-  border-radius: 8px;
+  background: var(--white);
+  border-radius: 800px;
   padding: 8px 16px;
   transition: background 0.3s;
   cursor: pointer;
@@ -42,7 +42,7 @@ defineProps({
   }
 
   .button-link {
-    color: var(--white);
+    color: var(--orange);
     text-decoration: none;
     font-weight: 600;
     font-size: 15px;

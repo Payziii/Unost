@@ -62,7 +62,7 @@ onMounted(() => {
     <RouterView />
     <Footer/>
     
-    <div class="random-icons-container">
+    <div class="random-icons-container" hidden>
       <img 
         v-for="icon in icons" 
         :key="icon.id"
