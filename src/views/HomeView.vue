@@ -165,7 +165,8 @@ onBeforeUnmount(() => {
 
 .title {
   width: 40%;
-  margin-top: 175px;
+  align-self: center;
+  margin-top: -50px;
 
   h1 {
     font-weight: 700;
@@ -229,7 +230,6 @@ onBeforeUnmount(() => {
 }
 
 .slider {
-  margin-top: 10px;
   display: flex;
   overflow-x: hidden;        /* убрал scrollbars */
   scroll-snap-type: x mandatory;
@@ -239,6 +239,8 @@ onBeforeUnmount(() => {
 }
 
 .slider-wrapper {
+  align-self: center;
+  margin-top: -50px;
   position: relative;
   width: 40%;
 }
