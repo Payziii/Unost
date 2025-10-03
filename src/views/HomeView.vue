@@ -123,7 +123,6 @@ onBeforeUnmount(() => {
       <img src="/images/cards/1.jpg" alt="">
       <h3>Очень интересная новость</h3>
       <p>Данный текст можно не читать и в нем ничего нет, он лишь показывает длину описания для блока карточки и как это будет выглядеть.
-        Кстати, текст выровнен по ширине (не знаю зачем, но пусть будет). Шрифт - Rubik (не таймс нью роман 14)
       </p>
       <div class="baton">
         <a>Войти в личный кабинет</a>
@@ -250,7 +249,7 @@ onBeforeUnmount(() => {
   width: 60px;
   line-height: -60px;
   position: absolute;
-  top: 20%;
+  top: 37.5%;
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.3);
   border: none;
@@ -285,13 +284,13 @@ onBeforeUnmount(() => {
   overflow: hidden;            /* чтобы картинка не вылезала за границы */
   display: flex;
   flex-direction: column;
-  height: 450px;               /* фиксируем высоту карточки (можешь поменять) */
+  height: 600px;               /* фиксируем высоту карточки (можешь поменять) */
   scroll-snap-align: start;  /* фиксируем на карточке */
   user-select: none; 
 }
 
 .card img {
-  height: 50%;                 /* половина высоты карточки */
+  height: 70%;                 /* половина высоты карточки */
   width: 100%;
   object-fit: cover;            /* обрезаем/масштабируем */
   object-position: center bottom;
