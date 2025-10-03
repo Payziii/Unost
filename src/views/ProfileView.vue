@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 
 const router = useRouter()
 const profile = ref({
@@ -26,26 +25,40 @@ const fetchProfile = async () => {
       return
     }
 
-    const response = await axios.get(`${API_BASE_URL}/api/students/profile`, {
+    const response = await fetch(`${API_BASE_URL}/api/students/profile`, {
       headers: {
-        Authorization: `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json' // Добавляем Content-Type, если ожидается JSON
       }
     })
 
-    profile.value = response.data
+    if (!response.ok) {
+      if (response.status === 401 || response.status === 422) {
+        // Токен невалиден или просрочен
+        localStorage.removeItem('token')
+        localStorage.removeItem('user_id')
+        localStorage.removeItem('user_role')
+        router.push('/login')
+        return // Важно вернуть, чтобы остановить дальнейшее выполнение
+      } else if (response.status === 404) {
+        throw new Error('Профиль не найден')
+      } else {
+        const errorData = await response.json().catch(() => ({ error: 'Неизвестная ошибка сервера' }))
+        throw new Error(errorData.error || `Ошибка сервера: ${response.status}`)
+      }
+    }
+
+    profile.value = await response.json()
+
   } catch (err) {
-    console.error('Ошибка загрузки профиля:', err.response?.data || err)
+    console.error('Ошибка загрузки профиля:', err)
     
-    if (err.response?.status === 401 || err.response?.status === 422) {
-      // Токен невалиден или просрочен
-      localStorage.removeItem('token')
-      localStorage.removeItem('user_id')
-      localStorage.removeItem('user_role')
-      router.push('/login')
-    } else if (err.response?.status === 404) {
+    if (err.message === 'Профиль не найден') {
       error.value = 'Профиль не найден'
+    } else if (err.message.startsWith('Ошибка сервера')) {
+      error.value = err.message
     } else {
-      error.value = err.response?.data?.error || 'Не удалось загрузить данные профиля'
+      error.value = 'Не удалось загрузить данные профиля. Пожалуйста, проверьте ваше интернет-соединение.'
     }
   } finally {
     loading.value = false
@@ -55,6 +68,10 @@ const fetchProfile = async () => {
 const formatDate = (dateString) => {
   if (!dateString) return 'Не указана'
   const date = new Date(dateString)
+  // Проверяем, является ли дата валидной
+  if (isNaN(date.getTime())) {
+    return 'Некорректная дата'
+  }
   return date.toLocaleDateString('ru-RU')
 }
 

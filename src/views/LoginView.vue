@@ -15,12 +15,14 @@
           <button 
             @click="isRegister = false" 
             :class="['tab-button', { 'active': !isRegister }]"
+            :disabled="loading"
           >
             Вход
           </button>
           <button 
             @click="isRegister = true" 
             :class="['tab-button', { 'active': isRegister }]"
+            :disabled="loading"
           >
             Регистрация
           </button>
@@ -201,8 +203,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 // Настройка базового URL для API
 const API_BASE_URL = 'http://localhost:5000';
 
@@ -259,46 +259,52 @@ export default {
       this.errorMessage = '';
       
       try {
-        console.log('=== ОТЛАДКА ВХОДА ===');
-        console.log('Отправка запроса на вход...');
-        
-        const response = await axios.post(`${API_BASE_URL}/api/login`, {
-          email: this.email,
-          password: this.password
+        const response = await fetch(`${API_BASE_URL}/api/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password
+          }),
         });
 
-        console.log('✅ Ответ от сервера:', response.data);
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: 'Неизвестная ошибка сервера' }));
+          throw new Error(errorData.error || `Ошибка сервера: ${response.status}`);
+        }
+
+        const data = await response.json();
         
         // Сохраняем токен
-        const token = response.data.token;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user_id', response.data.user_id);
-        localStorage.setItem('user_role', response.data.role);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user_id', data.user_id);
+        localStorage.setItem('user_role', data.role);
 
-        console.log('🔐 Токен сохранен в localStorage:', token);
-        console.log('👤 User ID:', response.data.user_id);
-        
         // Проверим токен сразу через check-token endpoint
-        console.log('🔄 Проверка токена через /api/check-token...');
-        try {
-          const checkResponse = await axios.get(`${API_BASE_URL}/api/check-token`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-          console.log('✅ Токен проверен успешно:', checkResponse.data);
-        } catch (tokenError) {
-          console.error('❌ Ошибка проверки токена:', tokenError.response?.data);
-          console.error('Статус ошибки:', tokenError.response?.status);
+        const checkResponse = await fetch(`${API_BASE_URL}/api/check-token`, {
+          headers: {
+            'Authorization': `Bearer ${data.token}`,
+          }
+        });
+
+        if (!checkResponse.ok) {
+          const tokenErrorData = await checkResponse.json().catch(() => ({ error: 'Неизвестная ошибка при проверке токена' }));
+          throw new Error(tokenErrorData.error || `Ошибка проверки токена: ${checkResponse.status}`);
         }
         
-        console.log('🔄 Перенаправление на /profile...');
         this.$router.push('/profile');
         
       } catch (error) {
-        console.error('❌ Полная ошибка входа:', error);
-        console.error('Данные ошибки:', error.response?.data);
-        this.handleApiError(error, 'Ошибка входа');
+        if (error.message.startsWith('Ошибка сервера') || error.message.startsWith('Ошибка проверки токена')) {
+          this.errorMessage = error.message;
+        } else if (error.message === 'Network Error') {
+          this.errorMessage = 'Ошибка подключения к серверу. Проверьте, запущен ли бэкенд.';
+        } else {
+          this.errorMessage = error.message || 'Ошибка входа: Неизвестная ошибка';
+        }
+        console.error('API Error:', error);
       } finally {
         this.loading = false;
       }
@@ -337,36 +343,40 @@ export default {
           group: this.selectedGroup
         };
 
-        const response = await axios.post(`${API_BASE_URL}/api/register`, registrationData);
+        const response = await fetch(`${API_BASE_URL}/api/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(registrationData),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: 'Неизвестная ошибка сервера' }));
+          throw new Error(errorData.error || `Ошибка сервера: ${response.status}`);
+        }
+
+        const data = await response.json();
 
         // Сохраняем токен
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user_id', response.data.user.id);
-        localStorage.setItem('user_role', response.data.user.role);
-
-        console.log('Успешная регистрация:', response.data);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user_id', data.user.id);
+        localStorage.setItem('user_role', data.user.role);
         
-        // Перенаправляем на главную страницу
         this.$router.push('/profile');
         
       } catch (error) {
-        this.handleApiError(error, 'Ошибка регистрации');
+        if (error.message.startsWith('Ошибка сервера')) {
+          this.errorMessage = error.message;
+        } else if (error.message === 'Network Error') {
+          this.errorMessage = 'Ошибка подключения к серверу. Проверьте, запущен ли бэкенд.';
+        } else {
+          this.errorMessage = error.message || 'Ошибка регистрации: Неизвестная ошибка';
+        }
+        console.error('API Error:', error);
       } finally {
         this.loading = false;
       }
-    },
-
-    // В методах handleLogin и handleRegistration добавьте более детальную обработку ошибок:
-
-    handleApiError(error, defaultMessage) {
-      if (error.response && error.response.data && error.response.data.error) {
-        this.errorMessage = error.response.data.error;
-      } else if (error.code === 'NETWORK_ERROR' || error.message === 'Network Error') {
-        this.errorMessage = 'Ошибка подключения к серверу. Проверьте, запущен ли бэкенд.';
-      } else {
-        this.errorMessage = defaultMessage + ': ' + (error.message || 'Неизвестная ошибка');
-      }
-      console.error('API Error:', error.response?.data || error);
     },
 
     loadRememberedEmail() {
@@ -393,15 +403,24 @@ export default {
       } else {
         this.errorMessage = '';
       }
+    },
+    // Добавляем обработчик для rememberMe, чтобы сохранять email
+    rememberMe(newVal) {
+      if (!newVal) {
+        localStorage.removeItem('remembered_email');
+      }
     }
   },
   mounted() {
     this.loadRememberedEmail();
     
     // Проверяем подключение к бэкенду
-    axios.get(`${API_BASE_URL}/`)
+    fetch(`${API_BASE_URL}/`)
       .then(response => {
-        console.log('Бэкенд подключен:', response.data);
+        if (!response.ok) {
+          throw new Error('Не удалось подключиться к серверу');
+        }
+        console.log('Бэкенд подключен');
       })
       .catch(error => {
         console.warn('Бэкенд недоступен:', error.message);
