@@ -111,11 +111,11 @@ const menuItems = {
           <h1>ВПМТТ «Юность»</h1>
           <h2>Механико-технологический техникум</h2>
         </div>
-        <Button text="О колледже" route="/novosti" />
+        <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
         <Button text="Направления" route="/novosti" />
         <Button text="Отуденческая жизнь" route="/novosti" />
-        <Button text="Абитуриентам" route="/novosti" />
-        <Button text="Контакты" route="/novosti" />
+         <DropdownMenu text="Абитуриентам" route="/timetable" :items="menuItems.applicants" />
+        <Button text="Контакты" route="/kontakty" />
       </div>
       <Button2 text="Подать заявку" route="/novosti" />
     </div>

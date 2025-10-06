@@ -75,7 +75,7 @@ function submitFeedback() {
 }
 
 .isp3304 {
-  background-color: var(--soft-white, #fff);
+  /* background-color: var(--soft-white, #fff); */
   width: 90%;
   display: flex;
   flex-direction: column;
