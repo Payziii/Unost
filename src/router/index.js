@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import ContactsView from '../views/ContactsView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import KnigaZhalob from '@/components/KnigaZhalob.vue'
+import AdminPanel from '@/components/AdminPanel.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +34,17 @@ const router = createRouter({
       path: '/applicants/priem',
       name: 'priem',
       component: () => import('../views/applicants/PriemView.vue')
+    },
+    {
+    path: '/kniga-zhalob',
+    name: 'kniga-zhalob',
+    component: KnigaZhalob
+    },
+    {
+    path: '/admin/kniga-zhalob',
+    name: 'admin-kniga-zhalob',
+    component: AdminPanel,
+    meta: { requiresAuth: true }
     }
   ],
 })
