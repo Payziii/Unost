@@ -106,11 +106,13 @@ const menuItems = {
   <div class="header">
     <div class="upper">
       <div class="left">
+        <router-link to="/" class="left">
         <img src="/images/logo/logo.png" class="logo" />
         <div class="texta">
           <h1>ВПМТТ «Юность»</h1>
           <h2>Механико-технологический техникум</h2>
         </div>
+        </router-link>
         <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
         <Button text="Направления" route="/novosti" />
         <Button text="Отуденческая жизнь" route="/novosti" />
@@ -144,6 +146,10 @@ const menuItems = {
     display: flex;
     align-items: center;
     gap: 20px;
+
+    a {
+      text-decoration: none;
+    }
 
     .logo {
       height: 50px;
