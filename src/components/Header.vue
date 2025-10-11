@@ -80,7 +80,7 @@ const menuItems = {
   applicants: [
     { text: 'Рейтинг', route: '/abiturientam/reyting_abiturientov' },
     { text: 'Профессионалитет', route: '/abiturientam/professionalitet' },
-    { text: 'Правила приема', route: '/abiturientam/vpmtt_yunost' },
+    { text: 'Правила приема', route: '/applicants/priem' },
     { text: 'Кадетская школа-интернат', route: '/abiturientam/kadetskaya_shkola-internat' }
   ],
   structure: [
