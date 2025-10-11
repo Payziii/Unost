@@ -45,7 +45,7 @@ onMounted(() => {
 // Данные для выпадающих меню
 const menuItems = {
   basicInfo: [
-    { text: 'Основнык сведения', route: '/svedeniya/osnovnye' },
+    { text: 'Основные сведения', route: '/svedeniya/osnovnye' },
     { text: 'Структура и органы управления образовательной организацией', route: '/svedeniya/struktura_i_organy_upravleniya' },
     { text: 'Документы', route: '/svedeniya/dokumenty' },
     { text: 'Образование', route: '/svedeniya/obrazovanie' },

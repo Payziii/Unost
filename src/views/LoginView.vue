@@ -6,11 +6,35 @@
           <div class="logo-section">
             <h1 class="technical-college-name">Верхнепышминский механико-технологический техникум «Юность»</h1>
             <div class="divider"></div>
-            <h2 class="login-title">Вход в личный кабинет</h2>
+            <h2 class="login-title">{{ isRegister ? 'Регистрация' : 'Вход в личный кабинет' }}</h2>
           </div>
         </div>
 
-        <form @submit.prevent="handleLogin" class="login-form">
+        <!-- Переключение между входом и регистрацией -->
+        <div class="tabs">
+          <button 
+            @click="isRegister = false" 
+            :class="['tab-button', { 'active': !isRegister }]"
+            :disabled="loading"
+          >
+            Вход
+          </button>
+          <button 
+            @click="isRegister = true" 
+            :class="['tab-button', { 'active': isRegister }]"
+            :disabled="loading"
+          >
+            Регистрация
+          </button>
+        </div>
+
+        <!-- Сообщения об ошибках -->
+        <div v-if="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <!-- Форма входа -->
+        <form v-if="!isRegister" @submit.prevent="handleLogin" class="login-form">
           <div class="form-group">
             <label class="form-label">Email</label>
             <input 
@@ -19,6 +43,7 @@
               required 
               placeholder="Введите ваш email"
               class="form-input"
+              :disabled="loading"
             >
           </div>
 
@@ -30,27 +55,142 @@
               required 
               placeholder="Введите ваш пароль"
               class="form-input"
+              :disabled="loading"
             >
           </div>
 
           <div class="form-options">
             <label class="remember-me">
-              <input type="checkbox" v-model="rememberMe">
+              <input type="checkbox" v-model="rememberMe" :disabled="loading">
               <span class="checkmark"></span>
               Запомнить меня
             </label>
             <a href="#" class="forgot-password">Забыли пароль?</a>
           </div>
 
-          <button type="submit" class="login-button">
-            <span class="button-text">Войти</span>
+          <button type="submit" class="login-button" :disabled="loading">
+            <span class="button-text">{{ loading ? 'Вход...' : 'Войти' }}</span>
             <div class="button-loader" v-if="loading"></div>
           </button>
         </form>
 
+        <!-- Форма регистрации -->
+        <form v-else @submit.prevent="handleRegistration" class="login-form">
+          <!-- Шаг 1: Основные данные -->
+          <div v-if="registerStep === 1">
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input 
+                type="email" 
+                v-model="registerEmail" 
+                required 
+                placeholder="Введите ваш email"
+                class="form-input"
+                :disabled="loading"
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Пароль</label>
+              <input 
+                type="password" 
+                v-model="registerPassword" 
+                required 
+                placeholder="Придумайте пароль"
+                class="form-input"
+                :disabled="loading"
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Подтвердите пароль</label>
+              <input 
+                type="password" 
+                v-model="confirmPassword" 
+                required 
+                placeholder="Повторите пароль"
+                class="form-input"
+                :disabled="loading"
+              >
+            </div>
+
+            <button type="submit" class="login-button" :disabled="loading">
+              <span class="button-text">{{ loading ? 'Проверка...' : 'Продолжить' }}</span>
+              <div class="button-loader" v-if="loading"></div>
+            </button>
+          </div>
+
+          <!-- Шаг 2: Дополнительные данные -->
+          <div v-else>
+            <div class="form-group">
+              <label class="form-label">ФИО</label>
+              <input 
+                type="text" 
+                v-model="fullName" 
+                required 
+                placeholder="Введите ваше полное имя"
+                class="form-input"
+                :disabled="loading"
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Номер телефона</label>
+              <input 
+                type="tel" 
+                v-model="phone" 
+                required 
+                placeholder="+7 (XXX) XXX-XX-XX"
+                class="form-input"
+                :disabled="loading"
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Дата рождения</label>
+              <input 
+                type="date" 
+                v-model="birthDate" 
+                required 
+                class="form-input"
+                :disabled="loading"
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Группа</label>
+              <select v-model="selectedGroup" required class="form-input" :disabled="loading">
+                <option value="" disabled selected>Выберите вашу группу</option>
+                <optgroup label="Первый курс">
+                  <option v-for="group in firstYearGroups" :key="group" :value="group">{{ group }}</option>
+                </optgroup>
+                <optgroup label="Второй курс">
+                  <option v-for="group in secondYearGroups" :key="group" :value="group">{{ group }}</option>
+                </optgroup>
+                <optgroup label="Третий курс">
+                  <option v-for="group in thirdYearGroups" :key="group" :value="group">{{ group }}</option>
+                </optgroup>
+                <optgroup label="Четвертый курс">
+                  <option v-for="group in fourthYearGroups" :key="group" :value="group">{{ group }}</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" @click="registerStep = 1" class="back-button" :disabled="loading">
+                Назад
+              </button>
+              <button type="submit" class="login-button" :disabled="loading">
+                <span class="button-text">{{ loading ? 'Регистрация...' : 'Завершить регистрацию' }}</span>
+                <div class="button-loader" v-if="loading"></div>
+              </button>
+            </div>
+          </div>
+        </form>
+
         <div class="login-footer">
           <p class="support-text">
-            Возникли проблемы со входом? 
+            Возникли проблемы? 
             <a href="mailto:bolastovo77@mail.ru" class="support-link">Обратитесь в поддержку</a>
           </p>
           <p class="contact-info">
@@ -63,40 +203,228 @@
 </template>
 
 <script>
+// Настройка базового URL для API
+const API_BASE_URL = 'http://localhost:5000';
+
 export default {
   name: 'LoginView',
   data() {
     return {
+      // Данные для входа
       email: '',
       password: '',
       rememberMe: false,
-      loading: false
+      
+      // Данные для регистрации
+      isRegister: false,
+      registerStep: 1,
+      registerEmail: '',
+      registerPassword: '',
+      confirmPassword: '',
+      fullName: '',
+      phone: '',
+      birthDate: '',
+      selectedGroup: '',
+      
+      // Общие данные
+      loading: false,
+      errorMessage: '',
+      
+      // Списки групп
+      firstYearGroups: [
+        'ТМ-1417', 'МЦМ-Пф-102', 'ТИК-112', 'ИСП-1308', 'СП-Пф-1603', 
+        'ТЭиРП-1901', 'ТАКХС-Пф-1202', 'ИСП-1309п', 'ТОиРА-1701п', 
+        'ПКД-1808п', 'ТМ-1418п', 'СП-Пф-1604п'
+      ],
+      secondYearGroups: [
+        'ТЭО-Пф-2501', 'МЦМ-Пф-201', 'СП-Пф-2601', 'ТАКХС-Пф-2201', 
+        'ТОРД-2706', 'ТМ-2415', 'ПКД-2806/07п', 'СП-Пф-2602п', 
+        'ТОРД-2707п', 'ТМ-2416п', 'ИСП-2306п', 'ИСП-2307п'
+      ],
+      thirdYearGroups: [
+        'ТАКХС-3202', 'СП-3611', 'ТМ-3413', 'МЦМ-308', 'ИСП-3304', 
+        'ОСА-391', 'ТИК-311', 'ИСП-3305п', 'ТОРД-3705п', 'ПКД-3805п', 
+        'СП-3612п', 'ТМ-3414п'
+      ],
+      fourthYearGroups: [
+        'ТАКХС-4201', 'ТЭО-4510', 'СП-469', 'ТОРД-4703', 'ТМ-4412', 
+        'МЦМ-407', 'ПКД-4803', 'ИСП-4303п', 'ТОРД-4704п', 'СП-4610п', 
+        'ПКД-4804п'
+      ]
     }
   },
   methods: {
     async handleLogin() {
-      this.loading = true
+      this.loading = true;
+      this.errorMessage = '';
       
       try {
-        // Здесь будет логика авторизации
-        console.log('Данные для входа:', {
-          email: this.email,
-          password: this.password,
-          rememberMe: this.rememberMe
-        })
+        const response = await fetch(`${API_BASE_URL}/api/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: 'Неизвестная ошибка сервера' }));
+          throw new Error(errorData.error || `Ошибка сервера: ${response.status}`);
+        }
+
+        const data = await response.json();
         
-        // Имитация загрузки
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        // Сохраняем токен
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user_id', data.user_id);
+        localStorage.setItem('user_role', data.role);
+
+        // Проверим токен сразу через check-token endpoint
+        const checkResponse = await fetch(`${API_BASE_URL}/api/check-token`, {
+          headers: {
+            'Authorization': `Bearer ${data.token}`,
+          }
+        });
+
+        if (!checkResponse.ok) {
+          const tokenErrorData = await checkResponse.json().catch(() => ({ error: 'Неизвестная ошибка при проверке токена' }));
+          throw new Error(tokenErrorData.error || `Ошибка проверки токена: ${checkResponse.status}`);
+        }
         
-        // После успешного входа перенаправляем пользователя
-        // this.$router.push('/dashboard')
+        this.$router.push('/profile');
         
       } catch (error) {
-        console.error('Ошибка входа:', error)
+        if (error.message.startsWith('Ошибка сервера') || error.message.startsWith('Ошибка проверки токена')) {
+          this.errorMessage = error.message;
+        } else if (error.message === 'Network Error') {
+          this.errorMessage = 'Ошибка подключения к серверу. Проверьте, запущен ли бэкенд.';
+        } else {
+          this.errorMessage = error.message || 'Ошибка входа: Неизвестная ошибка';
+        }
+        console.error('API Error:', error);
       } finally {
-        this.loading = false
+        this.loading = false;
+      }
+    },
+
+    async handleRegistration() {
+      if (this.registerStep === 1) {
+        // Проверка паролей
+        if (this.registerPassword !== this.confirmPassword) {
+          this.errorMessage = 'Пароли не совпадают';
+          return;
+        }
+        
+        if (this.registerPassword.length < 6) {
+          this.errorMessage = 'Пароль должен содержать минимум 6 символов';
+          return;
+        }
+        
+        // Переходим ко второму шагу
+        this.registerStep = 2;
+        this.errorMessage = '';
+        return;
+      }
+      
+      // Шаг 2: Завершение регистрации
+      this.loading = true;
+      this.errorMessage = '';
+      
+      try {
+        const registrationData = {
+          email: this.registerEmail,
+          password: this.registerPassword,
+          full_name: this.fullName,
+          phone: this.phone,
+          birth_date: this.birthDate,
+          group: this.selectedGroup
+        };
+
+        const response = await fetch(`${API_BASE_URL}/api/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(registrationData),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: 'Неизвестная ошибка сервера' }));
+          throw new Error(errorData.error || `Ошибка сервера: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Сохраняем токен
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user_id', data.user.id);
+        localStorage.setItem('user_role', data.user.role);
+        
+        this.$router.push('/profile');
+        
+      } catch (error) {
+        if (error.message.startsWith('Ошибка сервера')) {
+          this.errorMessage = error.message;
+        } else if (error.message === 'Network Error') {
+          this.errorMessage = 'Ошибка подключения к серверу. Проверьте, запущен ли бэкенд.';
+        } else {
+          this.errorMessage = error.message || 'Ошибка регистрации: Неизвестная ошибка';
+        }
+        console.error('API Error:', error);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    loadRememberedEmail() {
+      const rememberedEmail = localStorage.getItem('remembered_email');
+      if (rememberedEmail) {
+        this.email = rememberedEmail;
+        this.rememberMe = true;
       }
     }
+  },
+  watch: {
+    isRegister(newVal) {
+      if (newVal) {
+        // Сброс данных регистрации при переключении на вкладку
+        this.registerStep = 1;
+        this.registerEmail = '';
+        this.registerPassword = '';
+        this.confirmPassword = '';
+        this.fullName = '';
+        this.phone = '';
+        this.birthDate = '';
+        this.selectedGroup = '';
+        this.errorMessage = '';
+      } else {
+        this.errorMessage = '';
+      }
+    },
+    // Добавляем обработчик для rememberMe, чтобы сохранять email
+    rememberMe(newVal) {
+      if (!newVal) {
+        localStorage.removeItem('remembered_email');
+      }
+    }
+  },
+  mounted() {
+    this.loadRememberedEmail();
+    
+    // Проверяем подключение к бэкенду
+    fetch(`${API_BASE_URL}/`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Не удалось подключиться к серверу');
+        }
+        console.log('Бэкенд подключен');
+      })
+      .catch(error => {
+        console.warn('Бэкенд недоступен:', error.message);
+      });
   }
 }
 </script>
@@ -113,7 +441,7 @@ export default {
 
 .login-background {
   width: 100%;
-  max-width: 420px;
+  max-width: 450px;
 }
 
 .login-card {
@@ -156,6 +484,62 @@ export default {
   margin: 0;
 }
 
+.tabs {
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.tab-button {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #657786;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tab-button.active {
+  color: #3498db;
+  font-weight: 600;
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #3498db;
+  border-radius: 3px 3px 0 0;
+}
+
+.tab-button:hover:not(.active) {
+  background: #edf2f7;
+  color: #2c3e50;
+}
+
+.tab-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 12px 20px;
+  margin: 15px 30px 0;
+  border-radius: 6px;
+  border: 1px solid #fcc;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 .login-form {
   padding: 30px;
 }
@@ -192,6 +576,20 @@ export default {
   color: #aab8c2;
 }
 
+.form-input:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px top 50%;
+  background-size: 12px auto;
+}
+
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -209,6 +607,11 @@ export default {
 
 .remember-me input {
   margin-right: 6px;
+}
+
+.remember-me:has(input:disabled) {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .forgot-password {
@@ -234,16 +637,24 @@ export default {
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
+  margin-bottom: 0;
 }
 
-.login-button:hover {
+.login-button:hover:not(:disabled) {
   background: #2980b9;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
 }
 
-.login-button:active {
+.login-button:active:not(:disabled) {
   transform: translateY(0);
+}
+
+.login-button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .button-loader {
@@ -259,6 +670,41 @@ export default {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.back-button {
+  flex: 1;
+  background: #95a5a6;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover:not(:disabled) {
+  background: #7f8c8d;
+  transform: translateY(-1px);
+}
+
+.back-button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-actions .login-button {
+  flex: 2;
+  margin-bottom: 0;
 }
 
 .login-footer {
@@ -296,7 +742,7 @@ export default {
   }
   
   .login-background {
-    max-width: 380px;
+    max-width: 400px;
   }
   
   .login-form {
@@ -310,6 +756,14 @@ export default {
   .login-title {
     font-size: 1.3rem;
   }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .error-message {
+    margin: 15px 20px 0;
+  }
 }
 
 @media (max-width: 480px) {
@@ -318,7 +772,7 @@ export default {
   }
   
   .login-background {
-    max-width: 340px;
+    max-width: 350px;
   }
   
   .login-form {
@@ -337,6 +791,19 @@ export default {
   
   .technical-college-name {
     font-size: 0.95rem;
+  }
+  
+  .tabs {
+    flex-direction: column;
+  }
+  
+  .tab-button {
+    padding: 12px;
+  }
+  
+  .error-message {
+    margin: 15px 15px 0;
+    font-size: 0.85rem;
   }
 }
 </style>
