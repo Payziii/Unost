@@ -27,6 +27,11 @@ const router = createRouter({
     name: 'profile',
     component: ProfileView,
     meta: { requiresAuth: true }
+    },
+    {
+      path: '/applicants/priem',
+      name: 'priem',
+      component: () => import('../views/applicants/PriemView.vue')
     }
   ],
 })
