@@ -32,7 +32,7 @@ defineProps({
   flex-direction: column;
   /* align-items: center; */
   border-radius: 24px;
-  padding: 32px 24px 24px 24px;
+  padding: 32px 48px 24px 48px;
   box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
   gap: 24px;
 }

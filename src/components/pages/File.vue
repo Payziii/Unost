@@ -19,9 +19,8 @@ const props = defineProps({
 });
 
 const paragraphStyles = computed(() => ({
-  'font-size': '1.05rem',
+  'font-size': '1.3rem',
   'color': props.color,
-  'text-decoration': 'underline'
 }));
 </script>
 
@@ -38,4 +37,13 @@ const paragraphStyles = computed(() => ({
 
 
 <style scoped>
+a {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+  scale: 1.01
+}
 </style>

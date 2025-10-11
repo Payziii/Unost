@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 const paragraphStyles = computed(() => ({
-  'font-size': '1.05rem',
+  'font-size': '1.3rem',
   'color': props.color, 
 }));
 </script>

@@ -16,8 +16,8 @@ defineProps({
 
 <style scoped>
 p {
-  font-size: 1.05rem;
-  color: #444;
+  font-size: 1.3rem;
+  color: #1b1b1b;
   margin-top: 0;
   margin-bottom: 0;
   line-height: 1.6;
