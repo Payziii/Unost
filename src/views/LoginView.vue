@@ -1,4 +1,5 @@
 <template>
+  <div class="main">
   <div class="login-container">
     <div class="login-background">
       <div class="login-card">
@@ -199,6 +200,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -430,8 +432,16 @@ export default {
 </script>
 
 <style scoped>
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .login-container {
-  background: #f8f9fa;
+  /* background: #f8f9fa; */
+  width: 90%;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
   display: flex;
   align-items: center;
   justify-content: center;
