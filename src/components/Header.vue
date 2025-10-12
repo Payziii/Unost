@@ -78,10 +78,10 @@ const menuItems = {
     { text: 'Педагог и наставник 2023', route: '/studentu/pedagog_i_nastavnik_2023' }
   ],
   applicants: [
-    { text: 'Рейтинг', route: '/abiturientam/reyting_abiturientov' },
-    { text: 'Профессионалитет', route: '/abiturientam/professionalitet' },
+    { text: 'Рейтинг', route: '/applicants/reyting_abiturientov' },
+    { text: 'Профессионалитет', route: '/applicants/professionalitet' },
     { text: 'Правила приема', route: '/applicants/priem' },
-    { text: 'Кадетская школа-интернат', route: '/abiturientam/kadetskaya_shkola-internat' }
+    { text: 'Кадетская школа-интернат', route: '/applicants/kadetskaya_shkola-internat' }
   ],
   structure: [
     { text: 'О нас', route: '/info/simvolika' },
