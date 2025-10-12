@@ -8,7 +8,7 @@ const stats = ref({})
 const loading = ref(true)
 const error = ref('')
 
-const API_BASE_URL = 'http://localhost:5000'
+const API_BASE_URL = 'http://юность.панксквад.рф/api'
 
 const fetchComplaints = async () => {
   try {
