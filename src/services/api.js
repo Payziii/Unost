@@ -39,21 +39,21 @@ api.interceptors.response.use(
 
 export const authAPI = {
   login: (email, password) => 
-    api.post('/api/login', { email, password }),
+    api.post('/login', { email, password }),
 
   register: (userData) => 
-    api.post('/api/register', userData),
+    api.post('/register', userData),
 
   getProfile: () => 
-    api.get('/api/students/profile'),
+    api.get('/students/profile'),
 };
 
 export const studentAPI = {
   getStudents: () => 
-    api.get('/api/students'),
+    api.get('/students'),
 
   getStudent: (id) => 
-    api.get(`/api/students/${id}`),
+    api.get(`/students/${id}`),
 };
 
 export default api;
