@@ -31,7 +31,7 @@ const submitComplaint = async () => {
   success.value = ''
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/complaints`, {
+    const response = await fetch(`${API_BASE_URL}/complaints`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

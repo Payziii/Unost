@@ -20,7 +20,7 @@ const fetchComplaints = async () => {
       return
     }
 
-    const response = await fetch(`${API_BASE_URL}/api/complaints`, {
+    const response = await fetch(`${API_BASE_URL}/complaints`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ const fetchComplaints = async () => {
 const fetchStats = async () => {
   try {
     const token = localStorage.getItem('token')
-    const response = await fetch(`${API_BASE_URL}/api/complaints/stats`, {
+    const response = await fetch(`${API_BASE_URL}/complaints/stats`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'

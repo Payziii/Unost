@@ -261,7 +261,7 @@ export default {
       this.errorMessage = '';
       
       try {
-        const response = await fetch(`${API_BASE_URL}/api/login`, {
+        const response = await fetch(`${API_BASE_URL}/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -285,7 +285,7 @@ export default {
         localStorage.setItem('user_role', data.role);
 
         // Проверим токен сразу через check-token endpoint
-        const checkResponse = await fetch(`${API_BASE_URL}/api/check-token`, {
+        const checkResponse = await fetch(`${API_BASE_URL}/check-token`, {
           headers: {
             'Authorization': `Bearer ${data.token}`,
           }

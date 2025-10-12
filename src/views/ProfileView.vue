@@ -31,7 +31,7 @@ const fetchProfile = async () => {
       return
     }
 
-    const response = await fetch(`${API_BASE_URL}/api/students/profile`, {
+    const response = await fetch(`${API_BASE_URL}/students/profile`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ const fetchPortfolioFiles = async () => {
   try {
     loadingPortfolio.value = true
     const token = localStorage.getItem('token')
-    const response = await fetch(`${API_BASE_URL}/api/students/portfolio`, {
+    const response = await fetch(`${API_BASE_URL}/students/portfolio`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -121,7 +121,7 @@ const uploadFile = async () => {
 
   try {
     const token = localStorage.getItem('token')
-    const response = await fetch(`${API_BASE_URL}/api/students/portfolio`, {
+    const response = await fetch(`${API_BASE_URL}/students/portfolio`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -151,7 +151,7 @@ const deleteFile = async (fileId) => {
 
   try {
     const token = localStorage.getItem('token')
-    const response = await fetch(`${API_BASE_URL}/api/students/portfolio/${fileId}`, {
+    const response = await fetch(`${API_BASE_URL}/students/portfolio/${fileId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -171,7 +171,7 @@ const deleteFile = async (fileId) => {
 
 const downloadFile = (fileId, fileName) => {
   const token = localStorage.getItem('token')
-  const downloadUrl = `${API_BASE_URL}/api/students/portfolio/${fileId}/download`
+  const downloadUrl = `${API_BASE_URL}/students/portfolio/${fileId}/download`
   
   // Создаем скрытую ссылку для скачивания
   const link = document.createElement('a')
