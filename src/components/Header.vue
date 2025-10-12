@@ -114,10 +114,11 @@ const menuItems = {
         </div>
         </router-link>
         <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
-        <Button text="Направления" route="/novosti" />
-        <Button text="Отуденческая жизнь" route="/novosti" />
-         <DropdownMenu text="Абитуриентам" route="/timetable" :items="menuItems.applicants" />
+        <DropdownMenu text="Студентам" route="/" :items="menuItems.students" />
+        <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
+        <DropdownMenu text="Структура" route="/timetable" :items="menuItems.structure" />
         <Button text="Контакты" route="/kontakty" />
+        <Button text="Личный кабинет" route="/login" />
       </div>
       <Button2 text="Подать заявку" route="/novosti" />
     </div>
