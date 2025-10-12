@@ -9,10 +9,10 @@
 
 <style scoped>
 .cards {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 450px));
   gap: 24px;
-  justify-content: space-around;
+  justify-content: center; /* сетка как блок будет центрирована */
 }
+
 </style>

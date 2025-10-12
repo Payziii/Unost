@@ -63,7 +63,7 @@ import Card from '@/components/pages/Card.vue';
                     9. Прививочный сертификат
                 </Text>
             </Card>
-            <Card title="Электронная подача">
+            <Card title="Электронная подача" isButton buttonText="Подать заявление" buttonLink="http://priem.egov66.ru/">
                 <Text align="left"><Highlight>Требуемые документы:</Highlight><br/>
                     1. Скан заполненного заявления<br/>
                     2. Скан паспорта<br/>
@@ -73,13 +73,12 @@ import Card from '@/components/pages/Card.vue';
                     6. Скан мед.полиса [2 шт]<br/>
                     7. Скан ИНН<br/>
                     8. Скан СНИЛС<br/>
-                    <Link linkTo="http://priem.egov66.ru/">Подать</Link>
                 </Text>
             </Card>
             <Card title="С функционалом ЕПГУ">
                 <Text align="justify"> С использованием функционала (сервисов) региональных порталов государственных и муниципальных услуг, являющихся государственными информационными системами субъектов Российской Федерации, созданными органами государственной власти субъектов Российской Федерации (при наличии).</Text>
             </Card>
-            <Card title="На почту">
+            <Card title="На почту" isButton buttonText="Подать заявление" buttonLink="mailto:priemMTTyunost@yandex.ru">
                 <Text align="left"><Highlight>Требуемые документы:</Highlight><br/>
                     1. Скан заполненного заявления<br/>
                     2. Скан паспорта<br/>
@@ -90,7 +89,6 @@ import Card from '@/components/pages/Card.vue';
                     7. Скан ИНН<br/>
                     8. Скан СНИЛС<br/>
                     9. Прививочный сертификат<br/>
-                    <Link linkTo="mailto:priemMTTyunost@yandex.ru">Подать</Link>
                 </Text>
             </Card>
         </CardGrid>
