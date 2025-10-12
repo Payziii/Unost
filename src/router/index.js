@@ -3,8 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import ContactsView from '../views/ContactsView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProfileView from '@/views/ProfileView.vue'
-import KnigaZhalob from '@/components/KnigaZhalob.vue'
-import AdminPanel from '@/components/AdminPanel.vue'
+import KnigaZhalob from '@/views/KnigaZhalob.vue'
+import AdminPanel from '@/views/AdminPanel.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
