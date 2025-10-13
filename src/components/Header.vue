@@ -4,6 +4,9 @@ import Button2 from '@/components/Button2.vue';
 import DropdownMenu from '@/components/DropdownMenu.vue';
 import { ref, onMounted } from 'vue';
 
+const isMenuOpen = ref(false);
+const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
+
 const titleElement = ref(null);
 const titles = [
   "ГАПОУ СО Верхнепышминский механико-технологический техникум «Юность»",
@@ -17,20 +20,16 @@ const typeWriter = async (element, titlesArray, speed = 100) => {
   let count = 0;
   while (true) {
     const text = titlesArray[Math.floor(Math.random() * titlesArray.length)];
-
     for (let i = 0; i <= text.length; i++) {
       element.textContent = text.substring(0, i);
       await new Promise(resolve => setTimeout(resolve, speed));
     }
-
     await new Promise(resolve => setTimeout(resolve, 2000));
-
     if (count > 1) break;
     for (let i = text.length; i >= 0; i--) {
       element.textContent = text.substring(0, i);
       await new Promise(resolve => setTimeout(resolve, 50));
     }
-
     await new Promise(resolve => setTimeout(resolve, 50));
     count++;
   }
@@ -42,7 +41,6 @@ onMounted(() => {
   }
 });
 
-// Данные для выпадающих меню
 const menuItems = {
   basicInfo: [
     { text: 'Основные сведения', route: '/svedeniya/osnovnye' },
@@ -106,131 +104,139 @@ const menuItems = {
   <div class="header">
     <div class="upper">
       <div class="left">
-        <router-link to="/" class="left">
-        <img src="/images/logo/logo.png" class="logo" />
-        <div class="texta">
-          <h1>ВПМТТ «Юность»</h1>
-          <h2>Механико-технологический техникум</h2>
-        </div>
+        <router-link to="/" class="logo-wrap">
+          <img src="/images/logo/logo.png" class="logo" />
+          <div class="texta">
+            <h1>ВПМТТ «Юность»</h1>
+            <h2>Механико-технологический техникум</h2>
+          </div>
         </router-link>
+
+        <div class="nav-links">
+          <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
+          <DropdownMenu text="Студентам" route="/" :items="menuItems.students" />
+          <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
+          <DropdownMenu text="Структура" route="/" :items="menuItems.structure" />
+          <Button text="Контакты" route="/kontakty" />
+          <Button text="Личный кабинет" route="/login" />
+        </div>
+
+        <button class="burger" @click="toggleMenu">☰</button>
+      </div>
+
+      <Button2 text="Подать заявку" route="/novosti" />
+    </div>
+
+    <transition name="slide">
+      <div class="mobile-menu" v-if="isMenuOpen">
         <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
         <DropdownMenu text="Студентам" route="/" :items="menuItems.students" />
         <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
-        <DropdownMenu text="Структура" route="/timetable" :items="menuItems.structure" />
+        <DropdownMenu text="Структура" route="/" :items="menuItems.structure" />
         <Button text="Контакты" route="/kontakty" />
         <Button text="Личный кабинет" route="/login" />
       </div>
-      <Button2 text="Подать заявку" route="/novosti" />
-    </div>
+    </transition>
   </div>
 </template>
 
 <style scoped>
 .header {
   width: 100%;
-  height: 75px;
-  /* background: linear-gradient(90deg, var(--orange) 0%, var(--soft-orange) 50%, var(--orange) 100%); */
   background-color: var(--orang);
   margin-bottom: 20px;
 }
 
 .upper {
-  padding-left: 70px;
-  padding-right: 70px;
+  padding: 0 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 75px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
   gap: 20px;
-  height: 100%;
-
-  .left {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    a {
-      text-decoration: none;
-    }
-
-    .logo {
-      height: 50px;
-      width: auto;
-    }
-
-    h1 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--white);
-    }
-
-    h2 {
-      font-size: 14px;
-      color: var(--white)
-    }
-  }
-
-  .right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
 }
 
-.navbar {
-  padding-left: 300px;
-  padding-right: 300px;
+.logo-wrap {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
+  text-decoration: none;
 }
 
-.search {
-  display: inline-block;
-  background: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  transition: background 0.3s;
-  cursor: pointer;
+.logo {
+  height: 50px;
+  width: auto;
 }
 
-.search:hover {
-  background: var(--soft-orange);
-}
-
-.search input {
-  color: var(--black);
-  font-weight: 600;
-  font-size: 20px;
-  transition: color 0.3s ease;
-  background: transparent;
-  border: none;
-  outline: none;
-  width: 100px;
-}
-
-.search input::placeholder {
+h1 {
+  font-size: 18px;
+  font-weight: 700;
   color: var(--white);
 }
 
-.search:hover input::placeholder {
-  color: var(--black);
+h2 {
+  font-size: 14px;
+  color: var(--white);
 }
 
-.typing-text::after {
-  content: '|';
-  animation: blink 1s infinite;
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-@keyframes blink {
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 26px;
+  cursor: pointer;
+}
 
-  0%,
-  50% {
-    opacity: 1;
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  background: var(--orang);
+  padding: 10px 20px;
+  gap: 10px;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* адаптивность */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
   }
 
-  51%,
-  100% {
-    opacity: 0;
+  .burger {
+    display: block;
+  }
+
+  .upper {
+    padding: 0 20px;
+  }
+
+  .texta h1 {
+    font-size: 16px;
+  }
+
+  .texta h2 {
+    font-size: 12px;
   }
 }
 </style>
