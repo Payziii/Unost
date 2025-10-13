@@ -36,6 +36,21 @@ const router = createRouter({
       component: () => import('../views/applicants/PriemView.vue')
     },
     {
+      path: '/applicants/reyting_abiturientov',
+      name: 'rating',
+      component: () => import('../views/applicants/RatingView.vue')
+    },
+    {
+      path: '/applicants/professionalitet',
+      name: 'professionalitet',
+      component: () => import('../views/applicants/ProfessionalitetView.vue')
+    },
+    {
+      path: '/applicants/kadetskaya_shkola-internat',
+      name: 'kadeti',
+      component: () => import('../views/applicants/KadetiView.vue')
+    },
+    {
     path: '/kniga-zhalob',
     name: 'kniga-zhalob',
     component: KnigaZhalob
