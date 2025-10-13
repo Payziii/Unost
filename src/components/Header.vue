@@ -64,16 +64,16 @@ const menuItems = {
     { text: 'Противодействие коррупции', route: '/svedeniya/protivodeystvie_korruptsii' }
   ],
   students: [
-    { text: 'Расписание занятий', route: '/studentu/raspisanie_zanyatiy' },
-    { text: 'Учебные планы', route: '/studentu/uchebnye_plany' },
-    { text: 'Графики', route: '/studentu/grafiki' },
+    { text: 'Расписание занятий', route: '/students/raspisanie_zanyatiy' },
+    { text: 'Учебные планы', route: '/students/uchebnye_plany' },
+    { text: 'Графики', route: '/students/graphici' },
     { text: 'Промежуточная аттестация', route: '/promejutochnaya_attestatsiya_' },
-    { text: 'Государственная итоговая аттестация', route: '/studentu/gosudarstvennaya_itogovaya_attestatsiya' },
-    { text: 'Конкурсы и олимпиады', route: '/studentu/nashi_dostijeniya' },
-    { text: 'Образовательный кредит', route: '/studentu/obrazovatelnyy_kredit_' },
-    { text: 'Доступ к библиотечным и электронным образовательным ресурсам', route: '/studentu/dostup_k_bibliotechnym_i_elektronnym_obrazovatelnym_resursam' },
-    { text: 'Полезные ссылки', route: '/studentu/poleznye_ssylki' },
-    { text: 'Педагог и наставник 2023', route: '/studentu/pedagog_i_nastavnik_2023' }
+    { text: 'Государственная итоговая аттестация', route: '/students/gosudarstvennaya_itogovaya_attestatsiya' },
+    { text: 'Конкурсы и олимпиады', route: '/students/nashi_dostijeniya' },
+    { text: 'Образовательный кредит', route: '/students/obrazovatelnyy_kredit_' },
+    { text: 'Доступ к библиотечным и электронным образовательным ресурсам', route: '/students/dostup_k_bibliotechnym_i_elektronnym_obrazovatelnym_resursam' },
+    { text: 'Полезные ссылки', route: '/students/poleznye_ssylki' },
+    { text: 'Педагог и наставник 2023', route: '/students/pedagog_i_nastavnik_2023' }
   ],
   applicants: [
     { text: 'Рейтинг', route: '/applicants/reyting_abiturientov' },

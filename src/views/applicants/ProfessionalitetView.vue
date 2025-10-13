@@ -84,13 +84,13 @@ import Card from '@/components/pages/Card.vue';
             </iframe>
         </div>
 
-        <div class="file-container">
+        <Text align="left">
             <File file="ОПОП 22.02.08 Металлургическое производство.pdf" icon>ОПОП 22.02.08 Металлургическое производство</File>
             <File file="ОПОП 15.02.19 Сварочное производство.pdf" icon>ОПОП 15.02.19 Сварочное производство</File>
             <File file="ОПОП 13.02.13 Эксплуатация и обслуживание электрооборудования.pdf" icon>ОПОП 13.02.13 Эксплуатация и обслуживание электрооборудования</File>
             <File file="ОПОП 18.02.12 Технология аналитического контроля химических соединений.pdf" icon>ОПОП 18.02.12 Технология аналитического контроля химических соединений</File>
             <File file="Соглашение о партнерстве-2023.pdf" icon>Соглашение о партнерстве-2023</File>
-        </div>
+        </Text>
 
     </Page>
 </template>
@@ -116,7 +116,6 @@ import Card from '@/components/pages/Card.vue';
     margin: 0 auto;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .video-container iframe {
@@ -125,13 +124,6 @@ import Card from '@/components/pages/Card.vue';
     border: none;
 }
 
-.file-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
-}
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {

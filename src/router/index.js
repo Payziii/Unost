@@ -51,6 +51,21 @@ const router = createRouter({
       component: () => import('../views/applicants/KadetiView.vue')
     },
     {
+      path: '/students/raspisanie_zanyatiy',
+      name: 'rasp',
+      component: () => import('../views/students/RaspView.vue')
+    },
+    {
+      path: '/students/uchebnye_plany',
+      name: 'uchebplan',
+      component: () => import('../views/students/UchebplanView.vue')
+    },
+    {
+      path: '/students/graphici',
+      name: 'graphici',
+      component: () => import('../views/students/GraphiciView.vue')
+    },
+    {
     path: '/kniga-zhalob',
     name: 'kniga-zhalob',
     component: KnigaZhalob
