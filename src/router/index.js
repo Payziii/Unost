@@ -70,6 +70,43 @@ const router = createRouter({
       name: 'promezhut',
       component: () => import('../views/students/promezhutView.vue')
     },
+        {
+      path: '/students/gia',
+      name: 'gia',
+      component: () => import('../views/students/GiaView.vue')
+    },
+        {
+      path: '/students/konkursi',
+      name: 'konkursi',
+      component: () => import('../views/students/KonkursiView.vue')
+    },
+            {
+      path: '/students/credit',
+      name: 'credit',
+      component: () => import('../views/students/CreditView.vue')
+    },
+                {
+      path: '/students/library',
+      name: 'library',
+      component: () => import('../views/students/LibraryView.vue')
+    },
+                    {
+      path: '/students/links',
+      name: 'links',
+      component: () => import('../views/students/LinksView.vue')
+    },
+                        {
+      path: '/students/pedagog',
+      name: 'pedagog',
+      component: () => import('../views/students/PedagogView.vue')
+    },
+
+    
+    
+    
+
+    
+    
     {
     path: '/kniga-zhalob',
     name: 'kniga-zhalob',

@@ -68,12 +68,12 @@ const menuItems = {
     { text: 'Учебные планы', route: '/students/uchebnye_plany' },
     { text: 'Графики', route: '/students/graphici' },
     { text: 'Промежуточная аттестация', route: '/students/promezhut' },
-    { text: 'Государственная итоговая аттестация', route: '/students/gosudarstvennaya_itogovaya_attestatsiya' },
-    { text: 'Конкурсы и олимпиады', route: '/students/nashi_dostijeniya' },
-    { text: 'Образовательный кредит', route: '/students/obrazovatelnyy_kredit_' },
-    { text: 'Доступ к библиотечным и электронным образовательным ресурсам', route: '/students/dostup_k_bibliotechnym_i_elektronnym_obrazovatelnym_resursam' },
-    { text: 'Полезные ссылки', route: '/students/poleznye_ssylki' },
-    { text: 'Педагог и наставник 2023', route: '/students/pedagog_i_nastavnik_2023' }
+    { text: 'Государственная итоговая аттестация', route: '/students/gia' },
+    { text: 'Конкурсы и олимпиады', route: '/students/konkursi' },
+    { text: 'Образовательный кредит', route: '/students/credit' },
+    { text: 'Доступ к библиотечным и электронным образовательным ресурсам', route: '/students/library' },
+    { text: 'Полезные ссылки', route: '/students/links' },
+    { text: 'Педагог и наставник 2023', route: '/students/pedagog' }
   ],
   applicants: [
     { text: 'Рейтинг', route: '/applicants/reyting_abiturientov' },
