@@ -66,6 +66,11 @@ const router = createRouter({
       component: () => import('../views/students/GraphiciView.vue')
     },
     {
+      path: '/students/promezhut',
+      name: 'promezhut',
+      component: () => import('../views/students/promezhutView.vue')
+    },
+    {
     path: '/kniga-zhalob',
     name: 'kniga-zhalob',
     component: KnigaZhalob

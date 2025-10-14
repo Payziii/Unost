@@ -136,7 +136,7 @@ const scheduleData = {
 
         <!-- Связующий элемент -->
         <div class="connection">
-          <div class="connection-line"></div>
+          
           <div class="connection-icon">🤝</div>
           <div class="connection-text">Братство знаний</div>
         </div>

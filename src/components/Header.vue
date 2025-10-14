@@ -67,7 +67,7 @@ const menuItems = {
     { text: 'Расписание занятий', route: '/students/raspisanie_zanyatiy' },
     { text: 'Учебные планы', route: '/students/uchebnye_plany' },
     { text: 'Графики', route: '/students/graphici' },
-    { text: 'Промежуточная аттестация', route: '/promejutochnaya_attestatsiya_' },
+    { text: 'Промежуточная аттестация', route: '/students/promezhut' },
     { text: 'Государственная итоговая аттестация', route: '/students/gosudarstvennaya_itogovaya_attestatsiya' },
     { text: 'Конкурсы и олимпиады', route: '/students/nashi_dostijeniya' },
     { text: 'Образовательный кредит', route: '/students/obrazovatelnyy_kredit_' },
