@@ -79,9 +79,6 @@ onBeforeUnmount(() => {
 });
 </script>
 
-
-
-
 <template>
   <div class="main">
     <div class="isp3304">
@@ -164,13 +161,32 @@ onBeforeUnmount(() => {
 
 .title {
   width: 40%;
-  align-self: center;
-  margin-top: -50px;
+  /* align-self: center;
+  margin-top: -50px; */
+  margin-top: 50px;
+  animation: pulse 4s infinite ease-in-out; /* Имя анимации, длительность, повторения, функция времени */
 
   h1 {
     font-weight: 700;
     font-size: 340%;
     color: #000;
+    /* Добавляем свойства анимации */ 
+  }
+}
+
+/* Определяем саму анимацию */
+@keyframes pulse {
+  0% {
+    transform: scale(1); /* Начальный размер */
+    opacity: 1; /* Начальная непрозрачность */
+  }
+  50% {
+    transform: scale(1.05); /* Увеличенный размер в середине анимации */
+    opacity: 0.8; /* Немного уменьшенная непрозрачность */
+  }
+  100% {
+    transform: scale(1); /* Возвращение к начальному размеру */
+    opacity: 1; /* Возвращение к начальной непрозрачности */
   }
 }
 
