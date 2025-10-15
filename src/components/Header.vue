@@ -1,45 +1,55 @@
+<template>
+  <div class="header">
+    <div class="upper">
+      <div class="left">
+        <router-link to="/" class="logo-wrap">
+          <img src="/images/logo/logo.png" class="logo" />
+          <div class="texta">
+            <h1>ВПМТТ «Юность»</h1>
+            <h2>Механико-технологический техникум</h2>
+          </div>
+        </router-link>
+
+        <div class="nav-links">
+          <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
+          <DropdownMenu text="Студентам" route="/" :items="menuItems.students" />
+          <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
+          <DropdownMenu text="Структура" route="/" :items="menuItems.structure" />
+          <Button text="Контакты" route="/kontakty" />
+          <Button text="Личный кабинет" route="/login" />
+        </div>
+
+        <button class="burger" @click="toggleMenu">☰</button>
+      </div>
+
+      <!-- ПК-кнопка -->
+      <Button2 class="desktop-apply" text="Подать заявку" route="/novosti" />
+    </div>
+
+    <!-- Мобильное бургер-меню -->
+    <transition name="slide">
+      <div class="mobile-menu" v-if="isMenuOpen">
+        <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
+        <DropdownMenu text="Студентам" route="/" :items="menuItems.students" />
+        <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
+        <DropdownMenu text="Структура" route="/" :items="menuItems.structure" />
+        <Button text="Контакты" route="/kontakty" />
+        <Button text="Личный кабинет" route="/login" />
+        <!-- Мобильная версия кнопки "Подать заявку" -->
+        <Button2 class="mobile-apply" text="Подать заявку" route="/novosti" />
+      </div>
+    </transition>
+  </div>
+</template>
+
 <script setup>
 import Button from '@/components/Button.vue';
 import Button2 from '@/components/Button2.vue';
 import DropdownMenu from '@/components/DropdownMenu.vue';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 const isMenuOpen = ref(false);
 const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
-
-const titleElement = ref(null);
-const titles = [
-  "ГАПОУ СО Верхнепышминский механико-технологический техникум «Юность»",
-  "ГАПОУ СО Верхнепышминский механико-технологический техникум «Юность»"
-];
-let isAnimating = false;
-
-const typeWriter = async (element, titlesArray, speed = 100) => {
-  if (isAnimating) return;
-  isAnimating = true;
-  let count = 0;
-  while (true) {
-    const text = titlesArray[Math.floor(Math.random() * titlesArray.length)];
-    for (let i = 0; i <= text.length; i++) {
-      element.textContent = text.substring(0, i);
-      await new Promise(resolve => setTimeout(resolve, speed));
-    }
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    if (count > 1) break;
-    for (let i = text.length; i >= 0; i--) {
-      element.textContent = text.substring(0, i);
-      await new Promise(resolve => setTimeout(resolve, 50));
-    }
-    await new Promise(resolve => setTimeout(resolve, 50));
-    count++;
-  }
-};
-
-onMounted(() => {
-  if (titleElement.value) {
-    typeWriter(titleElement.value, titles, 100);
-  }
-});
 
 const menuItems = {
   basicInfo: [
@@ -99,46 +109,6 @@ const menuItems = {
   ]
 };
 </script>
-
-<template>
-  <div class="header">
-    <div class="upper">
-      <div class="left">
-        <router-link to="/" class="logo-wrap">
-          <img src="/images/logo/logo.png" class="logo" />
-          <div class="texta">
-            <h1>ВПМТТ «Юность»</h1>
-            <h2>Механико-технологический техникум</h2>
-          </div>
-        </router-link>
-
-        <div class="nav-links">
-          <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
-          <DropdownMenu text="Студентам" route="/" :items="menuItems.students" />
-          <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
-          <DropdownMenu text="Структура" route="/" :items="menuItems.structure" />
-          <Button text="Контакты" route="/kontakty" />
-          <Button text="Личный кабинет" route="/login" />
-        </div>
-
-        <button class="burger" @click="toggleMenu">☰</button>
-      </div>
-
-      <Button2 text="Подать заявку" route="/novosti" />
-    </div>
-
-    <transition name="slide">
-      <div class="mobile-menu" v-if="isMenuOpen">
-        <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
-        <DropdownMenu text="Студентам" route="/" :items="menuItems.students" />
-        <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
-        <DropdownMenu text="Структура" route="/" :items="menuItems.structure" />
-        <Button text="Контакты" route="/kontakty" />
-        <Button text="Личный кабинет" route="/login" />
-      </div>
-    </transition>
-  </div>
-</template>
 
 <style scoped>
 .header {
@@ -207,6 +177,15 @@ h2 {
   gap: 10px;
 }
 
+.desktop-apply {
+  display: block;
+}
+
+.mobile-apply {
+  display: none;
+}
+
+/* плавная анимация */
 .slide-enter-active,
 .slide-leave-active {
   transition: all 0.3s ease;
@@ -217,26 +196,74 @@ h2 {
   transform: translateY(-10px);
 }
 
-/* адаптивность */
-@media (max-width: 900px) {
+/* 📱 Адаптация под мобильные устройства */
+@media (max-width: 768px) {
+  .upper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    padding: 10px 15px;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .left {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  h1 {
+    font-size: 16px;
+  }
+
+  h2 {
+    font-size: 12px;
+  }
+
   .nav-links {
     display: none;
   }
 
   .burger {
     display: block;
+    font-size: 28px;
+    margin-top: 5px;
   }
 
-  .upper {
-    padding: 0 20px;
+  /* скрываем десктопную кнопку */
+  .desktop-apply {
+    display: none;
   }
 
-  .texta h1 {
-    font-size: 16px;
+  /* показываем кнопку в мобильном меню */
+  .mobile-apply {
+    display: block;
+    width: 100%;
   }
 
-  .texta h2 {
-    font-size: 12px;
+  .mobile-menu {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    padding: 15px 0;
+    gap: 12px;
+    background: var(--orang);
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .mobile-menu a,
+  .mobile-menu button {
+    font-size: 15px;
+  }
+
+  .texta {
+    text-align: center;
   }
 }
 </style>
