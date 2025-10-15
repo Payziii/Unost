@@ -13,6 +13,11 @@ import { ref, onMounted } from 'vue';
         <div class="texta">
           <h1>ГАПОУ СО «ВПМТТ «Юность»</h1>
           <h2>Свердловская область, г. Верхняя Пышма, ул. Кривоусова, д. 53</h2>
+          <h3>© 2025 <a href="https://github.com/Payziii" target="_blank">Payziii</a>,
+            <a href="https://github.com/Ab4kshin" target="_blank">Ab4kshin</a>,
+            <a href="https://github.com/LegendaUral" target="_blank">LegendaUral</a>,
+            <a href="https://github.com/SenkoBread07" target="_blank">SenkoBread07</a>
+          </h3>
         </div>
       </div>
       <div class="navbar">
@@ -54,6 +59,16 @@ import { ref, onMounted } from 'vue';
     font-size: 15px;
     font-weight: 500;
     color: var(--white);
+  }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--white);
+    a {
+      text-decoration: none;
+      color: var(--white);
+    }
   }
 
   .left {
