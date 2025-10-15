@@ -105,6 +105,16 @@ const router = createRouter({
       name: 'avtoshkola',
       component: () => import('../views/struktura/AutoshkolaView.vue')
     },
+        {
+      path: '/info/maininfo',
+      name: 'maininfo',
+      component: () => import('../views/info/MainView.vue')
+    },
+            {
+      path: '/info/structure',
+      name: 'structure',
+      component: () => import('../views/info/StructureView.vue')
+    },
 
     
     
