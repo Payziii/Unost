@@ -82,20 +82,20 @@ const menuItems = {
     { text: 'Кадетская школа-интернат', route: '/applicants/kadetskaya_shkola-internat' }
   ],
   structure: [
-    { text: 'О нас', route: '/info/simvolika' },
-    { text: 'Кадетская школа-интернат', route: '/info/kshi' },
-    { text: 'Центр ПВиДП', route: '/info/tsentr_pvidp_' },
-    { text: 'Центр проведения демонстрационных экзаменов ', route: '/info/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills' },
-    { text: 'Федеральный проект "Содействие занятости"', route: '/info/federalnyy_proekt_sodeystvie_zanyatosti' },
-    { text: 'Проектная деятельность', route: '/info/proektnaya_deyatelnost' },
-    { text: 'Центр профилактики детского дорожно-транспортного травматизма «Лаборатория безопасности»', route: '/info/laboratoriya_bezopasnosti_sverdlovskaya_oblast' },
-    { text: 'Учебно-производственный комплекс', route: '/info/uchebno-proizvodstvennyy_kompleks' },
-    { text: 'Автошкола', route: '/info/avtoshkola' },
-    { text: 'Студенческий спортивный клуб', route: '/info/studencheskiy_sportivnyy_klub' },
-    { text: 'Профсоюз', route: '/info/profsoyuz' },
-    { text: 'Раскрытие информации', route: '/info/raskrytie_informatsii' },
-    { text: 'Информация о доступности объектов Учреждения', route: '/info/informatsiya_o_dostupnosti_obyektov_uchrejdeniya' },
-    { text: '«Сообщи, где торгуют смертью»', route: '/info/gde_torguyut_smertyu_' }
+    { text: 'О нас', route: '/structure/simvolika' },
+    { text: 'Кадетская школа-интернат', route: '/structure/kshi' },
+    { text: 'Центр ПВиДП', route: '/structure/tsentr_pvidp_' },
+    { text: 'Центр проведения демонстрационных экзаменов ', route: '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills' },
+    { text: 'Федеральный проект "Содействие занятости"', route: '/structure/federalnyy_proekt_sodeystvie_zanyatosti' },
+    { text: 'Проектная деятельность', route: '/structure/proektnaya_deyatelnost' },
+    { text: 'Центр профилактики детского дорожно-транспортного травматизма «Лаборатория безопасности»', route: '/structure/laboratoriya_bezopasnosti_sverdlovskaya_oblast' },
+    { text: 'Учебно-производственный комплекс', route: '/structure/uchebno-proizvodstvennyy_kompleks' },
+    { text: 'Автошкола', route: '/structure/avtoshkola' },
+    { text: 'Студенческий спортивный клуб', route: '/structure/studencheskiy_sportivnyy_klub' },
+    { text: 'Профсоюз', route: '/structure/profsoyuz' },
+    { text: 'Раскрытие информации', route: '/structure/raskrytie_informatsii' },
+    { text: 'Информация о доступности объектов Учреждения', route: '/structure/informatsiya_o_dostupnosti_obyektov_uchrejdeniya' },
+    { text: '«Сообщи, где торгуют смертью»', route: '/structure/gde_torguyut_smertyu_' }
   ]
 };
 </script>
