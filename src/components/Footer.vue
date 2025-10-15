@@ -2,7 +2,6 @@
 import Button from '@/components/Button.vue';
 import DropdownMenu from '@/components/DropdownMenu.vue';
 import { ref, onMounted } from 'vue';
-
 </script>
 
 <template>
@@ -20,6 +19,7 @@ import { ref, onMounted } from 'vue';
           </h3>
         </div>
       </div>
+
       <div class="navbar">
         <div class="contact">
           <img src="/images/icons/email.svg" class="icon" />
@@ -47,8 +47,8 @@ import { ref, onMounted } from 'vue';
 }
 
 .upper {
-  padding-left: 100px;
-  padding-right: 100px;
+  padding-left: 70px;
+  padding-right: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -113,58 +113,68 @@ import { ref, onMounted } from 'vue';
 
     a {
       text-decoration: underline;
-      color: var(--white)
+      color: var(--white);
     }
   }
 }
 
-.search {
-  display: inline-block;
-  background: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  transition: background 0.3s;
-  cursor: pointer;
-}
-
-.search:hover {
-  background: var(--soft-orange);
-}
-
-.search input {
-  color: var(--black);
-  font-weight: 600;
-  font-size: 20px;
-  transition: color 0.3s ease;
-  background: transparent;
-  border: none;
-  outline: none;
-  width: 100px;
-}
-
-.search input::placeholder {
-  color: var(--white);
-}
-
-.search:hover input::placeholder {
-  color: var(--black);
-}
-
-.typing-text::after {
-  content: '|';
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-
-  0%,
-  50% {
-    opacity: 1;
+/* 📱 Мобильная адаптация */
+@media (max-width: 768px) {
+  .header {
+    height: auto;
+    padding: 20px 10px;
   }
 
-  51%,
-  100% {
-    opacity: 0;
+  .upper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .upper .left {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .upper .left .logo {
+    height: 40px;
+  }
+
+  .upper .left h1 {
+    font-size: 18px;
+  }
+
+  .upper .left h2 {
+    font-size: 13px;
+  }
+
+  .upper .left h3 {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .navbar {
+    align-items: center;
+    text-align: center;
+  }
+
+  .navbar .contact {
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .navbar .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .navbar a {
+    font-size: 14px;
   }
 }
 </style>
