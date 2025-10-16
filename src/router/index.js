@@ -125,14 +125,6 @@ const router = createRouter({
       name: 'rukovodstvo',
       component: () => import('../views/info/RukovodstvoView.vue')
     },
-    
-
-    
-    
-    
-
-    
-    
     {
     path: '/kniga-zhalob',
     name: 'kniga-zhalob',
@@ -142,22 +134,36 @@ const router = createRouter({
     path: '/admin/kniga-zhalob',
     name: 'admin-kniga-zhalob',
     component: AdminPanel,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresAdmin: true }
     }
   ],
 })
 
-// ДОБАВЬТЕ ЭТОТ КОД - защита маршрутов
+// Защита маршрутов
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
+  const userRole = localStorage.getItem('user_role')
   
   // Если маршрут требует аутентификации и у пользователя нет токена
   if (to.meta.requiresAuth && !token) {
     next('/login')
   } 
+  // Если маршрут требует прав администратора, а пользователь не админ
+  else if (to.meta.requiresAdmin && userRole !== 'admin') {
+    next('/profile')
+  }
   // Если пользователь уже авторизован и пытается зайти на страницу логина
   else if (to.name === 'login' && token) {
-    next('/profile')
+    // Автоматический редирект для админа
+    if (userRole === 'admin') {
+      next('/admin/kniga-zhalob')
+    } else {
+      next('/profile')
+    }
+  }
+  // Если администратор пытается зайти на страницу профиля студента
+  else if (to.name === 'profile' && userRole === 'admin') {
+    next('/admin/kniga-zhalob')
   }
   // Во всех остальных случаях разрешаем переход
   else {

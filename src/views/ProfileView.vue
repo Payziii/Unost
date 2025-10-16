@@ -22,6 +22,16 @@ const loadingPortfolio = ref(false)
 
 const API_BASE_URL = 'http://юность.панксквад.рф/api'
 
+// Проверка роли пользователя и редирект для администраторов
+const checkUserRole = () => {
+  const userRole = localStorage.getItem('user_role')
+  if (userRole === 'admin') {
+    router.push('/admin/kniga-zhalob')
+    return true
+  }
+  return false
+}
+
 const fetchProfile = async () => {
   try {
     const token = localStorage.getItem('token')
@@ -112,7 +122,7 @@ const uploadFile = async () => {
 
   const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
   if (!allowedTypes.includes(selectedFile.value.type)) {
-    uploadError.value = 'Недопустимый тип файла. Разрешенные: PDF, JPEG, PNG, DOC, DOCX.'
+    uploadError.value = 'Недопустимый тип файла. Разрешенные: PDF, JPG, PNG, DOC, DOCX.'
     return
   }
 
@@ -216,6 +226,12 @@ const logout = () => {
 }
 
 onMounted(() => {
+  // Проверяем роль пользователя и делаем редирект для администраторов
+  if (checkUserRole()) {
+    return
+  }
+  
+  // Если пользователь не администратор, загружаем профиль
   fetchProfile()
   fetchPortfolioFiles()
 })
@@ -366,7 +382,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Все стили остаются такими же как в предыдущем коде */
 .profile-container {
   min-height: 100vh;
   display: flex;
