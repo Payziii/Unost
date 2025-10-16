@@ -18,7 +18,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--soft-white);
+  background-color: var(--yellow);
   z-index: 9999;
   transition: opacity 0.5s ease-out;
 }
