@@ -11,11 +11,9 @@ import Card from '@/components/pages/Card.vue';
 
 <template>  
     <Page title="Автошкола ВПМТТ «Юность»">
-        <div class="content-wrapper">
-            <Title>АВТОШКОЛА</Title>
+        <Title>АВТОШКОЛА</Title>
             
 
-        </div>
         <CardGrid>
             <Card title="Подготовка водителей категории В">
                 <Text align="left">
@@ -96,13 +94,6 @@ import Card from '@/components/pages/Card.vue';
     max-width: 65%;
     height: auto;
     border-radius: 8px;
-}
-
-.pulsing-text-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 2rem;
 }
 
 </style>
