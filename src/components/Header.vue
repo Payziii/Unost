@@ -75,23 +75,37 @@ const checkAuthStatus = () => {
 
 // Вычисляемое свойство для маршрута профиля
 const profileRoute = computed(() => {
+  // Всегда ведем на логин, если пользователь не авторизован
   if (!isLoggedIn.value) return '/login';
+  
+  // Для авторизованных пользователей определяем маршрут по роли
   return userRole.value === 'admin' ? '/admin/kniga-zhalob' : '/profile';
 });
 
 // Обработчик клика по кнопке профиля
 const handleProfileClick = (event) => {
+  // Если пользователь не авторизован, разрешаем стандартное поведение (переход на /login)
+  if (!isLoggedIn.value) {
+    isMenuOpen.value = false;
+    return;
+  }
+  
   // Если пользователь авторизован как админ, перенаправляем в админ-панель
-  if (isLoggedIn.value && userRole.value === 'admin') {
+  if (userRole.value === 'admin') {
     event.preventDefault();
     router.push('/admin/kniga-zhalob');
   }
+  // Для студентов разрешаем стандартное поведение (переход на /profile)
+  
   // Закрываем мобильное меню после клика
   isMenuOpen.value = false;
 };
 
 onMounted(() => {
   checkAuthStatus();
+  
+  // Слушаем изменения в localStorage для обновления статуса авторизации
+  window.addEventListener('storage', checkAuthStatus);
 });
 
 const menuItems = {

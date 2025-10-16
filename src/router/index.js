@@ -147,28 +147,35 @@ router.beforeEach((to, from, next) => {
   // Если маршрут требует аутентификации и у пользователя нет токена
   if (to.meta.requiresAuth && !token) {
     next('/login')
+    return
   } 
+  
   // Если маршрут требует прав администратора, а пользователь не админ
-  else if (to.meta.requiresAdmin && userRole !== 'admin') {
+  if (to.meta.requiresAdmin && userRole !== 'admin') {
+    // Если студент пытается зайти в админ-панель, перенаправляем в профиль
     next('/profile')
+    return
   }
+  
   // Если пользователь уже авторизован и пытается зайти на страницу логина
-  else if (to.name === 'login' && token) {
+  if (to.name === 'login' && token) {
     // Автоматический редирект для админа
     if (userRole === 'admin') {
       next('/admin/kniga-zhalob')
     } else {
       next('/profile')
     }
+    return
   }
+  
   // Если администратор пытается зайти на страницу профиля студента
-  else if (to.name === 'profile' && userRole === 'admin') {
+  if (to.name === 'profile' && userRole === 'admin') {
     next('/admin/kniga-zhalob')
+    return
   }
+  
   // Во всех остальных случаях разрешаем переход
-  else {
-    next()
-  }
+  next()
 })
 
 export default router
