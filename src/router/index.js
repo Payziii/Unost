@@ -120,6 +120,12 @@ const router = createRouter({
       name: 'structure',
       component: () => import('../views/info/StructureView.vue')
     },
+        {
+      path: '/info/rukovodstvo',
+      name: 'rukovodstvo',
+      component: () => import('../views/info/RukovodstvoView.vue')
+    },
+    
 
     
     
