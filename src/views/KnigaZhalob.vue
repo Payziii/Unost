@@ -73,18 +73,6 @@ const goToHome = () => {
 
 <template>
   <div class="complaint-container">
-    <header class="header">
-      <div class="header-content">
-        <div class="logo-section">
-          <h1 class="college-name">Верхнепышминский механико-технологический техникум «Юность»</h1>
-        </div>
-        <nav class="nav">
-          <button @click="goToHome" class="home-button">Главная</button>
-          <button @click="goToLogin" class="login-button">Войти</button>
-        </nav>
-      </div>
-    </header>
-
     <main class="main-content">
       <div class="complaint-card">
         <div class="complaint-header">
@@ -143,21 +131,6 @@ const goToHome = () => {
         </div>
       </div>
     </main>
-
-    <footer class="footer">
-      <div class="footer-content">
-        <p class="support-text">
-          Возникли проблемы? 
-          <a href="mailto:bolastovo77@mail.ru" class="support-link">Обратитесь в поддержку</a>
-        </p>
-        <p class="contact-info">
-          Телефон: +7 (34368) 5-44-86
-        </p>
-        <p class="copyright">
-          © 2024 Верхнепышминский механико-технологический техникум «Юность»
-        </p>
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -166,51 +139,7 @@ const goToHome = () => {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.header {
-  background: rgba(44, 62, 80, 0.95);
-  color: white;
-  padding: 1rem 0;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-}
-
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.college-name {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.nav {
-  display: flex;
-  gap: 1rem;
-}
-
-.home-button, .login-button {
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.home-button:hover, .login-button:hover {
-  background: white;
-  color: #2c3e50;
+  background: none;
 }
 
 .main-content {
@@ -228,7 +157,6 @@ const goToHome = () => {
   padding: 3rem;
   width: 100%;
   max-width: 700px;
-  backdrop-filter: blur(10px);
 }
 
 .complaint-header {
@@ -241,10 +169,6 @@ const goToHome = () => {
   font-weight: 700;
   color: #2c3e50;
   margin: 0 0 1rem 0;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  background-clip: text; /* Добавили стандартное свойство */
-  -webkit-text-fill-color: transparent;
 }
 
 .divider {
@@ -376,58 +300,8 @@ const goToHome = () => {
   margin-bottom: 0.5rem;
 }
 
-.footer {
-  background: rgba(44, 62, 80, 0.95);
-  color: white;
-  padding: 2rem 0;
-  margin-top: auto;
-}
-
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
-}
-
-.support-text {
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.support-link {
-  color: #3498db;
-  text-decoration: none;
-}
-
-.support-link:hover {
-  text-decoration: underline;
-}
-
-.contact-info {
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.copyright {
-  font-size: 0.8rem;
-  color: #bdc3c7;
-  margin: 0;
-}
-
 /* Адаптивность */
 @media (max-width: 768px) {
-  .header-content {
-    padding: 0 1rem;
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-
-  .college-name {
-    font-size: 1rem;
-  }
-
   .main-content {
     padding: 1rem;
   }
@@ -438,10 +312,6 @@ const goToHome = () => {
 
   .complaint-title {
     font-size: 1.5rem;
-  }
-
-  .nav {
-    justify-content: center;
   }
 }
 
