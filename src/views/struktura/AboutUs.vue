@@ -21,7 +21,7 @@ import Card from '@/components/pages/Card.vue';
         <br>Отделение <span style="font-weight: 500;">профессионального обучения.</span>
         <br>Техникум, основанный в 1970 году как ГПТУ-90, изначально готовил строительные кадры, а с 1978 года – специалистов для пищевой и легкой промышленности.
     </Text>
-    <CardGrid>
+    <CardGrid maxCardsPerRow=2>
             <img 
                 src="/images/AboutUs/Кадеты2004.jpg" 
                 alt="Кадетская школа Интернат" 
