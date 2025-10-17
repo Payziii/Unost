@@ -12,6 +12,8 @@
 
 5. Для билда проекта введите команду `npm run build`
 
+При необходимости запустите Back-end ([инструкция](https://github.com/Ab4kshin/Unost-backend))
+
 ## Структура
 
 /public - публичные файла
@@ -23,3 +25,5 @@
 /src/router - роутер
 
 /src/views - страницы
+
+## С
