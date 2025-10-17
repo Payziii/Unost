@@ -1,4 +1,7 @@
 <template>
+  <head>
+    <title>Вход в аккаунт</title>
+  </head>
   <div class="main">
   <div class="login-container">
     <div class="login-background">

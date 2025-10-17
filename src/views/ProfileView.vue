@@ -238,6 +238,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <head>
+    <title>Вход в аккаунт</title>
+  </head>
   <div class="profile-container">
     <header class="header">
       <div class="header-content">

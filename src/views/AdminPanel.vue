@@ -162,6 +162,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <head>
+    <title>Панель администратора</title>
+  </head>
   <div class="admin-container">
     <header class="header">
       <div class="header-content">

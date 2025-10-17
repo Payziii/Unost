@@ -72,6 +72,9 @@ onBeforeUnmount(() => clearInterval(interval));
 </script>
 
 <template>
+  <head>
+    <title>ГАПОУ СО ВПМТТ «Юность»</title>
+  </head>
   <div class="main">
     <div class="isp3304">
       <div class="title">

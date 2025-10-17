@@ -73,6 +73,9 @@ function closeFeedback() {
 </script>
 
 <template>
+  <head>
+    <title>Контакты</title>
+  </head>
   <div class="main">
     <div class="isp3304">
       <h1>

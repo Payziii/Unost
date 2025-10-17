@@ -72,6 +72,9 @@ const goToHome = () => {
 </script>
 
 <template>
+  <head>
+    <title>Книга жалоб</title>
+  </head>
   <div class="complaint-container">
     <main class="main-content">
       <div class="complaint-card">
