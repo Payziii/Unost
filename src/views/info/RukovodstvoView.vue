@@ -43,7 +43,7 @@ import Card from '@/components/pages/Card.vue';
                 </Text>
             </Card>
 <Card title="Рабенок Мария Александровна">
-    <img src="/images/AboutUs/Rabenok.png" height="480px"></img>
+    <img src="/images/AboutUs/Rabenok.png" height="465px"></img>
     <Text align="left">
         <span style="font-weight: 500">Должность: </span>Заместитель директора по учебной работе<br /><br />
         

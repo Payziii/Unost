@@ -115,7 +115,7 @@ const menuItems = {
     { text: 'Документы', route: '/info/dokumenty' },
     { text: 'Образование', route: '/info/obrazovanie' },
     { text: 'Руководство', route: '/info/rukovodstvo' },
-    { text: 'Педагогический состав', route: '/info/pedagogicheskiy_sostav' },
+    { text: 'Педагогический состав', route: '/info/pedsostav' },
     { text: 'Образовательные стандарты', route: '/info/standarty' },
     { text: 'Материально-техническое обеспечение и оснащение образовательного процесса', route: '/info/mto' },
     { text: 'Доступная среда', route: '/info/dostupnaya_sreda' },

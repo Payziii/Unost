@@ -125,6 +125,11 @@ const router = createRouter({
       name: 'rukovodstvo',
       component: () => import('../views/info/RukovodstvoView.vue')
     },
+            {
+      path: '/info/pedsostav',
+      name: 'pedsostav',
+      component: () => import('../views/info/PedSostavView.vue')
+    },
     {
     path: '/kniga-zhalob',
     name: 'kniga-zhalob',
