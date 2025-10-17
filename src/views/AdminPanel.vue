@@ -4,12 +4,17 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const complaints = ref([])
+const feedback = ref([])
 const stats = ref({})
+const feedbackStats = ref({})
 const loading = ref(true)
+const feedbackLoading = ref(true)
 const error = ref('')
+const activeTab = ref('complaints')
 
 const API_BASE_URL = 'http://юность.панксквад.рф/api'
 
+// Функции для работы с жалобами
 const fetchComplaints = async () => {
   try {
     loading.value = true
@@ -44,18 +49,64 @@ const fetchComplaints = async () => {
   }
 }
 
-const fetchStats = async () => {
+// Функции для работы с обратной связью
+const fetchFeedback = async () => {
   try {
+    feedbackLoading.value = true
     const token = localStorage.getItem('token')
-    const response = await fetch(`${API_BASE_URL}/complaints/stats`, {
+    
+    if (!token) {
+      router.push('/login')
+      return
+    }
+
+    const response = await fetch(`${API_BASE_URL}/feedback`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
 
-    if (response.ok) {
-      stats.value = await response.json()
+    if (!response.ok) {
+      if (response.status === 403) {
+        error.value = 'У вас нет прав для просмотра обратной связи'
+        return
+      }
+      throw new Error('Ошибка загрузки обратной связи')
+    }
+
+    feedback.value = await response.json()
+  } catch (err) {
+    console.error('Ошибка загрузки обратной связи:', err)
+    error.value = err.message
+  } finally {
+    feedbackLoading.value = false
+  }
+}
+
+const fetchStats = async () => {
+  try {
+    const token = localStorage.getItem('token')
+    const [complaintsResponse, feedbackResponse] = await Promise.all([
+      fetch(`${API_BASE_URL}/complaints/stats`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }),
+      fetch(`${API_BASE_URL}/feedback/stats`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+    ])
+
+    if (complaintsResponse.ok) {
+      stats.value = await complaintsResponse.json()
+    }
+    if (feedbackResponse.ok) {
+      feedbackStats.value = await feedbackResponse.json()
     }
   } catch (err) {
     console.error('Ошибка загрузки статистики:', err)
@@ -82,19 +133,41 @@ const logout = () => {
   router.push('/login')
 }
 
-onMounted(() => {
-  fetchComplaints()
+const refreshData = () => {
+  if (activeTab.value === 'complaints') {
+    fetchComplaints()
+  } else {
+    fetchFeedback()
+  }
   fetchStats()
+}
+
+// Проверка прав администратора
+const checkAdminAccess = () => {
+  const userRole = localStorage.getItem('user_role')
+  if (userRole !== 'admin') {
+    router.push('/profile')
+    return false
+  }
+  return true
+}
+
+onMounted(() => {
+  if (checkAdminAccess()) {
+    fetchComplaints()
+    fetchFeedback()
+    fetchStats()
+  }
 })
 </script>
 
 <template>
-  <div class="admin-complaints-container">
+  <div class="admin-container">
     <header class="header">
       <div class="header-content">
         <div class="logo-section">
           <h1 class="college-name">Верхнепышминский механико-технологический техникум «Юность»</h1>
-          <p class="admin-title">Панель администратора - Книга жалоб</p>
+          <p class="admin-title">Панель администратора</p>
         </div>
         <nav class="nav">
           <button @click="goBack" class="back-button">Назад</button>
@@ -105,60 +178,145 @@ onMounted(() => {
 
     <main class="main-content">
       <div class="admin-card">
+        <!-- Вкладки -->
+        <div class="tabs">
+          <button 
+            @click="activeTab = 'complaints'" 
+            :class="['tab-button', { 'active': activeTab === 'complaints' }]"
+          >
+            Книга жалоб
+          </button>
+          <button 
+            @click="activeTab = 'feedback'" 
+            :class="['tab-button', { 'active': activeTab === 'feedback' }]"
+          >
+            Формы обратной связи
+          </button>
+        </div>
+
+        <!-- Статистика -->
         <div class="stats-section">
-          <h2 class="section-title">Статистика жалоб</h2>
+          <h2 class="section-title">
+            {{ activeTab === 'complaints' ? 'Статистика жалоб' : 'Статистика обратной связи' }}
+          </h2>
           <div class="stats-grid">
             <div class="stat-item">
-              <div class="stat-number">{{ stats.total_complaints || 0 }}</div>
-              <div class="stat-label">Всего жалоб</div>
+              <div class="stat-number">
+                {{ activeTab === 'complaints' ? (stats.total_complaints || 0) : (feedbackStats.total_feedback || 0) }}
+              </div>
+              <div class="stat-label">
+                {{ activeTab === 'complaints' ? 'Всего жалоб' : 'Всего форм' }}
+              </div>
             </div>
             <div class="stat-item">
-              <div class="stat-number">{{ stats.recent_complaints || 0 }}</div>
+              <div class="stat-number">
+                {{ activeTab === 'complaints' ? (stats.recent_complaints || 0) : (feedbackStats.recent_feedback || 0) }}
+              </div>
               <div class="stat-label">За последние 7 дней</div>
             </div>
           </div>
         </div>
 
-        <div class="complaints-section">
-          <div class="section-header">
-            <h2 class="section-title">Список жалоб и предложений</h2>
-            <button @click="fetchComplaints" class="refresh-button">Обновить</button>
-          </div>
+        <!-- Содержимое вкладок -->
+        <div class="content-section">
+          <!-- Вкладка жалоб -->
+          <div v-if="activeTab === 'complaints'" class="tab-content">
+            <div class="section-header">
+              <h2 class="section-title">Список жалоб и предложений</h2>
+              <button @click="refreshData" class="refresh-button">Обновить</button>
+            </div>
 
-          <div v-if="loading" class="loading">Загрузка жалоб...</div>
-          
-          <div v-else-if="error" class="error-message">
-            {{ error }}
-            <button @click="fetchComplaints" class="retry-button">Попробовать снова</button>
-          </div>
+            <div v-if="loading" class="loading">Загрузка жалоб...</div>
+            
+            <div v-else-if="error" class="error-message">
+              {{ error }}
+              <button @click="fetchComplaints" class="retry-button">Попробовать снова</button>
+            </div>
 
-          <div v-else-if="complaints.length === 0" class="no-complaints">
-            Жалобы не найдены
-          </div>
+            <div v-else-if="complaints.length === 0" class="no-data">
+              Жалобы не найдены
+            </div>
 
-          <div v-else class="complaints-list">
-            <div 
-              v-for="complaint in complaints" 
-              :key="complaint.id" 
-              class="complaint-item"
-            >
-              <div class="complaint-header">
-                <div class="complaint-meta">
-                  <span class="complaint-id">#{{ complaint.id }}</span>
-                  <span class="complaint-date">{{ formatDate(complaint.created_at) }}</span>
+            <div v-else class="data-list">
+              <div 
+                v-for="item in complaints" 
+                :key="item.id" 
+                class="data-item"
+              >
+                <div class="data-header">
+                  <div class="data-meta">
+                    <span class="data-id">#{{ item.id }}</span>
+                    <span class="data-date">{{ formatDate(item.created_at) }}</span>
+                  </div>
+                  <div class="data-ip">
+                    IP: {{ item.ip_address }}
+                  </div>
                 </div>
-                <div class="complaint-ip">
-                  IP: {{ complaint.ip_address }}
+                
+                <div class="data-text">
+                  {{ item.complaint_text }}
+                </div>
+                
+                <div class="data-footer">
+                  <div class="user-agent">
+                    {{ item.user_agent }}
+                  </div>
                 </div>
               </div>
-              
-              <div class="complaint-text">
-                {{ complaint.complaint_text }}
-              </div>
-              
-              <div class="complaint-footer">
-                <div class="user-agent">
-                  {{ complaint.user_agent }}
+            </div>
+          </div>
+
+          <!-- Вкладка обратной связи -->
+          <div v-if="activeTab === 'feedback'" class="tab-content">
+            <div class="section-header">
+              <h2 class="section-title">Формы обратной связи</h2>
+              <button @click="refreshData" class="refresh-button">Обновить</button>
+            </div>
+
+            <div v-if="feedbackLoading" class="loading">Загрузка форм обратной связи...</div>
+            
+            <div v-else-if="error" class="error-message">
+              {{ error }}
+              <button @click="fetchFeedback" class="retry-button">Попробовать снова</button>
+            </div>
+
+            <div v-else-if="feedback.length === 0" class="no-data">
+              Формы обратной связи не найдены
+            </div>
+
+            <div v-else class="data-list">
+              <div 
+                v-for="item in feedback" 
+                :key="item.id" 
+                class="data-item"
+              >
+                <div class="data-header">
+                  <div class="data-meta">
+                    <span class="data-id">#{{ item.id }}</span>
+                    <span class="data-date">{{ formatDate(item.created_at) }}</span>
+                  </div>
+                  <div class="data-ip">
+                    IP: {{ item.ip_address }}
+                  </div>
+                </div>
+
+                <div class="feedback-info">
+                  <div class="feedback-field">
+                    <strong>Имя:</strong> {{ item.name }}
+                  </div>
+                  <div class="feedback-field">
+                    <strong>Email:</strong> {{ item.email }}
+                  </div>
+                </div>
+                
+                <div class="data-text">
+                  {{ item.message }}
+                </div>
+                
+                <div class="data-footer">
+                  <div class="user-agent">
+                    {{ item.user_agent }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -178,7 +336,8 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.admin-complaints-container {
+/* Стили остаются без изменений */
+.admin-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -255,6 +414,34 @@ onMounted(() => {
   max-width: 1200px;
 }
 
+.tabs {
+  display: flex;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-button.active {
+  color: #3498db;
+  border-bottom-color: #3498db;
+}
+
+.tab-button:hover:not(.active) {
+  color: #2c3e50;
+  background: #f8f9fa;
+}
+
 .stats-section {
   margin-bottom: 2rem;
   padding-bottom: 2rem;
@@ -294,7 +481,7 @@ onMounted(() => {
   font-size: 0.9rem;
 }
 
-.complaints-section {
+.content-section {
   margin-top: 2rem;
 }
 
@@ -351,7 +538,7 @@ onMounted(() => {
   background: #2980b9;
 }
 
-.no-complaints {
+.no-data {
   text-align: center;
   padding: 3rem;
   color: #666;
@@ -360,13 +547,13 @@ onMounted(() => {
   border-radius: 8px;
 }
 
-.complaints-list {
+.data-list {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.complaint-item {
+.data-item {
   background: #f8f9fa;
   border-radius: 8px;
   padding: 1.5rem;
@@ -374,11 +561,11 @@ onMounted(() => {
   transition: box-shadow 0.3s ease;
 }
 
-.complaint-item:hover {
+.data-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.complaint-header {
+.data-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -387,13 +574,13 @@ onMounted(() => {
   border-bottom: 1px solid #e9ecef;
 }
 
-.complaint-meta {
+.data-meta {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 
-.complaint-id {
+.data-id {
   background: #3498db;
   color: white;
   padding: 0.25rem 0.5rem;
@@ -402,18 +589,29 @@ onMounted(() => {
   font-weight: 600;
 }
 
-.complaint-date {
+.data-date {
   color: #666;
   font-size: 0.9rem;
 }
 
-.complaint-ip {
+.data-ip {
   color: #666;
   font-size: 0.9rem;
   font-family: monospace;
 }
 
-.complaint-text {
+.feedback-info {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+}
+
+.feedback-field {
+  font-size: 0.9rem;
+}
+
+.data-text {
   color: #2c3e50;
   line-height: 1.6;
   margin-bottom: 1rem;
@@ -421,7 +619,7 @@ onMounted(() => {
   word-break: break-word;
 }
 
-.complaint-footer {
+.data-footer {
   border-top: 1px solid #e9ecef;
   padding-top: 0.5rem;
 }
@@ -473,9 +671,14 @@ onMounted(() => {
     padding: 1.5rem;
   }
 
-  .complaint-header {
+  .data-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .feedback-info {
+    flex-direction: column;
     gap: 0.5rem;
   }
 
@@ -487,6 +690,21 @@ onMounted(() => {
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
+
+  .tab-button {
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+    border-left: 3px solid transparent;
+  }
+
+  .tab-button.active {
+    border-left-color: #3498db;
+    border-bottom-color: #e9ecef;
   }
 }
 

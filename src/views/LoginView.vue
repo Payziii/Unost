@@ -296,7 +296,12 @@ export default {
           throw new Error(tokenErrorData.error || `Ошибка проверки токена: ${checkResponse.status}`);
         }
         
-        this.$router.push('/profile');
+        // Авторедирект для админа
+        if (data.role === 'admin') {
+          this.$router.push('/admin/kniga-zhalob');
+        } else {
+          this.$router.push('/profile');
+        }
         
       } catch (error) {
         if (error.message.startsWith('Ошибка сервера') || error.message.startsWith('Ошибка проверки токена')) {
@@ -432,6 +437,7 @@ export default {
 </script>
 
 <style scoped>
+/* Стили остаются такими же как в оригинальном файле */
 .main {
   display: flex;
   justify-content: center;
@@ -439,7 +445,6 @@ export default {
 }
 
 .login-container {
-  /* background: #f8f9fa; */
   width: 90%;
   box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
   display: flex;

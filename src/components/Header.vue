@@ -16,7 +16,11 @@
           <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
           <DropdownMenu text="Структура" route="/" :items="menuItems.structure" />
           <Button text="Контакты" route="/kontakty" />
-          <Button text="Личный кабинет" route="/login" />
+          <Button 
+            text="Личный кабинет" 
+            :route="profileRoute" 
+            @click="handleProfileClick"
+          />
         </div>
 
         <button class="burger" @click="toggleMenu">☰</button>
@@ -34,7 +38,11 @@
         <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
         <DropdownMenu text="Структура" route="/" :items="menuItems.structure" />
         <Button text="Контакты" route="/kontakty" />
-        <Button text="Личный кабинет" route="/login" />
+        <Button 
+          text="Личный кабинет" 
+          :route="profileRoute" 
+          @click="handleProfileClick"
+        />
         <!-- Мобильная версия кнопки "Подать заявку" -->
         <Button2 class="mobile-apply" text="Подать заявку" route="/novosti" />
       </div>
@@ -46,10 +54,59 @@
 import Button from '@/components/Button.vue';
 import Button2 from '@/components/Button2.vue';
 import DropdownMenu from '@/components/DropdownMenu.vue';
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const isMenuOpen = ref(false);
+
+// Реактивные данные для пользователя
+const userRole = ref('');
+const isLoggedIn = ref(false);
+
 const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
+
+// Функция для проверки статуса авторизации
+const checkAuthStatus = () => {
+  const token = localStorage.getItem('token');
+  userRole.value = localStorage.getItem('user_role') || '';
+  isLoggedIn.value = !!token;
+};
+
+// Вычисляемое свойство для маршрута профиля
+const profileRoute = computed(() => {
+  // Всегда ведем на логин, если пользователь не авторизован
+  if (!isLoggedIn.value) return '/login';
+  
+  // Для авторизованных пользователей определяем маршрут по роли
+  return userRole.value === 'admin' ? '/admin/kniga-zhalob' : '/profile';
+});
+
+// Обработчик клика по кнопке профиля
+const handleProfileClick = (event) => {
+  // Если пользователь не авторизован, разрешаем стандартное поведение (переход на /login)
+  if (!isLoggedIn.value) {
+    isMenuOpen.value = false;
+    return;
+  }
+  
+  // Если пользователь авторизован как админ, перенаправляем в админ-панель
+  if (userRole.value === 'admin') {
+    event.preventDefault();
+    router.push('/admin/kniga-zhalob');
+  }
+  // Для студентов разрешаем стандартное поведение (переход на /profile)
+  
+  // Закрываем мобильное меню после клика
+  isMenuOpen.value = false;
+};
+
+onMounted(() => {
+  checkAuthStatus();
+  
+  // Слушаем изменения в localStorage для обновления статуса авторизации
+  window.addEventListener('storage', checkAuthStatus);
+});
 
 const menuItems = {
   basicInfo: [
@@ -58,7 +115,7 @@ const menuItems = {
     { text: 'Документы', route: '/info/dokumenty' },
     { text: 'Образование', route: '/info/obrazovanie' },
     { text: 'Руководство', route: '/info/rukovodstvo' },
-    { text: 'Педагогический состав', route: '/info/pedagogicheskiy_sostav' },
+    { text: 'Педагогический состав', route: '/info/pedsostav' },
     { text: 'Образовательные стандарты', route: '/info/standarty' },
     { text: 'Материально-техническое обеспечение и оснащение образовательного процесса', route: '/info/mto' },
     { text: 'Доступная среда', route: '/info/dostupnaya_sreda' },
@@ -170,7 +227,7 @@ h2 {
 }
 
 .mobile-menu {
-  display: flex;
+  display: none;
   flex-direction: column;
   background: var(--orang);
   padding: 10px 20px;
@@ -248,6 +305,7 @@ h2 {
   }
 
   .mobile-menu {
+    display: flex;
     width: 100%;
     align-items: center;
     text-align: center;
