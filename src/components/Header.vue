@@ -170,7 +170,7 @@ h2 {
 }
 
 .mobile-menu {
-  display: flex;
+  display: none;
   flex-direction: column;
   background: var(--orang);
   padding: 10px 20px;
@@ -248,6 +248,7 @@ h2 {
   }
 
   .mobile-menu {
+    display: flex;
     width: 100%;
     align-items: center;
     text-align: center;
