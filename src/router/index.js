@@ -1,147 +1,64 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import ContactsView from '../views/ContactsView.vue'
-import LoginView from '../views/LoginView.vue'
-import ProfileView from '@/views/ProfileView.vue'
-import KnigaZhalob from '@/views/KnigaZhalob.vue'
-import AdminPanel from '@/views/AdminPanel.vue'
+import { routeConfig, routeMeta, routeSettings } from './route-config.js'
+
+const pages = import.meta.glob('@/views/**/*.vue')
+
+function generateRoutes() {
+  const routes = []
+
+  Object.entries(routeConfig).forEach(([path, componentName]) => {
+    const componentPath = findComponentPath(componentName, path)
+    
+    if (componentPath) {
+      routes.push({
+        path,
+        name: generateRouteName(path),
+        component: pages[componentPath],
+        meta: routeMeta[path] || {}
+      })
+    } else {
+      console.warn(`Компонент ${componentName} не найден для пути ${path}`)
+    }
+  })
+  
+  return routes
+}
+
+function findComponentPath(componentName, routePath) {
+  const possiblePaths = [
+    `../views/${componentName}.vue`,
+    `../views/${componentName}.vue`.replace('View', ''),
+    ...Object.keys(pages).filter(key => 
+      key.includes(componentName) || 
+      key.includes(componentName.replace('View', ''))
+    )
+  ]
+  
+  const routeFolder = Object.entries(routeSettings.folders).find(([key]) => 
+    routePath.startsWith(`/${key}`)
+  )
+  
+  if (routeFolder) {
+    const [, folder] = routeFolder
+    possiblePaths.unshift(`../views/${folder}/${componentName}.vue`)
+  }
+  
+  return possiblePaths.find(path => path in pages)
+}
+
+function generateRouteName(path) {
+  if (path === '/') return 'home'
+  
+  return path
+    .slice(1)
+    .replace(/\//g, '-')
+    .replace(/_/g, '-')
+    .toLowerCase()
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/kontakty',
-      name: 'contacts',
-      component: ContactsView,
-    },
-    {
-    path: '/login',
-    name: 'login',
-    component: LoginView
-    },
-    {
-    path: '/profile',
-    name: 'profile',
-    component: ProfileView,
-    meta: { requiresAuth: true }
-    },
-    {
-      path: '/applicants/priem',
-      name: 'priem',
-      component: () => import('../views/applicants/PriemView.vue')
-    },
-    {
-      path: '/applicants/reyting_abiturientov',
-      name: 'rating',
-      component: () => import('../views/applicants/RatingView.vue')
-    },
-    {
-      path: '/applicants/professionalitet',
-      name: 'professionalitet',
-      component: () => import('../views/applicants/ProfessionalitetView.vue')
-    },
-    {
-      path: '/applicants/kadetskaya_shkola-internat',
-      name: 'kadeti',
-      component: () => import('../views/applicants/KadetiView.vue')
-    },
-    {
-      path: '/students/raspisanie_zanyatiy',
-      name: 'rasp',
-      component: () => import('../views/students/RaspView.vue')
-    },
-    {
-      path: '/students/uchebnye_plany',
-      name: 'uchebplan',
-      component: () => import('../views/students/UchebplanView.vue')
-    },
-    {
-      path: '/students/graphici',
-      name: 'graphici',
-      component: () => import('../views/students/GraphiciView.vue')
-    },
-    {
-      path: '/students/promezhut',
-      name: 'promezhut',
-      component: () => import('../views/students/promezhutView.vue')
-    },
-    {
-      path: '/students/gia',
-      name: 'gia',
-      component: () => import('../views/students/GiaView.vue')
-    },
-    {
-      path: '/students/konkursi',
-      name: 'konkursi',
-      component: () => import('../views/students/KonkursiView.vue')
-    },
-    {
-      path: '/students/credit',
-      name: 'credit',
-      component: () => import('../views/students/CreditView.vue')
-    },
-    {
-      path: '/students/library',
-      name: 'library',
-      component: () => import('../views/students/LibraryView.vue')
-    },
-    {
-      path: '/students/links',
-      name: 'links',
-      component: () => import('../views/students/LinksView.vue')
-    },
-    {
-      path: '/students/pedagog',
-      name: 'pedagog',
-      component: () => import('../views/students/PedagogView.vue')
-    },
-    {
-      path: '/structure/avtoshkola',
-      name: 'avtoshkola',
-      component: () => import('../views/struktura/AutoshkolaView.vue')
-    },
-    {
-      path: '/structure/simvolika',
-      name: 'AboutUs',
-      component: () => import('../views/struktura/AboutUs.vue')
-    },
-        {
-      path: '/info/maininfo',
-      name: 'maininfo',
-      component: () => import('../views/info/MainView.vue')
-    },
-    {
-      path: '/info/structure',
-      name: 'structure',
-      component: () => import('../views/info/StructureView.vue')
-    },
-        {
-      path: '/info/rukovodstvo',
-      name: 'rukovodstvo',
-      component: () => import('../views/info/RukovodstvoView.vue')
-    },
-            {
-      path: '/info/pedsostav',
-      name: 'pedsostav',
-      component: () => import('../views/info/PedSostavView.vue')
-    },
-    {
-    path: '/kniga-zhalob',
-    name: 'kniga-zhalob',
-    component: KnigaZhalob
-    },
-    {
-    path: '/admin/kniga-zhalob',
-    name: 'admin-kniga-zhalob',
-    component: AdminPanel,
-    meta: { requiresAuth: true, requiresAdmin: true }
-    }
-  ],
+  routes: generateRoutes()
 })
 
 // Защита маршрутов
