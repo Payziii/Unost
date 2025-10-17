@@ -3,7 +3,9 @@
     <div class="splash-content">
       <img src="/images/logo/logo.png" alt="Logo" class="logo">
       <h1>Вас приветствует Юность!</h1>
-      <div class="loader"></div>
+      <div class="image-loader">
+        <img src="/images/icons/settings.png" alt="Loading" class="loader-img">
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +35,7 @@
 
 h1 {
     margin-bottom: 30px;
+    font-weight: 500;
 }
 
 .logo {
@@ -41,14 +44,17 @@ h1 {
   animation: pulse 1.5s ease-in-out infinite;
 }
 
-.loader {
-  width: 50px;
-  height: 50px;
-  border: 5px solid var(--soft-white);
-  border-top: 5px solid var(--orange);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.image-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
+}
+
+.loader-img {
+  width: 70px;
+  height: 70px;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
