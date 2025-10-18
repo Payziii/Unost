@@ -328,13 +328,6 @@ onMounted(() => {
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="footer-content">
-        <p class="copyright">
-          © 2024 Верхнепышминский механико-технологический техникум «Юность» - Административная панель
-        </p>
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -344,7 +337,7 @@ onMounted(() => {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #f8f9fa;
+  background-color: none;
 }
 
 .header {

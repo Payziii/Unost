@@ -367,20 +367,6 @@ onMounted(() => {
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="footer-content">
-        <p class="support-text">
-          Возникли проблемы? 
-          <a href="mailto:bolastovo77@mail.ru" class="support-link">Обратитесь в поддержку</a>
-        </p>
-        <p class="contact-info">
-          Телефон: +7 (34368) 5-44-86
-        </p>
-        <p class="copyright">
-          © 2024 Верхнепышминский механико-технологический техникум «Юность»
-        </p>
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -389,7 +375,7 @@ onMounted(() => {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #f8f9fa;
+  background-color: none;
 }
 
 .header {
