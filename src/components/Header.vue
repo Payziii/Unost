@@ -266,7 +266,7 @@ h2 {
   }
 
   .left {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 10px;
   }
