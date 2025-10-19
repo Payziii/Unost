@@ -22,4 +22,9 @@ const paragraphStyles = computed(() => ({
 </template>
 
 <style scoped>
+@media (max-width: 768px) {
+  span {
+    font-size: 1rem !important;
+  }
+}
 </style>

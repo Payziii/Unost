@@ -23,6 +23,12 @@ p {
   line-height: 1.6;
 }
 
+@media (max-width: 768px) {
+  p {
+    font-size: 1rem;
+  }
+}
+
 .text-align-left {
   text-align: left;
 }

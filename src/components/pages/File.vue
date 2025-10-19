@@ -46,4 +46,10 @@ a:hover {
   text-decoration: underline;
   scale: 1.01
 }
+
+@media (max-width: 768px) {
+  a {
+    font-size: 1rem !important;
+  }
+}
 </style>

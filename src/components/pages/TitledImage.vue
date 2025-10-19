@@ -21,25 +21,34 @@ const paragraphStyles = computed(() => ({
 
 <template>
   <div class="logo-container">
-    <img
-      :src="src"
-      :alt="alt" class="logo" />
+    <img :src="src" :alt="alt" class="logo" />
   </div>
 </template>
 
 
 <style scoped>
 .logo-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  width: 100%;
 }
 
 .logo {
-    width: 65%;
-    max-width: 65%;
-    height: auto;
-    border-radius: 8px;
+  width: 65%;
+  max-width: 65%;
+  height: auto;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .logo-container {
+    margin-bottom: 0.5rem;
+  }
+
+  .logo {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 </style>

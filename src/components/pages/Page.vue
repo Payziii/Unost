@@ -36,4 +36,11 @@ defineProps({
   box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
   gap: 24px;
 }
+
+@media (max-width: 768px) {
+  .max {
+    width: 100%;
+    padding: 16px 24px 12px 24px;
+  }
+}
 </style>
