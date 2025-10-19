@@ -7,19 +7,13 @@ import Link from '@/components/pages/Link.vue';
 import File from '@/components/pages/File.vue';
 import CardGrid from '@/components/pages/CardGrid.vue';
 import Card from '@/components/pages/Card.vue';
+import TitledImage from '@/components/pages/TitledImage.vue';
 </script>
 
 <template>
     <Page title="Профессионалитет">
-        
-        <!-- Логотип уменьшенный -->
-        <div class="logo-container">
-            <img 
-                src="https://вп-юность.рф/upload/images/%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF%20%D0%BF%D1%80%D0%BE%D1%84.jpg" 
-                alt="Логотип Профессионалитет" 
-                class="logo"
-            />
-        </div>
+        <TitledImage src="https://вп-юность.рф/upload/images/%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF%20%D0%BF%D1%80%D0%BE%D1%84.jpg"
+        alt="Логотип Профессионалитет" />
 
         <Title>ПРОФЕССИОНАЛИТЕТ</Title>
         
@@ -96,20 +90,6 @@ import Card from '@/components/pages/Card.vue';
 </template>
 
 <style scoped>
-.logo-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-    width: 100%;
-}
-
-.logo {
-    width: 65%;
-    max-width: 65%;
-    height: auto;
-    border-radius: 8px;
-}
-
 .video-container {
     width: 100%;
     max-width: 100%;

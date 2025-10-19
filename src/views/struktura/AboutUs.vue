@@ -209,19 +209,4 @@ import Card from '@/components/pages/Card.vue';
 .content-wrapper {
     width: 100%;
 }
-
-.logo-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-    width: 100%;
-}
-
-.logo {
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    border-radius: 8px;
-}
-
 </style>
