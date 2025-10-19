@@ -75,7 +75,6 @@ onBeforeUnmount(() => {
 .dropdown {
   position: relative;
   display: inline-block;
-  z-index: 10;
 }
 
 /* ===== ДЕСКТОП ===== */
