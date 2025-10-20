@@ -65,22 +65,22 @@ import TitledImage from '@/components/pages/TitledImage.vue';
 
         <CardGrid>
             <Card title="Индивидуальный подход">
-                <Text align="left">
+                <Text align="center">
                     Занятия проводятся с учетом индивидуальных особенностей и потребностей обучающихся.
                 </Text>
             </Card>
             <Card title="Гибкий график">
-                <Text align="left">
+                <Text align="center">
                     Возможность выбора удобного времени для обучения и оплаты.
                 </Text>
             </Card>
             <Card title="Современное оборудование">
-                <Text align="left">
+                <Text align="center">
                     Занятия проходят на современном оборудовании и с использованием актуальных методик.
                 </Text>
             </Card>
             <Card title="Квалифицированные преподаватели">
-                <Text align="left">
+                <Text align="center">
                     Занятия ведут опытные преподаватели и специалисты в своей области.
                 </Text>
             </Card>
