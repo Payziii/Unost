@@ -34,8 +34,9 @@
 }
 
 h1 {
-    margin-bottom: 30px;
-    font-weight: 500;
+  font-size: 2em;
+  margin-bottom: 30px;
+  font-weight: 500;
 }
 
 .logo {
@@ -58,19 +59,41 @@ h1 {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes pulse {
   0% {
-    transform: scale(1); 
+    transform: scale(1);
   }
+
   50% {
-    transform: scale(1.1); 
+    transform: scale(1.1);
   }
+
   100% {
-    transform: scale(1); 
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .logo {
+    max-width: 140px;
+  }
+
+  .loader-img {
+    width: 50px;
+    height: 50px;
   }
 }
 </style>
