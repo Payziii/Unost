@@ -176,10 +176,10 @@ const scheduleData = {
 
 .day-btn {
   padding: 14px 28px;
-  border: 2px solid #e5e7eb;
+  border: 2px solid #ff7300;
   border-radius: 16px;
   background: white;
-  color: #374151;
+  color: #ff5e00;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -195,7 +195,7 @@ const scheduleData = {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
   transition: left 0.5s;
 }
 
@@ -204,18 +204,22 @@ const scheduleData = {
 }
 
 .day-btn:hover {
-  border-color: #3b82f6;
-  color: #3b82f6;
+  border-color: #d8683c;
+  color: #d8683c;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 8px 20px rgba(246, 196, 59, 0.15);
+}
+
+.kshi-card .card-title {
+  text-align: right; /* Выравнивание текста по правому краю */
 }
 
 .day-btn.active {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  border-color: #3b82f6;
+  background: linear-gradient(135deg, #ff5e00 0%, #d8683c 100%);
+  border-color: #ff5e00;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 25px rgba(221, 156, 17, 0.781);
 }
 
 .schedule-content {
@@ -234,7 +238,7 @@ const scheduleData = {
   font-weight: 800;
   color: #1f2937;
   margin-bottom: 8px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff5e00 0%, #d88f3c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -273,8 +277,8 @@ const scheduleData = {
 }
 
 .spo-card {
-  --gradient-from: #667eea;
-  --gradient-to: #764ba2;
+  --gradient-from: #ff5e00;
+  --gradient-to: #d8683c;
   justify-self: end;
 }
 
@@ -456,7 +460,7 @@ const scheduleData = {
   background: white;
   padding: 20px;
   border-radius: 50%;
-  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 10px 30px rgba(190, 246, 59, 0.3);
   z-index: 2;
   animation: connectionPulse 2s ease-in-out infinite;
   border: 3px solid #f1f5f9;
@@ -529,6 +533,7 @@ const scheduleData = {
   .card-title h3 {
     font-size: 24px;
   }
+  
   
   .lessons-list {
     padding: 20px 24px;
