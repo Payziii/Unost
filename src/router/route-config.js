@@ -33,7 +33,9 @@ export const routeConfig = {
   '/info/maininfo': 'MainView',
   '/info/structure': 'StructureView',
   '/info/rukovodstvo': 'RukovodstvoView',
-  '/info/pedsostav': 'PedSostavView'
+  '/info/pedsostav': 'PedSostavView',
+  '/info/standarty': 'StandartiView',
+  '/info/mto' : 'MtoView'
 }
 
 export const routeMeta = {
