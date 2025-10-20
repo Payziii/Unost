@@ -6,12 +6,18 @@ const props = defineProps({
     type: String,
     required: false,
     default: '#ff4800' 
+  },
+  isBold: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 });
 
 const paragraphStyles = computed(() => ({
   'font-size': '1.3rem',
-  'color': props.color, 
+  'color': props.color,
+  'font-weight': props.isBold ? '500' : 'normal'
 }));
 </script>
 
