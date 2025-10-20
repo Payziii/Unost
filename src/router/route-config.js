@@ -28,12 +28,15 @@ export const routeConfig = {
   // Структура (/structure)
   '/structure/avtoshkola': 'AutoshkolaView',
   '/structure/simvolika': 'AboutUs',
+  '/structure/gde_torguyut_smertyu_': 'Smert',
   
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
   '/info/structure': 'StructureView',
   '/info/rukovodstvo': 'RukovodstvoView',
-  '/info/pedsostav': 'PedSostavView'
+  '/info/pedsostav': 'PedSostavView',
+  '/info/standarty': 'StandartiView',
+  '/info/mto' : 'MtoView'
 }
 
 export const routeMeta = {
