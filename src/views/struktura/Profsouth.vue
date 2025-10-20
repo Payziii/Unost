@@ -11,15 +11,36 @@ import TitledImage from '@/components/pages/TitledImage.vue';
 </script>
 
 <template>  
-    <Page title="Раскрытие информации">
+    <Page title="Профсоюз">
         <Title>Профсоюз</Title>
-        <File file="ПредлоРегули.xls" icon>Предложение регулируемой организации об установлении тарифов в сфере теплоснабжения</File>
-        <File file="ОНаличииТехВоз.xls" icon>О наличии технической возможности подключения к системе теплоснабжения за 1 кв 2025 года</File>
+    <TitledImage
+                src="/images/ProfSouth/ПрофСоюз2.jpeg" 
+                alt="Профсоюз" 
+            />
+        <Title>Профсоюзная организация МТТ «Юность»</Title>
+        <Text align="justify">
+<span style="font-weight: 500;">Исполняющий обязанности председателя ППО:</span> Третяк Н.А.
+
+<br><span style="font-weight: 500;">Членов профсоюза:</span> 46 человек
+
+<br><span style="font-weight: 500;">Пенсионеры:</span> 4 человека.
+
+ 
+<br><br><sapn style="font-weight: 500;">Профсоюзный комитет:</sapn> 
+ 
+<br><br><span style="font-weight: 500;">1.</span> Иванова Альбина Григорьевна 
+<br><span style="font-weight: 500;">2.</span> Рыжкова Светлана Евгеньевна 
+<br><span style="font-weight: 500;">3.</span> Коршунова Галина Николаевна 
+<br><span style="font-weight: 500;">4.</span> Ярославцева Елена Анатольевна
+
+<br><br><File file="ДляЧегоНамПрофСоюз.pdf" icon>Для чего нам профсоюз</File>
+<File file="Заслуженный учитель.pdf" icon>Заслуженный учитель</File>
+<File file="ПриказМин.pdf" icon>Приказ Минпросвещения РФ "О ведомственных наградах"</File>
+<File file="Коллектиный договор.pdf" icon>Коллективный договор</File>
+<File file="КолДог.pdf" icon>Соглашение МОСО-СОПРНОН на 2021-2023</File>
+<File file="Заслуженный учитель.pdf" icon>Партнеры Екатеринбург</File>
+<File file="ПриказМин.pdf" icon>Федеральный проект Дисконтная карта члена профсоюза"</File>
+<File file="Коллектиный договор.pdf" icon>О вакцинации</File>
+        </Text>
     </Page>
 </template>
-
-<style scoped>
-.content-wrapper {
-    width: 100%;
-}
-</style>
