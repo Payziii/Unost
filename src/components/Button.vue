@@ -30,7 +30,7 @@ defineProps({
   display: inline-block;
   background: none;
   border-radius: 8px;
-  padding: 8px 16px;
+  padding: 8px 8px;
   transition: background 0.3s;
   cursor: pointer;
 
