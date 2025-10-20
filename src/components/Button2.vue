@@ -30,7 +30,7 @@ defineProps({
   display: inline-block;
   background: var(--white);
   border-radius: 800px;
-  padding: 8px 16px;
+  padding: 8px 8px;
   transition: background 0.3s;
   cursor: pointer;
 
@@ -45,7 +45,7 @@ defineProps({
     color: var(--orange);
     text-decoration: none;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
     transition: color 0.3s ease;
   }
 

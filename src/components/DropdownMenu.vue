@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
 
 .dropdown-content a {
   color: var(--black);
-  padding: 5px 16px;
+  padding: 5px 8px;
   text-decoration: none;
   display: block;
   transition: background-color 0.3s;

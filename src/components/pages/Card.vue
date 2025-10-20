@@ -77,4 +77,10 @@ a {
   color: #1b1b1b;
   font-weight: 500;
 }
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.2rem;
+  }
+}
 </style>
