@@ -45,7 +45,7 @@ defineProps({
     color: var(--white);
     text-decoration: none;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
     transition: color 0.3s ease;
   }
 
