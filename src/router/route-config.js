@@ -29,6 +29,9 @@ export const routeConfig = {
   '/structure/avtoshkola': 'AutoshkolaView',
   '/structure/simvolika': 'AboutUs',
   '/structure/gde_torguyut_smertyu_': 'Smert',
+  '/structure/informatsiya_o_dostupnosti_obyektov_uchrejdeniya': 'InfoDostup.vue',
+  '/structure/raskrytie_informatsii': 'RaskInfo',
+  '/structure/raskrytie_informatsii': 'Profsouth',
   
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
