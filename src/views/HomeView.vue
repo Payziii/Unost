@@ -150,7 +150,7 @@ onBeforeUnmount(() => clearInterval(interval));
 .title {
   width: 40%;
   margin-top: 50px;
-  animation: pulse 4s infinite ease-in-out;
+  /* animation: pulse 4s infinite ease-in-out; */
 }
 
 .title h1 {
