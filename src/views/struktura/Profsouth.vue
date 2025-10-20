@@ -8,6 +8,7 @@ import File from '@/components/pages/File.vue';
 import CardGrid from '@/components/pages/CardGrid.vue';
 import Card from '@/components/pages/Card.vue';
 import TitledImage from '@/components/pages/TitledImage.vue';
+import Bold from '@/components/pages/Bold.vue';
 </script>
 
 <template>  
@@ -19,19 +20,19 @@ import TitledImage from '@/components/pages/TitledImage.vue';
             />
         <Title>Профсоюзная организация МТТ «Юность»</Title>
         <Text align="justify">
-<span style="font-weight: 500;">Исполняющий обязанности председателя ППО:</span> Третяк Н.А.
+<Bold>Исполняющий обязанности председателя ППО:</Bold> Третяк Н.А.
 
-<br><span style="font-weight: 500;">Членов профсоюза:</span> 46 человек
+<br><Bold>Членов профсоюза:</Bold> 46 человек
 
-<br><span style="font-weight: 500;">Пенсионеры:</span> 4 человека.
+<br><Bold>Пенсионеры:</Bold> 4 человека.
 
  
-<br><br><sapn style="font-weight: 500;">Профсоюзный комитет:</sapn> 
+<br><br><Bold>Профсоюзный комитет:</Bold> 
  
-<br><br><span style="font-weight: 500;">1.</span> Иванова Альбина Григорьевна 
-<br><span style="font-weight: 500;">2.</span> Рыжкова Светлана Евгеньевна 
-<br><span style="font-weight: 500;">3.</span> Коршунова Галина Николаевна 
-<br><span style="font-weight: 500;">4.</span> Ярославцева Елена Анатольевна
+<br><br><Bold>1.</Bold> Иванова Альбина Григорьевна 
+<br><Bold>2.</Bold> Рыжкова Светлана Евгеньевна 
+<br><Bold>3.</Bold> Коршунова Галина Николаевна 
+<br><Bold>4.</Bold> Ярославцева Елена Анатольевна
 
 <br><br><File file="ДляЧегоНамПрофСоюз.pdf" icon>Для чего нам профсоюз</File>
 <File file="Заслуженный учитель.pdf" icon>Заслуженный учитель</File>
