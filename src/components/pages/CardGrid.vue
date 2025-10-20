@@ -30,4 +30,15 @@ defineProps({
   max-width: calc(var(--max-cards) * 450px + (var(--max-cards) - 1) * 24px);
   margin: 0 auto;
 }
+
+@media (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .cards.limited-cards {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
