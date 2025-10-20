@@ -28,6 +28,7 @@ export const routeConfig = {
   // Структура (/structure)
   '/structure/avtoshkola': 'AutoshkolaView',
   '/structure/simvolika': 'AboutUs',
+  '/structure/gde_torguyut_smertyu_': 'Smert',
   
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
