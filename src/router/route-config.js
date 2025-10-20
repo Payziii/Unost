@@ -38,6 +38,8 @@ export const routeConfig = {
   '/info/standarty': 'StandartiView',
   '/info/mto': 'MtoView',
   '/info/dostupnaya_sreda': 'SredaView',
+  '/info/platnye_obrazovatelnye_uslugi': 'PlatnieUslugiView',
+  
 }
 
 export const routeMeta = {
