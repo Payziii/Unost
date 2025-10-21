@@ -24,7 +24,7 @@ function toggleBlock(name) {
     <div class="accordion-item" @click="toggleBlock('docs')">
       <div class="accordion-header"><Highlight>ДОКУМЕНТАЦИЯ ЦЕНТРА</Highlight></div>
       <transition name="fade">
-        <div v-show="openBlock === 'docs'" class="accordion-content">
+        <div v-show="openBlock === 'docs'" class="accordion-content" @click.stop>
           <Text align="left">
             <File file="Приказ Министерства о создании Центра ПВиДП.pdf" icon>Приказ Министерства о создании Центра ПВиДП</File>
             <File file="Приказ о присвоении Центру ПВиДП имени Г.К. Жукова.pdf" icon>Приказ о присвоении Центру ПВиДП имени Г.К. Жукова</File>
@@ -46,7 +46,7 @@ function toggleBlock(name) {
     <div class="accordion-item" @click="toggleBlock('events')">
       <div class="accordion-header"><Highlight>ИНФОРМАЦИЯ О МЕРОПРИЯТИЯХ ЦЕНТРА</Highlight></div>
       <transition name="fade">
-        <div v-show="openBlock === 'events'" class="accordion-content">
+        <div v-show="openBlock === 'events'" class="accordion-content" @click.stop>
           <Text align="left">
             <File file="Положение Квест-игра 2024.pdf" icon>Положение Квест-игра 2024</File>
             <File file="Патриотический урок Исторический путь 90 лет Свердловской области.pdf" icon>Патриотический урок «Исторический путь», посвященный 90-летию Свердловской области</File>
@@ -68,7 +68,7 @@ function toggleBlock(name) {
     <div class="accordion-item" @click="toggleBlock('volunteers')">
       <div class="accordion-header"><Highlight>ВОЛОНТЕРСКОЕ ОБЪЕДИНЕНИЕ "ЮНОСТЬ"</Highlight></div>
       <transition name="fade">
-        <div v-show="openBlock === 'volunteers'" class="accordion-content">
+        <div v-show="openBlock === 'volunteers'" class="accordion-content" @click.stop>
           <Text align="left">
             <File file="Положение о волонтерском объединении Юность.pdf" icon>Положение о волонтерском объединении «Юность»</File>
             <File file="План работы волонтерского объединения Юность на 2023-2024г.pdf" icon>План работы волонтерского объединения «Юность» на 2023–2024 гг.</File>
