@@ -112,7 +112,18 @@ const menuItems = {
   basicInfo: [
     { text: 'Основные сведения', route: '/info/maininfo' },
     { text: 'Структура и органы управления образовательной организацией', route: '/info/structure' },
-    { text: 'Документы', route: '/info/dokumenty' },
+    { text: 'Документы', subitems: [
+        { text: 'Учредительные документы', route: '/dokumenty/uchreditelnye_dokumenty' },
+        { text: 'Локальные акты', route: '/dokumenty/lokalnye_akty' },
+        { text: 'Нормативные документы', route: '/dokumenty/normativnye_dokumenty' },
+        { text: 'Программа развития 2018-2022 ', route: '/dokumenty/razvitie' },
+        { text: 'Программа модернизации_2020-2022', route: '/dokumenty/modern' },
+        { text: 'Отчеты по самообследованию', route: '/dokumenty/otchety_po_samoobsledovaniyu' },
+        { text: 'Документы по учебной и производственной практики', route: '/dokumenty/dokumenty_po_uchebnoy_i_proizvodstvennoy_praktiki' },
+        { text: 'Мероприятия по устранению замечаний, выполнению предписаний', route: '/dokumenty/predpisaniya' },
+        { text: 'Информация о мероприятиях', route: '/dokumenty/informatsiya_o_meropriyatiyah' },
+        { text: 'Наставничество', route: '/dokumenty/nastavnichestvo' }
+      ]},
     { text: 'Образование', route: '/info/obrazovanie' },
     { text: 'Руководство', route: '/info/rukovodstvo' },
     { text: 'Педагогический состав', route: '/info/pedsostav' },
