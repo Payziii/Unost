@@ -50,6 +50,7 @@ export const routeConfig = {
   '/info/predpisaniya': 'PredpisView',
   '/info/nezavisimaya_otsenka_kachestva_okazaniya_uslug': 'OcenkaView',
   '/info/trudoustroystvo': 'CareerView',
+  '/info/vakansii' : 'VakansiiView',
 
 
 
