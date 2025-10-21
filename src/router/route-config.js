@@ -74,6 +74,8 @@ export const routeConfig = {
   '/info/monitoring': 'MonitoringView',
   '/info/dopobraz': 'DopObrazView',
   '/info/giagia': 'GiaGiaView',
+  '/info/oge': 'OgeView',
+  '/info/ege': 'EgeView',
   
 
   // Докуметы
