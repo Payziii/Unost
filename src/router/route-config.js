@@ -48,6 +48,7 @@ export const routeConfig = {
   '/bezopasnost/zdravoohranenie': 'ZdravoohranenieView',
   '/bezopasnost/informatsionnaya': 'InformView',
   '/bezopasnost/pojarnaya': 'PojarnayaView',
+  '/bezopasnost/dorojnaya': 'DorojnayaView',
 
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
