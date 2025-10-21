@@ -84,7 +84,7 @@ export const routeConfig = {
   '/dokumenty/modern': 'ProgMod2022',
   '/dokumenty/nastavnichestvo': 'Nastav',
   '/dokumenty/informatsiya_o_meropriyatiyah': 'InfoMerop',
-  
+  '/dokumenty/predpisaniya': 'Predpisaniya',
 
 
 
