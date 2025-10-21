@@ -12,8 +12,10 @@ import Bold from '@/components/pages/Bold.vue';
 </script>
 
 <template>  
-    <Page title="Программа развития 2018-2022 ">
-        <Title>Программа развития 2018-2022 </Title>
-        <File file="Программа развития 2018-2022.pdf" icon>Программа развития 2018-2022</File>
+    <Page title="Наставничество">
+        <Title>Наставничество</Title>
+        <File file="fFY3kbDneniSeNk5b9fA35EdG.pdf" icon>Положение о программе наставничестве </File>
+        <File file="FzN9Ei9d3es7NA82r54776Y43.pdf" icon>Приказ о наставничестве</File>
+        <File file="9NQfkfGeai46dSdb277Efrnr8.pdf" icon>Дорожная карта</File>
     </Page>
 </template>
