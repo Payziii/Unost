@@ -12,6 +12,7 @@ export const routeConfig = {
   '/applicants/reyting_abiturientov': 'RatingView',
   '/applicants/professionalitet': 'ProfessionalitetView',
   '/applicants/kadetskaya_shkola-internat': 'KadetiView',
+  '/applicants/faq': 'FaqView',
   
   // Студентики (/students)
   '/students/raspisanie_zanyatiy': 'RaspView',
@@ -33,7 +34,10 @@ export const routeConfig = {
   '/structure/raskrytie_informatsii': 'RaskInfo',
   '/structure/profsoyuz': 'Profsouth',
   '/structure/studencheskiy_sportivnyy_klub': 'ssc',
-  
+
+  // Безопасность (/bezopasnost)
+  '/bezopasnost/profilaktika_upotrebleniya_pav': 'ProfilaktikaPavView',
+
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
   '/info/structure': 'StructureView',
@@ -49,7 +53,9 @@ export const routeConfig = {
   '/info/sotsialnye_partnery_': 'SotrudView',
   '/info/predpisaniya': 'PredpisView',
   '/info/nezavisimaya_otsenka_kachestva_okazaniya_uslug': 'OcenkaView',
-  
+  '/info/trudoustroystvo': 'CareerView',
+  '/info/vakansii' : 'VakansiiView',
+
 
 
 
@@ -71,8 +77,9 @@ export const routeSettings = {
   
   folders: {
     'applicants': 'applicants',
-    'students': 'students', 
+    'students': 'students',
     'structure': 'struktura',
+    'bezopasnost': 'bezopasnost',
     'info': 'info'
   }
 }
