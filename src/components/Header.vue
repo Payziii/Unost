@@ -153,16 +153,16 @@ const menuItems = {
     { text: 'Полезные ссылки', route: '/students/links' },
     { text: 'Педагог и наставник 2023', route: '/students/pedagog' },
     { text: 'Комплексная безопасность', subitems: [
-        { text: 'Профилактика употребления ПАВ', route: 'bezopasnost/profilaktika_upotrebleniya_pav' },
-        { text: 'Материалы по профилактики экстремизма', route: 'bezopasnost/ekstremistskie_materialy' },
-        { text: 'Телефоны экстренных служб', route: 'bezopasnost/telefony_ekstrennyh_slujb_' },
-        { text: 'Противодействие коррупции', route: 'bezopasnost/protivodeystvie_korruptsii' },
-        { text: 'Защита прав ребёнка', route: 'bezopasnost/zaschita_prav_rebenka' },
-        { text: 'Здравоохранение', route: 'bezopasnost/zdravoohranenie' },
-        { text: 'Педагог-психолог', route: 'bezopasnost/go_i_chs' },
-        { text: 'Информационная безопасность', route: 'bezopasnost/informatsionnaya' },
-        { text: 'Пожарная безопасность', route: 'bezopasnost/pojarnaya' },
-        { text: 'Дорожная безопасность', route: 'bezopasnost/dorojnaya' }
+        { text: 'Профилактика употребления ПАВ', route: '/bezopasnost/profilaktika_upotrebleniya_pav' },
+        { text: 'Материалы по профилактики экстремизма', route: '/bezopasnost/ekstremistskie_materialy' },
+        { text: 'Телефоны экстренных служб', route: '/bezopasnost/telefony_ekstrennyh_slujb_' },
+        { text: 'Противодействие коррупции', route: '/bezopasnost/protivodeystvie_korruptsii' },
+        { text: 'Защита прав ребёнка', route: '/bezopasnost/zaschita_prav_rebenka' },
+        { text: 'Здравоохранение', route: '/bezopasnost/zdravoohranenie' },
+        { text: 'Педагог-психолог', route: '/bezopasnost/go_i_chs' },
+        { text: 'Информационная безопасность', route: '/bezopasnost/informatsionnaya' },
+        { text: 'Пожарная безопасность', route: '/bezopasnost/pojarnaya' },
+        { text: 'Дорожная безопасность', route: '/bezopasnost/dorojnaya' }
       ]},
   ],
   applicants: [
@@ -175,13 +175,13 @@ const menuItems = {
   structure: [
     { text: 'О нас', route: '/structure/simvolika' },
     { text: 'Кадетская школа-интернат', subitems: [
-        { text: 'Образование', route: 'kshi/obrazovanie' },
-        { text: 'Государственная Итоговая Аттестация', route: 'kshi/gia' },
-        { text: 'Нормативные документы', route: 'kshi/dokymenty' },
-        { text: 'Кадетская жизнь', route: 'kshi/jizn' },
-        { text: 'Для родителей', route: 'kshi/roditeli' },
-        { text: 'Классные часы', route: 'kshi/klassnii_chasy' },
-        { text: 'Педагог-психолог', route: 'kshi/priholog' }
+        { text: 'Образование', route: '/kshi/obrazovanie' },
+        { text: 'Государственная Итоговая Аттестация', route: '/kshi/gia' },
+        { text: 'Нормативные документы', route: '/kshi/dokymenty' },
+        { text: 'Кадетская жизнь', route: '/kshi/jizn' },
+        { text: 'Для родителей', route: '/kshi/roditeli' },
+        { text: 'Классные часы', route: '/kshi/klassnii_chasy' },
+        { text: 'Педагог-психолог', route: '/kshi/priholog' }
       ]},
     { text: 'Центр ПВиДП', route: '/structure/tsentr_pvidp_' },
     { text: 'Центр проведения демонстрационных экзаменов ', route: '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills' },
