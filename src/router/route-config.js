@@ -41,6 +41,8 @@ export const routeConfig = {
   // Безопасность (/bezopasnost)
   '/bezopasnost/profilaktika_upotrebleniya_pav': 'ProfilaktikaPavView',
   '/bezopasnost/ekstremistskie_materialy': 'EkstremistskieMaterialyView',
+  '/bezopasnost/telefony_ekstrennyh_slujb_': 'TelefoniView',
+  '/bezopasnost/zaschita_prav_rebenka': 'PravaRebenkaView',
 
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
@@ -58,6 +60,7 @@ export const routeConfig = {
   '/info/predpisaniya': 'PredpisView',
   '/info/nezavisimaya_otsenka_kachestva_okazaniya_uslug': 'OcenkaView',
   '/info/trudoustroystvo': 'CareerView',
+  '/info/protivodeystvie_korruptsii': 'ProtivodeystvieKorruptsiiView',
   '/info/vakansii' : 'VakansiiView',
 
 
