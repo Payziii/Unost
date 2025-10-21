@@ -422,7 +422,7 @@ onBeforeUnmount(() => {
 }
 
 .isp3304 {
-  height: 100vh;
+  min-height: 100vh;
   width: 90%;
   display: flex;
   flex-direction: row;
