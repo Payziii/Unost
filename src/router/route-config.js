@@ -46,7 +46,9 @@ export const routeConfig = {
   '/info/vakantnye_mesta': 'MestaView',
   '/info/matpodderjka': 'StepuhaView',
   '/info/sotsialnye_partnery_': 'SotrudView',
+  '/info/predpisaniya': 'PredpisView',
   
+
 
   
   
