@@ -44,6 +44,8 @@ export const routeConfig = {
   '/info/platnye_obrazovatelnye_uslugi': 'PlatnieUslugiView',
   '/info/fhd': 'FinHozView',
   '/info/vakantnye_mesta': 'MestaView',
+  '/info/matpodderjka': 'StepuhaView',
+  
   
   
 }
