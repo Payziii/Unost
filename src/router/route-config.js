@@ -82,6 +82,7 @@ export const routeConfig = {
   '/dokumenty/normativnye_dokumenty': 'normdoc',
   '/dokumenty/razvitie': 'program1822',
   '/dokumenty/modern': 'ProgMod2022',
+  '/dokumenty/otchety_po_samoobsledovaniyu': 'OtchPoSam',
   '/dokumenty/nastavnichestvo': 'Nastav',
   '/dokumenty/informatsiya_o_meropriyatiyah': 'InfoMerop',
   '/dokumenty/predpisaniya': 'Predpisaniya',
