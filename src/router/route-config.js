@@ -68,6 +68,8 @@ export const routeConfig = {
   '/info/trudoustroystvo': 'CareerView',
   '/info/protivodeystvie_korruptsii': 'ProtivodeystvieKorruptsiiView',
   '/info/vakansii' : 'VakansiiView',
+  '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills':'TsentrView',
+  
 
 
 
