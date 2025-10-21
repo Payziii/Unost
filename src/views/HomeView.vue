@@ -38,16 +38,22 @@ let runners = [];
 let particles = [];
 const RUNNER_SCALE = 3.2;
 
+let ctx2d = null;
+let io = null;
+
+const particlePool = [];
+const PERF = { maxParticles: 120, gravity: 4, arrowsPerSec: 6 };
+
+
 const ORANGE = '#f54900';
 
 const CARTOON = {
-  outline: 3,        // толщина чёрного контура
-  inner: 1.6,        // толщина оранжевых линий
-  bobAmp: 4,         // подпрыгивание, px
-  squash: 0.18,      // "сквош" при шаге (0..0.3)
-  shadowColor: 'rgba(0,0,0,.18)',
-  arrowWobbleDeg: 8, // качание стрелочек
-  speedlineChance: 5 // линий скорости в сек. на бегуна
+  line: 2,             // единая толщина линий
+  color: ORANGE,       // один цвет -> меньше смен состояния контекста
+  bobAmp: 3,           // подпрыгивание
+  squash: 0.12,        // сквош/стретч
+  arrowWobbleDeg: 6,   // качание стрелочек
+  speedlineChance: 3   // линий скорости в сек. на бегуна
 };
 
 
@@ -91,179 +97,134 @@ function setupRunners() {
 }
 
 function spawnArrow(x, y) {
-  const len = 1 + Math.random() * 8;
-  particles.push({
-    kind: 'arrow',
-    x: x - 8 - Math.random() * 6,
-    y: y - 6 + Math.random() * 12,
-    vx: -(40 + Math.random() * 40),
-    vy: (Math.random() - 0.5) * 20,
-    len,
-    life: 0.6 + Math.random() * 0.5,
-    age: 0,
-    angle: Math.PI,
-    wobbleSpeed: 6 + Math.random() * 6,
-    wobbleAmp: (CARTOON.arrowWobbleDeg * (0.5 + Math.random() * 0.5)) * Math.PI / 180
-  });
-  if (particles.length > 50) particles.splice(0, particles.length -50);
+  if (particles.length >= PERF.maxParticles) return;
+  const p = particlePool.pop() || {};
+  p.kind = 'arrow';
+  p.x = x - 6 - Math.random() * 6;
+  p.y = y - 5 + Math.random() * 10;
+  p.vx = -(40 + Math.random() * 40);
+  p.vy = (Math.random() - 0.5) * 18;
+  p.len = 8 + Math.random() * 10;
+  p.life = 0.55 + Math.random() * 0.45;
+  p.age = 0;
+  p.angle = Math.PI;
+  p.wobbleSpeed = 6 + Math.random() * 6;
+  p.wobbleAmp = (CARTOON.arrowWobbleDeg * (0.5 + Math.random() * 0.5)) * Math.PI / 180;
+  particles.push(p);
 }
 
 function spawnSpeedline(x, y) {
-  particles.push({
-    kind: 'speed',
-    x: x - 4,
-    y: y + 2,
-    vx: -(120 + Math.random() * 120),
-    vy: (Math.random() - 0.5) * 10,
-    len: 12 + Math.random() * 20,
-    life: 0.22 + Math.random() * 0.25,
-    age: 0
-  });
+  if (particles.length >= PERF.maxParticles) return;
+  const p = particlePool.pop() || {};
+  p.kind = 'speed';
+  p.x = x - 4;
+  p.y = y + 2;
+  p.vx = -(120 + Math.random() * 100);
+  p.vy = (Math.random() - 0.5) * 8;
+  p.len = 10 + Math.random() * 18;
+  p.life = 0.20 + Math.random() * 0.22;
+  p.age = 0;
+  p.dy = (Math.random() - 0.5) * 3; // фиксируем наклон один раз
+  particles.push(p);
 }
 
 function drawSpeedline(ctx, p) {
-  ctx.save();
-  ctx.globalAlpha = Math.max(0, 1 - p.age / p.life);
-  // контур
-  ctx.strokeStyle = '#121212';
-  ctx.lineWidth = CARTOON.outline;
+  const a = 1 - p.age / p.life;
+  if (a <= 0) return;
+  ctx.globalAlpha = a;
   ctx.beginPath();
   ctx.moveTo(p.x, p.y);
-  ctx.lineTo(p.x - p.len, p.y + (Math.random() - 0.5) * 4);
+  ctx.lineTo(p.x - p.len, p.y + p.dy);
   ctx.stroke();
-  // внутренняя линия
-  ctx.strokeStyle = ORANGE;
-  ctx.lineWidth = CARTOON.inner;
-  ctx.beginPath();
-  ctx.moveTo(p.x, p.y);
-  ctx.lineTo(p.x - p.len, p.y);
-  ctx.stroke();
-  ctx.restore();
+  ctx.globalAlpha = 1;
 }
-
 
 function drawArrow(ctx, p) {
+  const a = 1 - p.age / p.life;
+  if (a <= 0) return;
   ctx.save();
   ctx.translate(p.x, p.y);
-  const wobble = Math.sin(p.age * p.wobbleSpeed * 10) * p.wobbleAmp;
-  ctx.rotate(p.angle + wobble);
-  const alpha = Math.max(0, 1 - p.age / p.life);
-  ctx.globalAlpha = alpha;
+  ctx.rotate(p.angle + Math.sin(p.age * p.wobbleSpeed * 10) * p.wobbleAmp);
+  ctx.globalAlpha = a;
 
-  // чёрный контур
-  ctx.lineWidth = CARTOON.outline;
-  ctx.strokeStyle = '#121212';
+  // стрелка только контуром (один проход)
   ctx.beginPath();
   ctx.moveTo(-p.len * 0.1, 0);
   ctx.lineTo(p.len * 0.35, 0);
-  ctx.stroke();
-  ctx.beginPath();
   ctx.moveTo(-p.len * 0.1, 0);
   ctx.lineTo(-p.len * 0.50, -p.len * 0.22);
-  ctx.lineTo(-p.len * 0.50,  p.len * 0.22);
-  ctx.closePath();
-  ctx.stroke();
-
-  // оранжевая внутренняя
-  ctx.lineWidth = CARTOON.inner;
-  ctx.strokeStyle = ORANGE;
-  ctx.beginPath();
   ctx.moveTo(-p.len * 0.1, 0);
-  ctx.lineTo(p.len * 0.35, 0);
-  ctx.stroke();
-
-  ctx.fillStyle = ORANGE;
-  ctx.beginPath();
-  ctx.moveTo(-p.len * 0.1, 0);
-  ctx.lineTo(-p.len * 0.50, -p.len * 0.22);
   ctx.lineTo(-p.len * 0.50,  p.len * 0.22);
-  ctx.closePath();
-  ctx.fill();
+  ctx.stroke();
 
   ctx.restore();
 }
+
 
 
 function drawStickman(ctx, x, y, s, t) {
   const impact = Math.abs(Math.sin(t));
-  const xs = 1 + CARTOON.squash * impact; // растяжение по X
-  const ys = 1 - CARTOON.squash * impact; // сжатие по Y
-  const bob = Math.sin(t * 2) * CARTOON.bobAmp; // подпрыгивание
+  const xs = 1 + CARTOON.squash * impact;
+  const ys = 1 - CARTOON.squash * impact;
+  const bob = Math.sin(t * 2) * CARTOON.bobAmp;
 
   ctx.save();
   ctx.translate(x, y + bob);
-
-  // Тень (без скейла)
-  ctx.save();
-  ctx.fillStyle = CARTOON.shadowColor;
-  ctx.beginPath();
-  ctx.ellipse(0, 7 * s, 10 * s * (1 + 0.6 * impact), 3.2 * s, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
-
-  // Сквош/стретч тела
   ctx.scale(xs, ys);
-  const lwOut = CARTOON.outline / Math.max(xs, ys);
-  const lwIn  = CARTOON.inner   / Math.max(xs, ys);
 
-  ctx.lineJoin = 'round';
-  ctx.lineCap  = 'round';
+  const arm = 8 * s;
+  const leg = 10 * s;
+  const armSwing = Math.sin(t) * 1.15;
+  const legSwing = Math.sin(t + Math.PI) * 1.2;
 
-  // Туловище
+  // туловище
   ctx.beginPath();
   ctx.moveTo(0, -6 * s);
   ctx.lineTo(0,  6 * s);
-  ctx.strokeStyle = '#121212'; ctx.lineWidth = lwOut; ctx.stroke();
-  ctx.strokeStyle = ORANGE;    ctx.lineWidth = lwIn;  ctx.stroke();
+  ctx.stroke();
 
-  // Руки (усиленная амплитуда)
-  const arm = 8 * s;
-  const armSwing = Math.sin(t) * 1.25;
+  // руки
   ctx.beginPath();
   ctx.moveTo(0, -4 * s);
-  ctx.lineTo(Math.cos(armSwing) * arm, -4 * s + Math.sin(armSwing) * arm * 0.35);
-  ctx.strokeStyle = '#121212'; ctx.lineWidth = lwOut; ctx.stroke();
-  ctx.strokeStyle = ORANGE;    ctx.lineWidth = lwIn;  ctx.stroke();
-
-  ctx.beginPath();
+  ctx.lineTo(Math.cos(armSwing) * arm, -4 * s + Math.sin(armSwing) * arm * 0.32);
   ctx.moveTo(0, -4 * s);
-  ctx.lineTo(-Math.cos(armSwing) * arm, -4 * s - Math.sin(armSwing) * arm * 0.35);
-  ctx.strokeStyle = '#121212'; ctx.lineWidth = lwOut; ctx.stroke();
-  ctx.strokeStyle = ORANGE;    ctx.lineWidth = lwIn;  ctx.stroke();
+  ctx.lineTo(-Math.cos(armSwing) * arm, -4 * s - Math.sin(armSwing) * arm * 0.32);
+  ctx.stroke();
 
-  // Ноги (ещё сильнее)
-  const leg = 10 * s;
-  const legSwing = Math.sin(t + Math.PI) * 1.3;
+  // ноги
   ctx.beginPath();
   ctx.moveTo(0, 6 * s);
-  ctx.lineTo(Math.cos(legSwing) * leg, 6 * s + Math.abs(Math.sin(legSwing)) * leg * 0.7);
-  ctx.strokeStyle = '#121212'; ctx.lineWidth = lwOut; ctx.stroke();
-  ctx.strokeStyle = ORANGE;    ctx.lineWidth = lwIn;  ctx.stroke();
-
-  ctx.beginPath();
+  ctx.lineTo(Math.cos(legSwing) * leg, 6 * s + Math.abs(Math.sin(legSwing)) * leg * 0.65);
   ctx.moveTo(0, 6 * s);
-  ctx.lineTo(-Math.cos(legSwing) * leg, 6 * s + Math.abs(Math.sin(legSwing)) * leg * 0.7);
-  ctx.strokeStyle = '#121212'; ctx.lineWidth = lwOut; ctx.stroke();
-  ctx.strokeStyle = ORANGE;    ctx.lineWidth = lwIn;  ctx.stroke();
+  ctx.lineTo(-Math.cos(legSwing) * leg, 6 * s + Math.abs(Math.sin(legSwing)) * leg * 0.65);
+  ctx.stroke();
 
-  // Голова (слегка сплющиваем на ударе)
+  // голова — только контур (сквош через scale)
   ctx.save();
-  ctx.translate(0, -10 * s - impact * 0.8 * s);
-  ctx.scale(1 + 0.12 * impact, 1 - 0.12 * impact);
+  ctx.translate(0, -10 * s - impact * 0.7 * s);
+  ctx.scale(1 + 0.10 * impact, 1 - 0.10 * impact);
   ctx.beginPath();
   ctx.arc(0, 0, 3.6 * s, 0, Math.PI * 2);
-  ctx.strokeStyle = '#121212'; ctx.lineWidth = lwOut; ctx.stroke();
-  ctx.fillStyle = ORANGE; ctx.fill();
+  ctx.stroke();
   ctx.restore();
 
   ctx.restore();
+}
+
+function onVis() {
+  if (document.hidden) {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+  } else {
+    if (!rafId) { lastT = 0; rafId = requestAnimationFrame(tick); }
+  }
 }
 
 
 function tick(time) {
   const c = runnersCanvas.value;
-  if (!c) { rafId = requestAnimationFrame(tick); return; }
-  const ctx = c.getContext('2d');
+  const ctx = ctx2d;
+  if (!c || !ctx) { rafId = requestAnimationFrame(tick); return; }
+
   const dpi = window.devicePixelRatio || 1;
   const w = c.width / dpi;
   const h = c.height / dpi;
@@ -272,44 +233,79 @@ function tick(time) {
   const dt = lastT ? Math.min(0.035, now - lastT) : 0.016;
   lastT = now;
 
-  // очистка
+  // очистка (не сбивая DPI-настройки)
+  ctx.save();
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, c.width, c.height);
-  ctx.setTransform(dpi, 0, 0, dpi, 0, 0); // рисуем в CSS‑пикселях
+  ctx.restore();
+  ctx.setTransform(dpi, 0, 0, dpi, 0, 0);
+
+  // единые настройки пера на кадр
+  ctx.lineJoin = 'round';
+  ctx.lineCap  = 'round';
+  ctx.strokeStyle = CARTOON.color;
+  ctx.lineWidth   = CARTOON.line;
 
   // бегуны
   for (const r of runners) {
-  r.x += r.speed * dt;
-  r.phase += r.phaseSpeed * dt;
-  drawStickman(ctx, r.x, r.y, r.size, r.phase);
-  if (Math.random() < CARTOON.speedlineChance * dt) spawnSpeedline(r.x - 8, r.y + 4);
-  if (Math.random() < 10 * dt) spawnArrow(r.x - 6, r.y);
-  if (r.x > w + 30) r.x = -30 - Math.random() * 60;
-}
+    r.x += r.speed * dt;
+    r.phase += r.phaseSpeed * dt;
+    drawStickman(ctx, r.x, r.y, r.size, r.phase);
 
+    if (particles.length < PERF.maxParticles && Math.random() < CARTOON.speedlineChance * dt)
+      spawnSpeedline(r.x - 8, r.y + 4);
+    if (particles.length < PERF.maxParticles && Math.random() < PERF.arrowsPerSec * dt)
+      spawnArrow(r.x - 6, r.y);
+
+    if (r.x > w + 30) r.x = -30 - Math.random() * 60;
+  }
 
   // партиклы
   for (let i = particles.length - 1; i >= 0; i--) {
-  const p = particles[i];
-  p.age += dt;
-  p.x += p.vx * dt;
-  p.y += p.vy * dt;
-  p.vy += 5 * dt;
-  if (p.kind === 'speed') drawSpeedline(ctx, p);
-  else drawArrow(ctx, p);
-  if (p.age >= p.life) particles.splice(i, 1);
-}
+    const p = particles[i];
+    p.age += dt;
+    p.x += p.vx * dt;
+    p.y += p.vy * dt;
+    p.vy += PERF.gravity * dt;
 
+    if (p.kind === 'speed') drawSpeedline(ctx, p);
+    else drawArrow(ctx, p);
+
+    if (p.age >= p.life) {
+      particles.splice(i, 1);
+      particlePool.push(p); // возврат в пул
+    }
+  }
 
   rafId = requestAnimationFrame(tick);
 }
+
+
+
 
 function initRunnersAnimation() {
   resizeRunnersCanvas();
   setupRunners();
-  window.addEventListener('resize', handleResize, { passive: true });
+
+  // кэш контекста (desynchronized — hint браузеру)
+  ctx2d = runnersCanvas.value.getContext('2d', { alpha: true, desynchronized: true });
+
   rafId = requestAnimationFrame(tick);
+
+  // пауза, когда канвас не в вьюпорте
+  io = new IntersectionObserver(([e]) => {
+    if (!e) return;
+    if (e.isIntersecting) {
+      if (!rafId) { lastT = 0; rafId = requestAnimationFrame(tick); }
+    } else {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+    }
+  }, { root: null, threshold: 0 });
+  io.observe(runnersCanvas.value);
+
+  document.addEventListener('visibilitychange', onVis, { passive: true });
 }
+
 
 onMounted(async () => {
   await nextTick();
@@ -351,9 +347,13 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   clearInterval(interval);
-  cancelAnimationFrame(rafId);
+  if (rafId) cancelAnimationFrame(rafId);
   window.removeEventListener('resize', handleResize);
+  document.removeEventListener('visibilitychange', onVis);
+  if (io) io.disconnect();
+  ctx2d = null;
 });
+
 </script>
 
 <template>
