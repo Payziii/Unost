@@ -6,20 +6,19 @@ import Bold from '@/components/pages/Bold.vue';
 import Link from '@/components/pages/Link.vue';
 import File from '@/components/pages/File.vue';
 import TitledImage from '@/components/pages/TitledImage.vue';
+import CardGrid from '@/components/pages/CardGrid.vue';
 </script>
 
 <template>
   <Page title="Организация питания">
     <Title>Организация питания</Title>
 
-    <TitledImage src="" alt="Портал общественного контроля" />
+    <TitledImage src="/images/food/130x2.png" alt="Портал общественного контроля" />
 
     <Title>Основные сведения</Title>
 
     <Text align="left">
-      <Bold>Меню ежедневного горячего питания:</Bold>
-      <span> </span>
-      <Link linkTo="https://disk.yandex.ru/d/7oPUg__UgrVrCA">ссылка</Link>
+      <Link linkTo="https://disk.yandex.ru/d/7oPUg__UgrVrCA"><Bold>Меню ежедневного горячего питания</Bold></Link>
     </Text>
 
     <Text align="left">
@@ -123,18 +122,15 @@ import TitledImage from '@/components/pages/TitledImage.vue';
     <Text align="left">
       Постановление Главного государственного санитарного врача РФ от 27.10.2020 № 32 «Об утверждении санитарно-эпидемиологических правил и норм СанПиН 2.3/2.4.3590-20 «Санитарно-эпидемиологические требования к организации общественного питания населения»
     </Text>
-    <File file="">(скачать)</File>
+    <File file="sanpin-2.3.pdf">(скачать)</File>
 
     <Title>Локальные акты и акты проверок</Title>
 
-    <File file="">Приказ о создании родительского контроля за организацией и качеством питания</File>
-    <File file="">Положение о родительском контроле организации и качества горячего питания</File>
-    <File file="">Приказ директора ГАПОУ СО «ВПМТТ «ЮНОСТЬ» от 27.08.2021 № 142/1-од «О составе, обязанностях и графике работы бракеражной комиссии»</File>
-    <File file="">Акт проверки от 28.10.2022</File>
+    <File file="приказ о созданииродительского контроля за орган. и качеством питания.pdf">Приказ о создании родительского контроля за организацией и качеством питания</File>
+    <File file="положение о родительском контроле организации и качества горячего питания(1).pdf">Положение о родительском контроле организации и качества горячего питания</File>
+    
+    <File file="акт.pdf">Акт проверки от 28.10.2022</File>
 
-    <Title>Двухнедельное меню</Title>
-
-    <File file="">2-х недельное меню</File>
 
     <Title>Участие в опросе</Title>
 
@@ -147,8 +143,11 @@ import TitledImage from '@/components/pages/TitledImage.vue';
     <Text align="center">
       Чтобы оценить условия осуществления образовательной деятельности, наведите камеру телефона и отсканируйте QR-код.
     </Text>
-
-    <TitledImage src="" alt="QR-код для участия в опросе" />
+    <CardGrid>
+    <img src="/images/food/анкета на мнение(1).jpg" alt="QR-код для участия в опросе"
+    height="auto"
+    width="450px" />
+    </CardGrid>
 
     <Text align="left">
       Перейдя по ссылке, Вы сможете:
