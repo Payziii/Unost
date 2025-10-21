@@ -174,7 +174,15 @@ const menuItems = {
   ],
   structure: [
     { text: 'О нас', route: '/structure/simvolika' },
-    { text: 'Кадетская школа-интернат', route: '/structure/kshi' },
+    { text: 'Кадетская школа-интернат', subitems: [
+        { text: 'Образование', route: 'kshi/obrazovanie' },
+        { text: 'Государственная Итоговая Аттестация', route: 'kshi/gia' },
+        { text: 'Нормативные документы', route: 'kshi/dokymenty' },
+        { text: 'Кадетская жизнь', route: 'kshi/jizn' },
+        { text: 'Для родителей', route: 'kshi/roditeli' },
+        { text: 'Классные часы', route: 'kshi/klassnii_chasy' },
+        { text: 'Педагог-психолог', route: 'kshi/priholog' }
+      ]},
     { text: 'Центр ПВиДП', route: '/structure/tsentr_pvidp_' },
     { text: 'Центр проведения демонстрационных экзаменов ', route: '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills' },
     { text: 'Федеральный проект "Содействие занятости"', route: '/structure/federalnyy_proekt_sodeystvie_zanyatosti' },
