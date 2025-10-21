@@ -73,9 +73,8 @@ import File from '@/components/pages/File.vue';
       <Link linkTo="/info/giagia">
         Государственная итоговая аттестация
       </Link><br/>
-      <Link linkTo="http://вп-юность.рф/food/">Горячее питание</Link><br/>
-      <Link linkTo="https://cloud.mail.ru/public/5JC5/4SwzR7nFu">Программы дисциплин</Link><br/>
-      <Link linkTo="http://вп-юность.рф/svedeniya/обrazovanie/uchebnye_plany/">Учебные планы</Link>
+      <Link linkTo="/structure/food">Горячее питание</Link><br/>
+      <Link linkTo="/info/uchebplankshi">Учебные планы</Link>
     </Text>
 
     <!-- Документы (file === название документа + .pdf) -->

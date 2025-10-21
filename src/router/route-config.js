@@ -76,6 +76,7 @@ export const routeConfig = {
   '/info/giagia': 'GiaGiaView',
   '/info/oge': 'OgeView',
   '/info/ege': 'EgeView',
+  '/info/uchebplankshi': 'UchebPlaniKshiView',
   
 
   // Докуметы
