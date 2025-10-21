@@ -5,12 +5,23 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const complaints = ref([])
 const feedback = ref([])
+const news = ref([])
 const stats = ref({})
 const feedbackStats = ref({})
 const loading = ref(true)
 const feedbackLoading = ref(true)
+const newsLoading = ref(true)
 const error = ref('')
+const newsError = ref('')
 const activeTab = ref('complaints')
+const newsForm = ref({
+  title: '',
+  content: '',
+  image: null
+})
+const newsSubmitting = ref(false)
+const previewImage = ref('')
+const newsFileInputKey = ref(0)
 
 const API_BASE_URL = 'http://юность.панксквад.рф/api'
 
@@ -84,6 +95,113 @@ const fetchFeedback = async () => {
   }
 }
 
+const fetchNews = async () => {
+  try {
+    newsLoading.value = true
+    newsError.value = ''
+
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      router.push('/login')
+      return
+    }
+
+    const response = await fetch(`${API_BASE_URL}/news`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    if (!response.ok) {
+      if (response.status === 403) {
+        newsError.value = 'У вас нет прав для просмотра новостей'
+        return
+      }
+      throw new Error('Ошибка загрузки новостей')
+    }
+
+    news.value = await response.json()
+  } catch (err) {
+    console.error('Ошибка загрузки новостей:', err)
+    newsError.value = err.message
+  } finally {
+    newsLoading.value = false
+  }
+}
+
+const resetNewsForm = () => {
+  newsForm.value = {
+    title: '',
+    content: '',
+    image: null
+  }
+  previewImage.value = ''
+  newsFileInputKey.value += 1
+}
+
+const handleImageUpload = (event) => {
+  const file = event.target.files?.[0]
+  if (file) {
+    newsForm.value.image = file
+    previewImage.value = URL.createObjectURL(file)
+  } else {
+    newsForm.value.image = null
+    previewImage.value = ''
+  }
+}
+
+const submitNews = async () => {
+  if (!newsForm.value.title.trim() || !newsForm.value.content.trim()) {
+    newsError.value = 'Пожалуйста, заполните все обязательные поля'
+    return
+  }
+
+  try {
+    newsSubmitting.value = true
+    newsError.value = ''
+
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      router.push('/login')
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('title', newsForm.value.title)
+    formData.append('content', newsForm.value.content)
+    if (newsForm.value.image) {
+      formData.append('image', newsForm.value.image)
+    }
+
+    const response = await fetch(`${API_BASE_URL}/news`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      body: formData
+    })
+
+    if (!response.ok) {
+      if (response.status === 403) {
+        newsError.value = 'У вас нет прав для создания новостей'
+        return
+      }
+      throw new Error('Ошибка сохранения новости')
+    }
+
+    const createdNews = await response.json()
+    news.value = [createdNews, ...news.value]
+    resetNewsForm()
+  } catch (err) {
+    console.error('Ошибка создания новости:', err)
+    newsError.value = err.message
+  } finally {
+    newsSubmitting.value = false
+  }
+}
+
 const fetchStats = async () => {
   try {
     const token = localStorage.getItem('token')
@@ -136,8 +254,10 @@ const logout = () => {
 const refreshData = () => {
   if (activeTab.value === 'complaints') {
     fetchComplaints()
-  } else {
+   } else if (activeTab.value === 'feedback') {
     fetchFeedback()
+  } else {
+    fetchNews()
   }
   fetchStats()
 }
@@ -156,6 +276,7 @@ onMounted(() => {
   if (checkAdminAccess()) {
     fetchComplaints()
     fetchFeedback()
+    fetchNews()
     fetchStats()
   }
 })
@@ -195,10 +316,16 @@ onMounted(() => {
           >
             Формы обратной связи
           </button>
+          <button
+            @click="activeTab = 'news'"
+            :class="['tab-button', { 'active': activeTab === 'news' }]"
+          >
+            Новости
+          </button>
         </div>
 
         <!-- Статистика -->
-        <div class="stats-section">
+        <div v-if="activeTab !== 'news'" class="stats-section">
           <h2 class="section-title">
             {{ activeTab === 'complaints' ? 'Статистика жалоб' : 'Статистика обратной связи' }}
           </h2>
@@ -324,6 +451,87 @@ onMounted(() => {
               </div>
             </div>
           </div>
+          <!-- Вкладка новостей -->
+          <div v-if="activeTab === 'news'" class="tab-content">
+            <div class="section-header">
+              <h2 class="section-title">Новости</h2>
+              <button @click="refreshData" class="refresh-button">Обновить</button>
+            </div>
+
+            <form class="news-form" @submit.prevent="submitNews">
+              <div class="form-group">
+                <label for="news-title">Заголовок *</label>
+                <input
+                  id="news-title"
+                  v-model="newsForm.title"
+                  type="text"
+                  placeholder="Введите заголовок новости"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="news-content">Текст новости *</label>
+                <textarea
+                  id="news-content"
+                  v-model="newsForm.content"
+                  rows="6"
+                  placeholder="Введите текст новости"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="news-image">Изображение</label>
+                <input
+                  id="news-image"
+                  :key="newsFileInputKey"
+                  type="file"
+                  accept="image/*"
+                  @change="handleImageUpload"
+                />
+                <p class="field-hint">Поддерживаются изображения в формате JPG, PNG или GIF</p>
+              </div>
+
+              <div v-if="previewImage" class="image-preview">
+                <img :src="previewImage" alt="Предпросмотр изображения" />
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="submit-button" :disabled="newsSubmitting">
+                  {{ newsSubmitting ? 'Сохранение...' : 'Добавить новость' }}
+                </button>
+              </div>
+            </form>
+
+            <div v-if="newsLoading" class="loading">Загрузка новостей...</div>
+
+            <div v-else-if="newsError" class="error-message">
+              {{ newsError }}
+              <button @click="fetchNews" class="retry-button">Попробовать снова</button>
+            </div>
+
+            <div v-else-if="news.length === 0" class="no-data">Новости не найдены</div>
+
+            <div v-else class="news-list">
+              <article
+                v-for="item in news"
+                :key="item.id"
+                class="news-item"
+              >
+                <div class="news-header">
+                  <h3 class="news-title">{{ item.title }}</h3>
+                  <div class="news-meta">{{ formatDate(item.created_at) }}</div>
+                </div>
+
+                <div v-if="item.image_url" class="news-image">
+                  <img :src="item.image_url" :alt="item.title" />
+                </div>
+
+                <p class="news-content">{{ item.content }}</p>
+              </article>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -408,6 +616,141 @@ onMounted(() => {
   padding: 2rem;
   width: 100%;
   max-width: 1200px;
+}
+
+.news-form {
+  margin-bottom: 2rem;
+  display: grid;
+  gap: 1.5rem;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.form-group input[type='text'],
+.form-group textarea,
+.form-group input[type='file'] {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #d1d9e0;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input[type='text']:focus,
+.form-group textarea:focus,
+.form-group input[type='file']:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15);
+}
+
+.field-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.image-preview {
+  max-width: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e9ecef;
+}
+
+.image-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-button {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.submit-button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+.submit-button:not(:disabled):hover {
+  background: #1e8449;
+}
+
+.news-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.news-item {
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.news-title {
+  font-size: 1.25rem;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.news-meta {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.news-image {
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e9ecef;
+}
+
+.news-image img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.news-content {
+  margin: 0;
+  color: #2c3e50;
+  line-height: 1.6;
+  white-space: pre-wrap;
 }
 
 .tabs {
@@ -701,6 +1044,15 @@ onMounted(() => {
   .tab-button.active {
     border-left-color: #3498db;
     border-bottom-color: #e9ecef;
+  }
+
+  .form-actions {
+    justify-content: stretch;
+  }
+
+  .submit-button {
+    width: 100%;
+    text-align: center;
   }
 }
 
