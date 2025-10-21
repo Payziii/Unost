@@ -80,6 +80,7 @@ export const routeConfig = {
   '/dokumenty/normativnye_dokumenty': 'normdoc',
   '/dokumenty/razvitie': 'program1822',
   '/dokumenty/modern': 'ProgMod2022',
+  '/dokumenty/nastavnichestvo': 'Nastav',
   
 
 
