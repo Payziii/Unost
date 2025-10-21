@@ -72,6 +72,8 @@ export const routeConfig = {
   '/structure/tsentr_pvidp_': 'PvdpView',
   '/info/kshi': 'kshiView',
   '/info/monitoring': 'MonitoringView',
+  '/info/dopobraz': 'DopObrazView',
+  '/info/giagia': 'GiaGiaView',
   
 
   // Докуметы
