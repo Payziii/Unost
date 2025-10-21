@@ -156,7 +156,6 @@ const menuItems = {
         { text: 'Профилактика употребления ПАВ', route: '/bezopasnost/profilaktika_upotrebleniya_pav' },
         { text: 'Материалы по профилактики экстремизма', route: '/bezopasnost/ekstremistskie_materialy' },
         { text: 'Телефоны экстренных служб', route: '/bezopasnost/telefony_ekstrennyh_slujb_' },
-        { text: 'Противодействие коррупции', route: '/bezopasnost/protivodeystvie_korruptsii' },
         { text: 'Защита прав ребёнка', route: '/bezopasnost/zaschita_prav_rebenka' },
         { text: 'Здравоохранение', route: '/bezopasnost/zdravoohranenie' },
         { text: 'Педагог-психолог', route: '/bezopasnost/go_i_chs' },

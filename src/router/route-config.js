@@ -37,10 +37,13 @@ export const routeConfig = {
   '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills': 'TsentrWorldSkills',
   '/structure/studencheskiy_sportivnyy_klub': 'ssc',
   '/structure/uchebno-proizvodstvennyy_kompleks': 'UpkView',
+  '/structure/laboratoriya_bezopasnosti_sverdlovskaya_oblast': 'LB',
 
   // Безопасность (/bezopasnost)
   '/bezopasnost/profilaktika_upotrebleniya_pav': 'ProfilaktikaPavView',
   '/bezopasnost/ekstremistskie_materialy': 'EkstremistskieMaterialyView',
+  '/bezopasnost/telefony_ekstrennyh_slujb_': 'TelefoniView',
+  '/bezopasnost/zaschita_prav_rebenka': 'PravaRebenkaView',
 
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
