@@ -34,7 +34,10 @@ export const routeConfig = {
   '/structure/raskrytie_informatsii': 'RaskInfo',
   '/structure/profsoyuz': 'Profsouth',
   '/structure/studencheskiy_sportivnyy_klub': 'ssc',
-  
+
+  // Безопасность (/bezopasnost)
+  '/bezopasnost/profilaktika_upotrebleniya_pav': 'ProfilaktikaPavView',
+
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
   '/info/structure': 'StructureView',
@@ -73,8 +76,9 @@ export const routeSettings = {
   
   folders: {
     'applicants': 'applicants',
-    'students': 'students', 
+    'students': 'students',
     'structure': 'struktura',
+    'bezopasnost': 'bezopasnost',
     'info': 'info'
   }
 }
