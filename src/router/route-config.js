@@ -83,7 +83,7 @@ export const routeConfig = {
   '/dokumenty/nastavnichestvo': 'Nastav',
   '/dokumenty/informatsiya_o_meropriyatiyah': 'InfoMerop',
   '/dokumenty/predpisaniya': 'Predpisaniya',
-
+  '/dokumenty/dokumenty_po_uchebnoy_i_proizvodstvennoy_praktiki': 'Practica'
 
 
 
