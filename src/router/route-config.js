@@ -12,6 +12,7 @@ export const routeConfig = {
   '/applicants/reyting_abiturientov': 'RatingView',
   '/applicants/professionalitet': 'ProfessionalitetView',
   '/applicants/kadetskaya_shkola-internat': 'KadetiView',
+  '/applicants/faq': 'FaqView',
   
   // Студентики (/students)
   '/students/raspisanie_zanyatiy': 'RaspView',
