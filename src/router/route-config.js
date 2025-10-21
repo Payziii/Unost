@@ -38,6 +38,7 @@ export const routeConfig = {
   '/structure/studencheskiy_sportivnyy_klub': 'ssc',
   '/structure/uchebno-proizvodstvennyy_kompleks': 'UpkView',
   '/structure/laboratoriya_bezopasnosti_sverdlovskaya_oblast': 'LB',
+  '/structure/federalnyy_proekt_sodeystvie_zanyatosti': 'FederalnyyProektSodeystvieZanyatostiView',
 
   // Безопасность (/bezopasnost)
   '/bezopasnost/profilaktika_upotrebleniya_pav': 'ProfilaktikaPavView',
