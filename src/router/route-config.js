@@ -34,6 +34,8 @@ export const routeConfig = {
   '/structure/raskrytie_informatsii': 'RaskInfo',
   '/structure/profsoyuz': 'Profsouth',
   '/structure/studencheskiy_sportivnyy_klub': 'ssc',
+  '/structure/uchebno-proizvodstvennyy_kompleks': 'UpkView',
+  
   
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
