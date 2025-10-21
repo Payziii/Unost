@@ -1,0 +1,27 @@
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1b2a49" />
+      <stop offset="100%" stop-color="#274f8a" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg2)" rx="24" />
+  <g opacity="0.08" fill="#ffffff">
+    <path d="M120 360 L200 120 L280 360 Z" />
+    <path d="M320 360 L400 120 L480 360 Z" />
+    <path d="M520 360 L600 120 L680 360 Z" />
+  </g>
+  <g fill="#ffdd2d">
+    <rect x="180" y="160" width="100" height="120" rx="12" opacity="0.75" />
+    <rect x="350" y="140" width="120" height="160" rx="12" opacity="0.85" />
+    <rect x="540" y="150" width="110" height="140" rx="12" opacity="0.8" />
+  </g>
+  <g fill="#ffffff" font-family="'Montserrat', 'Arial', sans-serif">
+    <text x="400" y="320" font-size="46" font-weight="600" text-anchor="middle">
+      Мастерские WorldSkills
+    </text>
+    <text x="400" y="366" font-size="26" text-anchor="middle" opacity="0.85">
+      12 рабочих зон и современное оборудование
+    </text>
+  </g>
+</svg>
