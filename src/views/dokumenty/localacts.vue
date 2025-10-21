@@ -24,7 +24,7 @@ import Bold from '@/components/pages/Bold.vue';
             <File file="Л8.pdf" icon>Правила внутреннего трудового распорядка</File>
             <File file="Л9.pdf" icon>Положение о формировании порядка</File>
             <File file="Л10.pdf" icon>Договор на оказания услуг по представлению доступа к ЭБС</File>
-            <File file="Л10.pdf" icon>Оплата временной нетрудоспособности</File>
+            <File file="Л11.pdf" icon>Оплата временной нетрудоспособности</File>
         </Text>
     </Page>
 </template>  
