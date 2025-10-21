@@ -4,6 +4,7 @@ import Title from '@/components/pages/Title.vue';
 import Text from '@/components/pages/Text.vue';
 import Bold from '@/components/pages/Bold.vue';
 import Link from '@/components/pages/Link.vue';
+import File from '@/components/pages/File.vue';
 import TitledImage from '@/components/pages/TitledImage.vue';
 </script>
 
@@ -102,8 +103,6 @@ import TitledImage from '@/components/pages/TitledImage.vue';
       стороне, что повышает риск негативного влияния.
     </Text>
 
-    <TitledImage src="https://molodezh79.ru/images/3474568.jpg" alt="Общение родителей с подростком" />
-
     <Text align="justify">
       Если подросток пытается наладить контакт, важно находить время для разговоров, чтобы понимать, чем он занимается,
       и уберечь от пагубного влияния компаний.
@@ -175,7 +174,7 @@ import TitledImage from '@/components/pages/TitledImage.vue';
 
     <Text align="justify">
       На сайте
-      <Link linkTo="https://xn--80abeqcb5awlc6d.xn--p1ai/">https://общее-дело.рф</Link>
+      <Link linkTo="https://общее-дело.рф">https://общее-дело.рф</Link>
       размещены документальные фильмы:
     </Text>
 
@@ -194,44 +193,28 @@ import TitledImage from '@/components/pages/TitledImage.vue';
     <Text align="justify">Бонус: м/ф «Тайна едкого дыма» и м/ф «Опасное погружение».</Text>
 
     <Text align="left">
-      <ul>
-        <li>
-          <Link linkTo="/upload/files/%D0%9F%D0%BB%D0%B0%D0%BD%20%D0%BF%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B8%20%D0%B4%D0%B5%D0%B2%D0%B8%D0%B0%D0%BD%D1%82%D0%BD%D0%BE%D0%B3%D0%BE%20%D0%BF%D0%BE%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%83%D0%BF%D0%BE%D1%82%D1%80%D0%B5%D0%B1%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%9F%D0%90%D0%92%20%D1%81%D1%80%D0%B5%D0%B4%D0%B8%20%D0%BE%D0%B1%D1%83%D1%87%D0%B0%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F.pdf">
+          <File icon file="План профилактики девиантного поведения и употребления ПАВ среди обучающихся.pdf">
             План профилактики девиантного поведения и употребления ПАВ
-          </Link>
-        </li>
-      </ul>
+          </File>
     </Text>
 
     <Text align="left"><Bold>Для родителей:</Bold></Text>
     <Text align="left">
-      <ul>
-        <li>
-          <Link linkTo="/upload/files/%D0%A2%D1%80%D1%83%D0%B4%D0%BD%D1%8B%D0%B9%20%D0%BF%D0%BE%D0%B4%D1%80%D0%BE%D1%81%D1%82%D0%BE%D0%BA.pdf">
+          <File icon file="Трудный подросток.pdf">
             Трудный подросток
-          </Link>
-        </li>
-        <li>
-          <Link linkTo="/upload/files/%D0%A1%D0%B5%D1%80%D1%8C%D0%B5%D0%B7%D0%BD%D1%8B%D0%B9%20%D0%BC%D0%B8%D1%80%20%D0%BD%D0%B5%D1%81%D0%B5%D1%80%D1%8C%D0%B5%D0%B7%D0%BD%D1%8B%D1%85%20%D0%BF%D0%BE%D0%B4%D1%80%D0%BE%D1%81%D1%82%D0%BA%D0%BE%D0%B2.pdf">
+          </File>
+          <File icon file="Серьезный мир несерьезных подростков.pdf">
             Серьёзный мир несерьёзных подростков
-          </Link>
-        </li>
-        <li>
-          <Link linkTo="/upload/files/%D0%A0%D0%BE%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D1%8F%D0%BC%20%D0%BE%20%D0%BC%D0%BE%D1%82%D0%B8%D0%B2%D0%B0%D1%86%D0%B8%D0%B8.pdf">
+          </File>
+          <File icon file="Родителям о мотивации.pdf">
             Родителям о мотивации
-          </Link>
-        </li>
-        <li>
-          <Link linkTo="/upload/files/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5%20%D0%BF%D1%80%D0%B8%D0%B7%D0%BD%D0%B0%D0%BA%D0%B8%20%D0%BF%D0%BE%D1%82%D1%80%D0%B5%D0%B1%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BD%D0%B0%D1%80%D0%BA%D0%BE%D1%82%D0%B8%D0%BA%D0%BE%D0%B2%281%29.pdf">
+          </File>
+          <File icon file="Основные признаки потребления наркотиков(1).pdf">
             Основные признаки потребления наркотиков
-          </Link>
-        </li>
-        <li>
-          <Link linkTo="/upload/files/%D0%94%D0%B8%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D0%B0%20%D0%BF%D0%BE%D1%82%D1%80%D0%B5%D0%B1%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%9F%D0%90%D0%92.pdf">
+          </File>
+          <File icon file="Диагностика потребления ПАВ.pdf">
             Диагностика потребления ПАВ
-          </Link>
-        </li>
-      </ul>
+          </File>
     </Text>
 
     <Text align="left"><Bold>Для учащихся:</Bold></Text>
@@ -250,33 +233,23 @@ import TitledImage from '@/components/pages/TitledImage.vue';
     </Text>
 
     <Text align="left">
-      <ul>
-        <li>
-          <Link linkTo="/upload/files/%D0%A3%D0%B2%D0%B5%D1%80%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C%20%D0%BF%D1%80%D0%B8%20%D0%BE%D0%B1%D1%89%D0%B5%D0%BD%D0%B8%D0%B8.pdf">
+          <File icon file="Уверенность при общении.pdf">
             Уверенность при общении
-          </Link>
-        </li>
-        <li>
-          <Link linkTo="/upload/files/%D0%A4%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B%20%D0%BF%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B0%20%D0%9F%D0%90%D0%92.docx.pdf">
+          </File>
+          <File icon file="Фильмы профилактика ПАВ.docx.pdf">
             Фильмы профилактика ПАВ
-          </Link>
-        </li>
-        <li>
-          <Link linkTo="/upload/files/%D0%92%D0%BD%D1%83%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D0%B8%D0%B5%20%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D1%8B.pdf">
+          </File>
+          <File icon file="Внутренние проблемы.pdf">
             Внутренние проблемы
-          </Link>
-        </li>
-        <li>
-          <Link linkTo="/upload/files/%D0%92%D0%B7%D0%B0%D0%B8%D0%BC%D0%BE%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%20%D1%81%D0%BE%20%D0%B2%D0%B7%D1%80%D0%BE%D1%81%D0%BB%D1%8B%D0%BC%D0%B8.pdf">
+          </File>
+          <File icon file="Взаимопоним со взрослыми.pdf">
             Взаимопонимание со взрослыми
-          </Link>
-        </li>
-      </ul>
+          </File>
     </Text>
 
-    <TitledImage src="/upload/images/%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BA%D0%B01.jpg" alt="Памятка по профилактике ПАВ №1" />
-    <TitledImage src="/upload/images/%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BA%D0%B02.jpg" alt="Памятка по профилактике ПАВ №2" />
-    <TitledImage src="/upload/images/%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BA%D0%B03.jpg" alt="Памятка по профилактике ПАВ №3" />
-    <TitledImage src="/upload/images/%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BA%D0%B0%204%20%281%29.jpg" alt="Памятка по профилактике ПАВ №4" />
+    <TitledImage src="/images/памятка1.jpg" alt="Памятка по профилактике ПАВ №1" />
+    <TitledImage src="/images/памятка2.jpg" alt="Памятка по профилактике ПАВ №2" />
+    <TitledImage src="/images/памятка3.jpg" alt="Памятка по профилактике ПАВ №3" />
+    <TitledImage src="/images/памятка 4 (1).jpg" alt="Памятка по профилактике ПАВ №4" />
   </Page>
 </template>
