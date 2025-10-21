@@ -117,7 +117,7 @@ const menuItems = {
         { text: 'Локальные акты', route: '/dokumenty/lokalnye_akty' },
         { text: 'Нормативные документы', route: '/dokumenty/normativnye_dokumenty' },
         { text: 'Программа развития 2018-2022 ', route: '/dokumenty/razvitie' },
-        { text: 'Программа модернизации_2020-2022', route: '/dokumenty/modern' },
+        { text: 'Программа модернизации 2020-2022', route: '/dokumenty/modern' },
         { text: 'Отчеты по самообследованию', route: '/dokumenty/otchety_po_samoobsledovaniyu' },
         { text: 'Документы по учебной и производственной практики', route: '/dokumenty/dokumenty_po_uchebnoy_i_proizvodstvennoy_praktiki' },
         { text: 'Мероприятия по устранению замечаний, выполнению предписаний', route: '/dokumenty/predpisaniya' },
