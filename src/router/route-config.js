@@ -51,7 +51,7 @@ export const routeConfig = {
   '/bezopasnost/dorojnaya': 'DorojnayaView',
 
   // О техникуме (/info)
-  '/info/maininfo': 'MainView',
+  '/info/maininfo': 'ZMainView',
   '/info/structure': 'StructureView',
   '/info/rukovodstvo': 'RukovodstvoView',
   '/info/pedsostav': 'PedSostavView',
@@ -79,10 +79,10 @@ export const routeConfig = {
   '/info/uchebplankshi': 'UchebPlaniKshiView',
   '/info/spo': 'SpoView',
   '/info/uchebplanspo': 'UchebPlaniSpoView',
-  '/info/mainprofprog': 'MainProfProgrammiView',
+  '/info/profmainprog': 'MainProfProgrammiView',
   '/info/realiz': 'RealizView',
   '/info/prof': 'ProfObuchView',
-  
+
 
   
 

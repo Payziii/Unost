@@ -169,37 +169,163 @@ import TitledImage from '@/components/pages/TitledImage.vue';
             </table>
         </div>
 
-        <Title>Документы</Title>
+<Title>Документы</Title>
 
-        <Text align="left">
-            <File file="/docs/2024_03_28/AYbiiEGRAt2Gsrt8D8fdRBhGQ.pdf" icon>
-                Соглашение 20-2024-000025 от 24.01.2024 Кураторство
-            </File>
-            <File file="/docs/2024_03_28/yF72ff8E2RkQiNTse5nE6edas.pdf" icon>
-                Соглашение 19 от 05.03.2024 патриотика
-            </File>
-            <File file="/docs/2024_03_28/hzRTY3FBefEh7Aa4KekyYZ2BD.pdf" icon>
-                Соглашение 012021-ПСД от 19.02.2024
-            </File>
-            <File file="/docs/2024_03_28/et2EHeitGE547A5KD6NbNzrHa.pdf" icon>
-                Соглашение 012021-МП от 07.03.2024 матпомощь
-            </File>
-            <File file="/docs/2024_03_28/TYBsKyDFbRdbaKSZn8QrsAkQY.pdf" icon>
-                Соглашение 20-2024-009334 от 26.01.2024 Классное руководство
-            </File>
-            <File file="/docs/2024_03_28/i7SkHazFRZRr4ayZ8yy6Rdzrt.pdf" icon>
-                Соглашение ГЗ №012021-2024-ГЗ от 17.01.24г.
-            </File>
-            <File file="/docs/2024_03_28/i8RAiNeyd77aH8tYEKnyEfK46.pdf" icon>
-                Соглашение 012021-СТ от 22.01.2024 стипендия
-            </File>
-            <File file="/docs/2024_03_28/7StkBSn5en3Ftehekz4GHa5rN.pdf" icon>
-                ПФХД на 2024 год и плановый период 2025-2026 годов
-            </File>
-            <File file="/docs/2024_03_28/5bhHa37rD8iyKFAtb8FdS7bBy.pdf" icon>
-                Отчёт об использовании целевых средств за 2023 год
-            </File>
-        </Text>
+<Text align="left">
+    <!-- Соглашения -->
+    <File file="/AYbiiEGRAt2Gsrt8D8fdRBhGQ.pdf" icon>
+        Соглашение 20-2024-000025 от 24.01.2024 Кураторство
+    </File>
+    <File file="/yF72ff8E2RkQiNTse5nE6edas.pdf" icon>
+        Соглашение 19 от 05.03.2024 патриотика
+    </File>
+    <File file="/hzRTY3FBefEh7Aa4KekyYZ2BD.pdf" icon>
+        Соглашение 012021-ПСД от 19.02.2024
+    </File>
+    <File file="/et2EHeitGE547A5KD6NbNzrHa.pdf" icon>
+        Соглашение 012021-МП от 07.03.2024 матпомощь
+    </File>
+    <File file="/TYBsKyDFbRdbaKSZn8QrsAkQY.pdf" icon>
+        Соглашение 20-2024-009334 от 26.01.2024 Классное руководство
+    </File>
+    <File file="/i7SkHazFRZRr4ayZ8yy6Rdzrt.pdf" icon>
+        Соглашение ГЗ №012021-2024-ГЗ от 17.01.24г.
+    </File>
+    <File file="/i8RAiNeyd77aH8tYEKnyEfK46.pdf" icon>
+        Соглашение 012021-СТ от 22.01.2024 стипендия
+    </File>
+
+    <!-- Другие документы -->
+    <File file="/7StkBSn5en3Ftehekz4GHa5rN.pdf" icon>
+        ПФХД на 2024 год и плановый период 2025-2026 годов
+    </File>
+    <File file="/5bhHa37rD8iyKFAtb8FdS7bBy.pdf" icon>
+        Отчёт об использовании целевых средств за 2023 год
+    </File>
+    <File file="/fD3BFkDsdiQsady9yZQAsKhDS.pdf" icon>
+        ПФХД 2023 год ПДД
+    </File>
+    <File file="/bZ4Tzk4Bd8sDRbF7ZieSyD644.pdf" icon>
+        ПФХД 2023 год ГМЗ
+    </File>
+    <File file="/ZeSka72Heyd5zz43GhKrBN65a.pdf" icon>
+        ПФХД 2023 год ЦС
+    </File>
+    <File file="/9B893DknD62DdtfknBYrFfnf4.pdf" icon>
+        Основные положения учетной политики
+    </File>
+    <File file="/kBaSHaiGSf7sGadA9QYGSA2ar.pdf" icon>
+        ПФХД на 2023 год и плановый период 2024-2025 годов
+    </File>
+    <File file="/K6Qirtaeffd284SzDfysa4h3f.pdf" icon>
+        ПФХД ЦС 9 месяцев 2023
+    </File>
+    <File file="/442e8R4Z6BNB836G52shi7k8S.pdf" icon>
+        ПФХД ПДД 9 месяцев 2023
+    </File>
+    <File file="/Z3rH3FHnEHb6ZszRd2Yz78NzS.pdf" icon>
+        ПФХД ГМЗ 9 месяцев 2023
+    </File>
+    <File file="/izRn2BZKZBEARHZrSZAQZQBf8.pdf" icon>
+        ПФХД ГМЗ 9 месяцев 2023
+    </File>
+    <File file="/B4FdzTsY3k6y634ZrYSdNr9td.pdf" icon>
+        ПД 30.06.2023
+    </File>
+    <File file="/9ni9Gn46QB5tDSFG4z5ZdDKe6.pdf" icon>
+        ГЗ 30.06.2023
+    </File>
+    <File file="/4zBK8Sa2idi5z6SH3bER5n6N7.pdf" icon>
+        ЦС 30.06.2023
+    </File>
+    <File file="/4ErSsRsf5A96Q5TaYkYBdhYEA.pdf" icon>
+        Отчёт о результатах деятельности от 27.02.2023
+    </File>
+    <File file="/aRkKE7zGfeKRTTGnfynn9bT6B.pdf" icon>
+        ПФХД ГМЗ на 13.01.2023
+    </File>
+    <File file="/ZdiTbHNf5GA2afR3E7A5isb2y.pdf" icon>
+        ПФХД ПДД на 13.01.2023
+    </File>
+    <File file="/6dt6s7FT42zrKAr6hQb944K2Y.pdf" icon>
+        Сведения об использовании средств целевых субсидий на 13.01.2023
+    </File>
+    <File file="/kTfsnGrarkibi8KGdbeQiFhKk.pdf" icon>
+        ПФХД ПДД 28.12.2022
+    </File>
+    <File file="/9ZT7i29ZHzfDKHfAGBT7fZzZf.pdf" icon>
+        Сведения об использовании ЦС за 2022 год
+    </File>
+    <File file="/bNZAy6nDR38syATdDQy37adGA.pdf" icon>
+        ПФХД ГМЗ 21.12.2022
+    </File>
+    <File file="/ts2aHKi9DdF2ADG867BBGnH75.pdf" icon>
+        ПФХД ГМЗ 9 месяцев 2022
+    </File>
+    <File file="/42KKZY5bG6KfeHKidAHF6GA47.pdf" icon>
+        ПФХД ИЦ 9 месяцев 2022
+    </File>
+    <File file="/DBzrGS4biAN33iEbBeDNtQTr2.pdf" icon>
+        ПФХД ИЦ 1 полугодие 2022
+    </File>
+    <File file="/hD45Gzt7TKEBDFK3fARt5TT8h.pdf" icon>
+        ПФХД приносящая доход деятельность 9 месяцев 2022
+    </File>
+    <File file="/79aZR7k8NZ6Y9yk5r6DTy43ey.pdf" icon>
+        Сведения об операция с целевыми субсидиями 1 полугодие 2022
+    </File>
+    <File file="/KFEGKQDHRknNAkkie8iDidTdF.pdf" icon>
+        ПФХД ГМЗ 1 полугодие 2022
+    </File>
+    <File file="/BsRK8hnBD56THEDBeYEZAh7dh.pdf" icon>
+        ПФХД ПДД 1 полугодие 2022
+    </File>
+    <File file="/YrbhYYQsh35KeGQzBKtZ49DZ3.pdf" icon>
+        0503737 ГМЗ 1 полугодие 2022
+    </File>
+    <File file="/hYK5G36TyAdsafG2R3tZ7EddZ.pdf" icon>
+        0503737 ИЦ 1 полугодие 2022
+    </File>
+    <File file="/biFFy8NdnZGtGfeisft3BKy2t.pdf" icon>
+        0503737 ПДД 1 полугодие 2022
+    </File>
+    <File file="/FRddDdez2FSENtrkN9R9AFrYy.pdf" icon>
+        Отчет о результатах деятельности ГАПОУ СО МТТ Юность по состоянию на 01.01.2022
+    </File>
+    <File file="/STfEFT7DtKdY9E4432teDsk8i.pdf" icon>
+        ПФХД иные цели 1 квартал 2022
+    </File>
+    <File file="/D7NQNDBBe5z7DrR9fF58hZZ3Z.pdf" icon>
+        ПФХД ГМЗ 1 квартал 2022
+    </File>
+    <File file="/Z3RE74K5TG5364R52Sa76zZZK.pdf" icon>
+        ПФХД приносящая доход деятельность 1 квартал 2022
+    </File>
+    <File file="/984BtrnrdRGhzst83aT3AQ52K.xlsx" icon>
+        ПФХД КФО 5 - 29.09.21
+    </File>
+    <File file="/bQ8K25HYT8b8ktb44infEk8F6.xlsx" icon>
+        ПФХД КФО 2 - 29.09.21
+    </File>
+    <File file="/26HRShSterf835SZ7R9nS4e5d.xlsx" icon>
+        ПФХД КФО 4 - 29.09.21
+    </File>
+    <File file="/382BseTYhKHTZ9z7bB7h3AGi6.xlsx" icon>
+        ПФХД КФО 2 - 27.09.21
+    </File>
+    <File file="/HAznefBidFGGFD4QZQ62BiKGS.pdf" icon>
+        за счет местных бюджетов, по договорам об оказании платных оу. ПФХД КФО 2
+    </File>
+    <File file="/ke7eyEa7yfyZra2s2eF8QzQT6.pdf" icon>
+        за счет бюджетов субъектов РФ. ПФХД КФО 4 госзадание
+    </File>
+    <File file="/65ez5E6AYREYhKQEzybGFYazG.pdf" icon>
+        План финансово-хозяйственной деятельности 2021год
+    </File>
+    <File file="/Gibh58Tst7ADzHF5daAG5btF7.pdf" icon>
+        за счет местных бюджетов, по договорам об оказании платных оу.ПФХД КФО 5 целевые
+    </File>
+</Text>
     </Page>
 </template>
 

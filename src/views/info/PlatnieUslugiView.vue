@@ -23,16 +23,10 @@ import TitledImage from '@/components/pages/TitledImage.vue';
         <Title>Документы</Title>
 
         <Text align="left">
-            <File file="/upload/files/Студент 2023-2024 договор 1 курс 3 стороны.docx" icon>
-                Договор на оказание платных образовательных услуг для совершеннолетних
-            </File>
-            <File file="/upload/files/Студент 2023 договор 2 стороны 1 курс(1).docx" icon>
-                Договор на оказание платных образовательных услуг для несовершеннолетних
-            </File>
-            <File file="/upload/files/Порядок оказания платных услуг и основания снижения стоимости.pdf" icon>
+            <File file="Порядок оказания платных услуг_и_основания снижения стоимости.pdf" icon>
                 Положение о порядке оказания платных образовательных услуг
             </File>
-            <File file="/upload/files/Прайс лист на обучение ЦПДЭ.pdf" icon>
+            <File file="Прайспо ЦПДЭ.pdf" icon>
                 Прайс-лист на обучение
             </File>
         </Text>

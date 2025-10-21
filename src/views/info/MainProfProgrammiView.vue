@@ -1,4 +1,4 @@
-```vue
+
 <script setup>
 import Page from '@/components/pages/Page.vue';
 import Title from '@/components/pages/Title.vue';
@@ -48,4 +48,3 @@ import Card from '@/components/pages/Card.vue';
    
   </Page>
 </template>
-```

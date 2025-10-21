@@ -89,7 +89,7 @@ import Card from '@/components/pages/Card.vue';
       
       <!-- Образовательные программы -->
       <p><strong>Образовательные программы:</strong></p>
-      <Link linkTo="/info/mainprofprog">Основные профессиональные образовательные программы</Link><br />
+      <Link linkTo="/info/profmainprog">Основные профессиональные образовательные программы</Link><br />
       <Link linkTo="https://cloud.mail.ru/public/ZFNj/bj3TdhhdE">Основная профессиональная образовательная программа 2023-2024 уч.год</Link><br />
       <Link linkTo="https://disk.yandex.ru/d/F5evAkEQhXn-qg">Основная профессиональная образовательная программа 2024-2025 уч.год (Профессионалитет)</Link><br />
       <Link linkTo="/info/realiz">Реализация дополнительных общеобразовательных общеразвивающих программ</Link>
