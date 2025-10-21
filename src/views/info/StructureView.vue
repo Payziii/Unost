@@ -7,6 +7,7 @@ import Link from '@/components/pages/Link.vue';
 import File from '@/components/pages/File.vue';
 import CardGrid from '@/components/pages/CardGrid.vue';
 import Card from '@/components/pages/Card.vue';
+import TitledImage from '@/components/pages/TitledImage.vue';
 </script>
 
 <template>
@@ -63,7 +64,6 @@ import Card from '@/components/pages/Card.vue';
             <Card title="Кадетская школа-интернат">
                 <Text align="left">
                     <File file="Приказ №03-д от 28.04.2004 г. (Об изменении типа, вида и наименования училища Юность Центр с КШИ).pdf" icon>Приказ создания № 03-д от 28.04.2004</File>
-                    <File file="Положение КШИ(2).pdf" icon>Положение</File><br/>
                     <Highlight>Адрес:</Highlight> 624090, Свердловская Область, г. Верхняя Пышма, ул. Кривоусова, д. 53<br/>
                     <Highlight>Свидетельство о гос. аккредитации:</Highlight> рег. № 9581 от 31.03.2020 г.<br/>
                     <Highlight>Срок действия:</Highlight> до 02.03.2029 г.<br/>
@@ -101,8 +101,8 @@ import Card from '@/components/pages/Card.vue';
             </Card>
             <Card title="Учебно-производственный комплекс (УПК)">
                 <Text align="left">
-                    <File file="О создании УПК.pdf" icon>Приказ о создании 29.02.2024 №27/1-од</File>
-                    <File file="Положение УПК.pdf" icon>Положение о создании</File><br/>
+                    <File file="О создании УПК(1).pdf" icon>Приказ о создании 29.02.2024 №27/1-од</File>
+                    <File file="Положение УПК(1).pdf" icon>Положение о создании</File><br/>
                     <Highlight>Руководитель:</Highlight> Вагайская Татьяна Александровна<br/>
                     <Highlight>Адрес:</Highlight> 624093, Свердловская Область, г. Верхняя Пышма, ул. Лесная, д. 1<br/>
                     <Highlight>Телефон:</Highlight> 8-996-17-78-168
@@ -118,9 +118,7 @@ import Card from '@/components/pages/Card.vue';
             <Card title="Совет Техникума">
                 <File file="Положение о Совете_подпись(1).pdf" icon>Положение о совете</File>
             </Card>
-            <Card title="Общее собрание работников">
-                <File file="Положение об общем собрании работников и представителей обучающихся.pdf" icon>Положение о собрании работников</File>
-            </Card>
+
             <Card title="Студенческий совет">
                 <File file="Положение о Совете обучающихся.pdf" icon>Положение о студ.совете</File>
             </Card>
@@ -132,17 +130,18 @@ import Card from '@/components/pages/Card.vue';
         <Title>Инновационная деятельность</Title>
         <CardGrid>
             <Card title="Стажировочная площадка ИРО">
-                <Text align="left">
-                    ГАПОУ СО «ВПМТТ «Юность» - Стажировочная площадка ИРО<br/>
-                    <Link linkTo="https://cloud.mail.ru/public/DDue/Tx7k86XUJ">https://cloud.mail.ru/public/DDue/Tx7k86XUJ</Link>
+                <Text align="center">
+                
+                    <Link linkTo="https://cloud.mail.ru/public/DDue/Tx7k86XUJ">ГАПОУ СО «ВПМТТ «Юность» - Стажировочная площадка ИРО</Link>
                 </Text>
             </Card>
             <Card title="Региональная инновационная площадка">
-                <Text align="left">
-                    ГАПОУ СО «ВПМТТ «Юность» - Региональная инновационная площадка Свердловской области<br/>
-                    <Link linkTo="https://cloud.mail.ru/public/6g1P/mjgTNhUAv">https://cloud.mail.ru/public/6g1P/mjgTNhUAv</Link>
+                <Text align="center">
+
+                    <Link linkTo="https://cloud.mail.ru/public/6g1P/mjgTNhUAv">ГАПОУ СО «ВПМТТ «Юность» - Региональная инновационная площадка Свердловской области</Link>
                 </Text>
             </Card>
         </CardGrid>
+        <TitledImage src="/images/Безымянный(1).jpg"> </TitledImage>
     </Page>
 </template>
