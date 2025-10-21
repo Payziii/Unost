@@ -21,7 +21,7 @@ import Bold from '@/components/pages/Bold.vue';
     </Text>
     <TitledImage
                 src="/images/Smert/smertfoto.jpg" 
-                alt="Кадетская школа Интернат" 
+                alt="Информация" 
             />
     </Page>
 </template>
