@@ -174,6 +174,12 @@ function closeFeedback() {
   gap: 24px;
 }
 
+@media (max-width: 768px) {
+  .isp3304 {
+    width: 100%;
+  }
+}
+
 .isp3304 h1 {
   font-size: 1.3rem;
   text-align: center;

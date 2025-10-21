@@ -137,6 +137,22 @@ watch(
 </template>
 
 <style>
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.router-view-wrapper {
+  flex: 1 0 auto; /* Занимает всё доступное пространство */
+}
+
+/* Или если нужно, чтобы контент растягивался */
+.router-view-wrapper {
+  flex: 1;
+}
+
 /* Кнопка "наверх" */
 .scroll-top-btn {
   position: fixed;
