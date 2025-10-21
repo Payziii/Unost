@@ -151,13 +151,26 @@ const menuItems = {
     { text: 'Образовательный кредит', route: '/students/credit' },
     { text: 'Доступ к библиотечным и электронным образовательным ресурсам', route: '/students/library' },
     { text: 'Полезные ссылки', route: '/students/links' },
-    { text: 'Педагог и наставник 2023', route: '/students/pedagog' }
+    { text: 'Педагог и наставник 2023', route: '/students/pedagog' },
+    { text: 'Комплексная безопасность', subitems: [
+        { text: 'Профилактика употребления ПАВ', route: 'bezopasnost/profilaktika_upotrebleniya_pav' },
+        { text: 'Материалы по профилактики экстремизма', route: 'bezopasnost/ekstremistskie_materialy' },
+        { text: 'Телефоны экстренных служб', route: 'bezopasnost/telefony_ekstrennyh_slujb_' },
+        { text: 'Противодействие коррупции', route: 'bezopasnost/protivodeystvie_korruptsii' },
+        { text: 'Защита прав ребёнка', route: 'bezopasnost/zaschita_prav_rebenka' },
+        { text: 'Здравоохранение', route: 'bezopasnost/zdravoohranenie' },
+        { text: 'Педагог-психолог', route: 'bezopasnost/go_i_chs' },
+        { text: 'Информационная безопасность', route: 'bezopasnost/informatsionnaya' },
+        { text: 'Пожарная безопасность', route: 'bezopasnost/pojarnaya' },
+        { text: 'Дорожная безопасность', route: 'bezopasnost/dorojnaya' }
+      ]},
   ],
   applicants: [
     { text: 'Рейтинг', route: '/applicants/reyting_abiturientov' },
     { text: 'Профессионалитет', route: '/applicants/professionalitet' },
     { text: 'Правила приема', route: '/applicants/priem' },
-    { text: 'Кадетская школа-интернат', route: '/applicants/kadetskaya_shkola-internat' }
+    { text: 'Кадетская школа-интернат', route: '/applicants/kadetskaya_shkola-internat' },
+    { text: 'Часто задаваемые вопросы', route: '/applicants/faq' }
   ],
   structure: [
     { text: 'О нас', route: '/structure/simvolika' },
@@ -172,6 +185,7 @@ const menuItems = {
     { text: 'Студенческий спортивный клуб', route: '/structure/studencheskiy_sportivnyy_klub' },
     { text: 'Профсоюз', route: '/structure/profsoyuz' },
     { text: 'Раскрытие информации', route: '/structure/raskrytie_informatsii' },
+    { text: 'Организация питания', route: '/structure/food' },
     { text: 'Информация о доступности объектов Учреждения', route: '/structure/informatsiya_o_dostupnosti_obyektov_uchrejdeniya' },
     { text: '«Сообщи, где торгуют смертью»', route: '/structure/gde_torguyut_smertyu_' }
   ]
