@@ -10,8 +10,6 @@ import Link from '@/components/pages/Link.vue';
   <Page title="Противодействие коррупции">
     <Title>Противодействие коррупции</Title>
 
-
-
     <Title>1. Телефон доверия по вопросам противодействия коррупции</Title>
 
     <Text align="justify">

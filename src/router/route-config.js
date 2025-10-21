@@ -31,6 +31,7 @@ export const routeConfig = {
   '/structure/simvolika': 'AboutUs',
   '/structure/gde_torguyut_smertyu_': 'Smert',
   '/structure/informatsiya_o_dostupnosti_obyektov_uchrejdeniya': 'InfoDostup.vue',
+  '/structure/food': 'FoodView',
   '/structure/raskrytie_informatsii': 'RaskInfo',
   '/structure/profsoyuz': 'Profsouth',
   '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills': 'TsentrWorldSkills',
