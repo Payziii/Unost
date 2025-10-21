@@ -32,6 +32,7 @@ export const routeConfig = {
   '/structure/informatsiya_o_dostupnosti_obyektov_uchrejdeniya': 'InfoDostup.vue',
   '/structure/raskrytie_informatsii': 'RaskInfo',
   '/structure/profsoyuz': 'Profsouth',
+  '/structure/studencheskiy_sportivnyy_klub': 'ssc',
   
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
@@ -47,7 +48,9 @@ export const routeConfig = {
   '/info/matpodderjka': 'StepuhaView',
   '/info/sotsialnye_partnery_': 'SotrudView',
   '/info/predpisaniya': 'PredpisView',
+  '/info/nezavisimaya_otsenka_kachestva_okazaniya_uslug': 'OcenkaView',
   
+
 
 
   
