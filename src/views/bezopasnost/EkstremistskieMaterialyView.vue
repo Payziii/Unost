@@ -292,12 +292,5 @@ import Link from '@/components/pages/Link.vue';
       влиянию психикой. Безусловно, сейчас значимой задачей общества стало объединение различных индивидов в общее и
       понимающее друг друга человечество.
     </Text>
-
-    <Text align="justify">
-      Дополнительная информация представлена на сайте
-      <Link linkTo="https://xn----ctb8aecph4fn.xn--p1ai/bezopasnost/ekstremistskie_materialy/">
-        https://xn----ctb8aecph4fn.xn--p1ai/bezopasnost/ekstremistskie_materialy/
-      </Link>.
-    </Text>
   </Page>
 </template>
