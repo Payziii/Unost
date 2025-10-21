@@ -36,6 +36,7 @@ export const routeConfig = {
   '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills': 'TsentrWorldSkills',
   '/structure/studencheskiy_sportivnyy_klub': 'ssc',
   '/structure/uchebno-proizvodstvennyy_kompleks': 'UpkView',
+  '/structure/laboratoriya_bezopasnosti_sverdlovskaya_oblast': 'LB',
 
   // Безопасность (/bezopasnost)
   '/bezopasnost/profilaktika_upotrebleniya_pav': 'ProfilaktikaPavView',
