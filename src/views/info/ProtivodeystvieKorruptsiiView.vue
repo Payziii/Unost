@@ -10,13 +10,7 @@ import Link from '@/components/pages/Link.vue';
   <Page title="Противодействие коррупции">
     <Title>Противодействие коррупции</Title>
 
-    <Text align="center">
-      <Link
-        linkTo="https://xn----ctb8aecph4fn.xn--p1ai/upload/files/doc03442220210907121149.pdf"
-      >
-        Обращение директора по нетерпимости коррупционных проявлений
-      </Link>
-    </Text>
+
 
     <Title>1. Телефон доверия по вопросам противодействия коррупции</Title>
 
