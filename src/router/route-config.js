@@ -48,7 +48,8 @@ export const routeConfig = {
   '/info/sotsialnye_partnery_': 'SotrudView',
   '/info/predpisaniya': 'PredpisView',
   '/info/nezavisimaya_otsenka_kachestva_okazaniya_uslug': 'OcenkaView',
-  
+  '/info/trudoustroystvo': 'CareerView',
+
 
 
 
