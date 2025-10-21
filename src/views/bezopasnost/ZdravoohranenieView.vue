@@ -4,6 +4,7 @@ import Title from '@/components/pages/Title.vue';
 import Text from '@/components/pages/Text.vue';
 import Bold from '@/components/pages/Bold.vue';
 import Link from '@/components/pages/Link.vue';
+import File from '@/components/pages/File.vue';
 import TitledImage from '@/components/pages/TitledImage.vue';
 </script>
 
@@ -14,22 +15,14 @@ import TitledImage from '@/components/pages/TitledImage.vue';
     <Title>Медицинский кабинет</Title>
 
     <TitledImage
-      src="https://xn----ctb8aecph4fn.xn--p1ai/upload/images/hNicDbDY6-U.jpg"
+      src="/images/hNicDbDY6-U.jpg"
       alt="Медицинский кабинет"
     />
 
-    <Text align="center">
-      <Link linkTo="https://xn----ctb8aecph4fn.xn--p1ai/upload/files/14574.pdf">
-        О проведении «Уроков здоровья»
-      </Link>
-    </Text>
-
-    <Text align="center">
-      <Link
-        linkTo="https://xn----ctb8aecph4fn.xn--p1ai/upload/files/%D0%9C%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B%20%D0%BF%D0%BE%20%D0%BF%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B5%20%D0%92%D0%98%D0%A7-%D0%B8%D0%BD%D1%84%D0%B5%D0%BA%D1%86%D0%B8%D0%B8%20%D1%81%D1%80%D0%B5%D0%B4%D0%B8%20%D0%BC%D0%BE%D0%BB%D0%BE%D0%B4%D0%B5%D0%B6%D0%B8.pdf"
-      >
+    <Text align="left">
+      <File icon file="Материалы по профилактике ВИЧ-инфекции среди молодежи.pdf">
         Материалы по профилактике ВИЧ-инфекции среди молодежи
-      </Link>
+    </File>
     </Text>
 
     <Text align="justify">
@@ -191,7 +184,7 @@ import TitledImage from '@/components/pages/TitledImage.vue';
     </Text>
 
     <TitledImage
-      src="https://xn----ctb8aecph4fn.xn--p1ai/upload/images/EKt-NiLXkAwOSdz.jpg"
+      src="/images/EKt-NiLXkAwOSdz.jpg"
       alt="Информационный плакат по профилактике ВИЧ"
     />
   </Page>
