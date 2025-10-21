@@ -77,6 +77,13 @@ export const routeConfig = {
   '/info/oge': 'OgeView',
   '/info/ege': 'EgeView',
   '/info/uchebplankshi': 'UchebPlaniKshiView',
+  '/info/spo': 'SpoView',
+  '/info/uchebplanspo': 'UchebPlaniSpoView',
+  '/info/mainprofprog': 'MainProfProgrammiView',
+  '/info/realiz': 'RealizView',
+  '/info/prof': 'ProfObuchView',
+  
+
   
 
   // Докуметы
