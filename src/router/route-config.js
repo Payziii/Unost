@@ -73,6 +73,7 @@ export const routeConfig = {
   
   // Докуметы
   '/dokumenty/uchreditelnye_dokumenty': 'UchView',
+  '/dokumenty/uchreditelnye_dokumenty': 'localacts.vue',
 
 
 
