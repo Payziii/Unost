@@ -74,6 +74,8 @@ export const routeConfig = {
   '/info/monitoring': 'MonitoringView',
   '/info/dopobraz': 'DopObrazView',
   '/info/giagia': 'GiaGiaView',
+  '/info/oge': 'OgeView',
+  '/info/ege': 'EgeView',
   
 
   // Докуметы
@@ -86,7 +88,7 @@ export const routeConfig = {
   '/dokumenty/nastavnichestvo': 'Nastav',
   '/dokumenty/informatsiya_o_meropriyatiyah': 'InfoMerop',
   '/dokumenty/predpisaniya': 'Predpisaniya',
-
+  '/dokumenty/dokumenty_po_uchebnoy_i_proizvodstvennoy_praktiki': 'Practica'
 
 
 

@@ -15,8 +15,8 @@ import TitledImage from '@/components/pages/TitledImage.vue';
         <Title>Государственная Итоговая Аттестация</Title>
         
         <Text align="left">
-            <Link linkTo="/info/kshi/gosudarstvennaya_itogovaya_attestatsiya/oge/">ОГЭ</Link><br/>
-            <Link linkTo="/info/kshi/gosudarstvennaya_itogovaya_attestatsiya/ege/">ЕГЭ</Link>
+            <Link linkTo="/info/oge">ОГЭ</Link><br/>
+            <Link linkTo="/info/ege">ЕГЭ</Link>
         </Text>
 
         <Text align="center">
