@@ -69,7 +69,11 @@ export const routeConfig = {
   '/info/protivodeystvie_korruptsii': 'ProtivodeystvieKorruptsiiView',
   '/info/vakansii' : 'VakansiiView',
   '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills':'TsentrView',
+  '/structure/tsentr_pvidp_': 'PvdpView',
   
+  // Докуметы
+  '/dokumenty/uchreditelnye_dokumenty': 'UchView',
+  '/dokumenty/lokalnye_akty': 'localacts',
 
 
 
@@ -95,6 +99,7 @@ export const routeSettings = {
     'students': 'students',
     'structure': 'struktura',
     'bezopasnost': 'bezopasnost',
-    'info': 'info'
+    'info': 'info',
+    'dokumenty': 'dokumenty'
   }
 }
