@@ -38,6 +38,7 @@ export const routeConfig = {
 
   // Безопасность (/bezopasnost)
   '/bezopasnost/profilaktika_upotrebleniya_pav': 'ProfilaktikaPavView',
+  '/bezopasnost/ekstremistskie_materialy': 'EkstremistskieMaterialyView',
 
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
