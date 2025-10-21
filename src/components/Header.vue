@@ -124,7 +124,11 @@ const menuItems = {
         { text: 'Информация о мероприятиях', route: '/dokumenty/informatsiya_o_meropriyatiyah' },
         { text: 'Наставничество', route: '/dokumenty/nastavnichestvo' }
       ]},
-    { text: 'Образование', route: '/info/obrazovanie' },
+    { text: 'Образование', subitems: [
+        { text: 'Кадетская школа-интернат', route: '/info/kshi' },
+        { text: 'Среднее профессиональное образование', route: '/info/spo' },
+        { text: 'Профессиональное обучение', route: '/info/prof' },
+      ]},
     { text: 'Руководство', route: '/info/rukovodstvo' },
     { text: 'Педагогический состав', route: '/info/pedsostav' },
     { text: 'Образовательные стандарты', route: '/info/standarty' },

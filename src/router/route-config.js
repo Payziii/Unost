@@ -70,7 +70,10 @@ export const routeConfig = {
   '/info/vakansii' : 'VakansiiView',
   '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills':'TsentrView',
   '/structure/tsentr_pvidp_': 'PvdpView',
+  '/info/kshi': 'kshiView',
+  '/info/monitoring': 'MonitoringView',
   
+
   // Докуметы
   '/dokumenty/uchreditelnye_dokumenty': 'UchView',
   '/dokumenty/lokalnye_akty': 'localacts',
@@ -90,6 +93,7 @@ export const routeMeta = {
 
 export const routeSettings = {
   customPaths: {
+    
     // Кастомный путь к файлу
     // Пример: '/special-path': 'special/SpecialComponent'
   },
