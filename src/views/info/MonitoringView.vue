@@ -93,8 +93,7 @@ function toggleBlock(name) {
       <transition name="fade">
         <div v-show="openBlock === 'item5'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="График выходов общественных наблюдателей.pdf" icon>График выходов общественных наблюдателей</File>
-            <File file="План наблюдения за процедурами оценки качества.pdf" icon>План наблюдения за процедурами оценки качества</File>
+            <File file="График выхода общественных наблюдателей на наблюдение.pdf" icon>График выхода общественных наблюдателей на наблюдение</File>
           </Text>
         </div>
       </transition>
@@ -108,8 +107,7 @@ function toggleBlock(name) {
       <transition name="fade">
         <div v-show="openBlock === 'item6'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="Положение о системе видеонаблюдения.pdf" icon>Положение о системе видеонаблюдения</File>
-            <File file="Регламент видеонаблюдения за процедурами оценки.pdf" icon>Регламент видеонаблюдения за процедурами оценки</File>
+            <File file="Регламент использования системы наблюдения.pdf" icon>Положение о системе видеонаблюдения</File>
           </Text>
         </div>
       </transition>
@@ -123,8 +121,12 @@ function toggleBlock(name) {
       <transition name="fade">
         <div v-show="openBlock === 'item7'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="Положение о предотвращении конфликта интересов.pdf" icon>Положение о предотвращении конфликта интересов</File>
-            <File file="Декларации об отсутствии конфликта интересов.pdf" icon>Декларации об отсутствии конфликта интересов</File>
+            <File file="Порядок создания, организации работы и принятия решений комиссией по урегулированию споров.pdf" icon>Порядок создания, организации работы и принятия решений комиссией по урегулированию споров</File>
+            <File file="Приложение 1.pdf" icon>Приложение 1</File>
+            <File file="Приложение 2.pdf" icon>Приложение 2</File>
+            <File file="Приложение 3.pdf" icon>Приложение 3</File>
+            <File file="Приложение 4.pdf" icon>Приложение 4</File>
+            <File file="Приложение 5.pdf" icon>Приложение 5</File>
           </Text>
         </div>
       </transition>
@@ -138,8 +140,9 @@ function toggleBlock(name) {
       <transition name="fade">
         <div v-show="openBlock === 'item8'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="Информационная справка об объективности процедур оценки.pdf" icon>Информационная справка об объективности процедур оценки</File>
-            <File file="Аналитический отчет по обеспечению объективности.pdf" icon>Аналитический отчет по обеспечению объективности</File>
+            <File file="Аналитический отчет о результатах ВПР за 2019-2020 уч.год.pdf" icon>Аналитический отчет о результатах ВПР за 2019-2020 уч.год</File>
+            <File file="Информационная справка о результатах обеспечения.pdf" icon>Информационная справка о результатах обеспечения</File>
+            <File file="Система внутришкольных мер по подготовке и проведению ВПР в 2020-2021 учебном году.pdf" icon>Система внутришкольных мер по подготовке и проведению ВПР в 2020-2021 учебном году</File>
           </Text>
         </div>
       </transition>
@@ -153,116 +156,100 @@ function toggleBlock(name) {
       <transition name="fade">
         <div v-show="openBlock === 'item9'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="Приказ о создании комиссии по проверке ВПР.pdf" icon>Приказ о создании комиссии по проверке ВПР</File>
-            <File file="Состав комиссии по проверке работ.pdf" icon>Состав комиссии по проверке работ</File>
-            <File file="Регламент работы комиссии.pdf" icon>Регламент работы комиссии</File>
+            <File file="Графики проверки ВПР по географии 2021.pdf" icon>Графики проверки ВПР по географии 2021</File>
+            <File file="Графики проверки ВПР по истории 2021.pdf" icon>Графики проверки ВПР по истории 2021</File>
+            <File file="Графики проверки ВПР по математике 2021.pdf" icon>Графики проверки ВПР по математике 2021</File>
           </Text>
         </div>
       </transition>
     </div>
 
+
+
     <!-- Пункт 10 -->
-    <div class="accordion-item" @click="toggleBlock('item10')">
+    <div class="accordion-item" @click="toggleBlock('item11')">
       <div class="accordion-header">
-        <span class="menu-title">10. Наличие информационной (аналитической) справки о результатах процедур оценки качества образования и олимпиад школьников</span>
+        <span class="menu-title">10. Наличие плана мероприятий по повышению объективности оценки качества образования и олимпиад школьников в образовательной организации</span>
       </div>
       <transition name="fade">
-        <div v-show="openBlock === 'item10'" class="accordion-content" @click.stop>
+        <div v-show="openBlock === 'item11'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="Аналитическая справка по результатам ВПР.pdf" icon>Аналитическая справка по результатам ВПР</File>
-            <File file="Аналитическая справка по результатам олимпиад.pdf" icon>Аналитическая справка по результатам олимпиад</File>
-            <File file="Сводный отчет по результатам оценочных процедур.pdf" icon>Сводный отчет по результатам оценочных процедур</File>
+            <File file="О мероприятиях по итогам ВПР.pdf" icon>О мероприятиях по итогам ВПР</File>
+            <File file="План мероприятий по повышению объективности оценки образовательных результатов в 2020-2021 учебном году.pdf" icon>План мероприятий по повышению объективности оценки образовательных результатов в 2020-2021 учебном году</File>
+            <File file="План прохождения инструктажа.pdf" icon>План прохождения инструктажа</File>
           </Text>
         </div>
       </transition>
     </div>
 
     <!-- Пункт 11 -->
-    <div class="accordion-item" @click="toggleBlock('item11')">
+    <div class="accordion-item" @click="toggleBlock('item12')">
       <div class="accordion-header">
-        <span class="menu-title">11. Наличие плана мероприятий по повышению объективности оценки качества образования и олимпиад школьников в образовательной организации</span>
+        <span class="menu-title">11. Наличие самостоятельно разработанных процедур общественной экспертизы качества образования в образовательной организации</span>
       </div>
       <transition name="fade">
-        <div v-show="openBlock === 'item11'" class="accordion-content" @click.stop>
+        <div v-show="openBlock === 'item12'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="План мероприятий по повышению объективности.pdf" icon>План мероприятий по повышению объективности</File>
-            <File file="Программа повышения объективности оценки.pdf" icon>Программа повышения объективности оценки</File>
+            <File file="Положение об общественной экспертизе деятельности и качества образования в ГАПОУ СО ВП МТТ Юность.pdf" icon>Положение об общественной экспертизе деятельности и качества образования в ГАПОУ СО ВП МТТ Юность</File>
           </Text>
         </div>
       </transition>
     </div>
 
     <!-- Пункт 12 -->
-    <div class="accordion-item" @click="toggleBlock('item12')">
+    <div class="accordion-item" @click="toggleBlock('item13')">
       <div class="accordion-header">
-        <span class="menu-title">12. Наличие самостоятельно разработанных процедур общественной экспертизы качества образования в образовательной организации</span>
+        <span class="menu-title">12. Систематическая трансляция эффективного административного и педагогического опыта на другие образовательные организации</span>
       </div>
       <transition name="fade">
-        <div v-show="openBlock === 'item12'" class="accordion-content" @click.stop>
+        <div v-show="openBlock === 'item13'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="Положение об общественной экспертизе качества образования.pdf" icon>Положение об общественной экспертизе качества образования</File>
-            <File file="Процедуры общественной экспертизы.pdf" icon>Процедуры общественной экспертизы</File>
+            <File file="Информационная справка по систематической трансляции эффективного административного и педагогического опыта.pdf" icon>Информационная справка по систематической трансляции эффективного административного и педагогического опыта</File>
           </Text>
         </div>
       </transition>
     </div>
 
     <!-- Пункт 13 -->
-    <div class="accordion-item" @click="toggleBlock('item13')">
+    <div class="accordion-item" @click="toggleBlock('item14')">
       <div class="accordion-header">
-        <span class="menu-title">13. Систематическая трансляция эффективного административного и педагогического опыта на другие образовательные организации</span>
+        <span class="menu-title">13. Наличие повышения объективности оценивания результатов независимых процедур оценки качества образования и олимпиад школьников (глубина 3 года)</span>
       </div>
       <transition name="fade">
-        <div v-show="openBlock === 'item13'" class="accordion-content" @click.stop>
+        <div v-show="openBlock === 'item14'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="План трансляции педагогического опыта.pdf" icon>План трансляции педагогического опыта</File>
-            <File file="Отчет о трансляции опыта.pdf" icon>Отчет о трансляции опыта</File>
+            <File file="Информационная справка по наличию повышения объективности.pdf" icon>Информационная справка по наличию повышения объективности</File>
           </Text>
         </div>
       </transition>
     </div>
 
     <!-- Пункт 14 -->
-    <div class="accordion-item" @click="toggleBlock('item14')">
+    <div class="accordion-item" @click="toggleBlock('item15')">
       <div class="accordion-header">
-        <span class="menu-title">14. Наличие повышения объективности оценивания результатов независимых процедур оценки качества образования и олимпиад школьников (глубина 3 года)</span>
+        <span class="menu-title">14. Реализация программ помощи учителям, имеющим профессиональные проблемы и дефициты в части оценивания результатов обучающихся и олимпиад школьников (повышение квалификации, внутришкольное обучение и самообразование, другое)</span>
       </div>
       <transition name="fade">
-        <div v-show="openBlock === 'item14'" class="accordion-content" @click.stop>
+        <div v-show="openBlock === 'item15'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="Динамика объективности оценивания за 3 года.pdf" icon>Динамика объективности оценивания за 3 года</File>
-            <File file="Аналитический отчет по объективности за 3 года.pdf" icon>Аналитический отчет по объективности за 3 года</File>
+            <File file="Реализация программы помощи учителям, имеющим проффессиональные проблемы и дефициты в части оценивания результатов обучающихся и олимпиад.pdf" icon>Реализация программы помощи учителям, имеющим проффессиональные проблемы и дефициты в части оценивания результатов обучающихся и олимпиад</File>
           </Text>
         </div>
       </transition>
     </div>
 
     <!-- Пункт 15 -->
-    <div class="accordion-item" @click="toggleBlock('item15')">
-      <div class="accordion-header">
-        <span class="menu-title">15. Реализация программ помощи учителям, имеющим профессиональные проблемы и дефициты в части оценивания результатов обучающихся и олимпиад школьников (повышение квалификации, внутришкольное обучение и самообразование, другое)</span>
-      </div>
-      <transition name="fade">
-        <div v-show="openBlock === 'item15'" class="accordion-content" @click.stop>
-          <Text align="left">
-            <File file="Программа помощи учителям.pdf" icon>Программа помощи учителям</File>
-            <File file="План повышения квалификации педагогов.pdf" icon>План повышения квалификации педагогов</File>
-            <File file="Программа внутришкольного обучения.pdf" icon>Программа внутришкольного обучения</File>
-          </Text>
-        </div>
-      </transition>
-    </div>
-
-    <!-- Пункт 16 -->
     <div class="accordion-item" @click="toggleBlock('item16')">
       <div class="accordion-header">
-        <span class="menu-title">16. Проведение учителями и методическими объединениями аналитической и экспертной работы с результатами процедур оценки качества образования и олимпиад школьников</span>
+        <span class="menu-title">15. Проведение учителями и методическими объединениями аналитической и экспертной работы с результатами процедур оценки качества образования и олимпиад школьников</span>
       </div>
       <transition name="fade">
         <div v-show="openBlock === 'item16'" class="accordion-content" @click.stop>
           <Text align="left">
-            <File file="План аналитической работы методических объединений.pdf" icon>План аналитической работы методических объединений</File>
-            <File file="Отчет об экспертной работе с результатами.pdf" icon>Отчет об экспертной работе с результатами</File>
+            <File file="Протокол №5.pdf" icon>Протокол №5</File>
+            <File file="Протокол №6.pdf" icon>Протокол №6</File>
+            <File file="Протокол №8.pdf" icon>Протокол №8</File>
+            <File file="Протокол №9.pdf" icon>Протокол №9</File>
           </Text>
         </div>
       </transition>
