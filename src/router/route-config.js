@@ -44,6 +44,7 @@ export const routeConfig = {
   '/bezopasnost/ekstremistskie_materialy': 'EkstremistskieMaterialyView',
   '/bezopasnost/telefony_ekstrennyh_slujb_': 'TelefoniView',
   '/bezopasnost/zaschita_prav_rebenka': 'PravaRebenkaView',
+  '/bezopasnost/zdravoohranenie': 'ZdravoohranenieView',
 
   // О техникуме (/info)
   '/info/maininfo': 'MainView',
