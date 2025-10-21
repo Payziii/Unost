@@ -46,6 +46,9 @@ export const routeConfig = {
   '/bezopasnost/telefony_ekstrennyh_slujb_': 'TelefoniView',
   '/bezopasnost/zaschita_prav_rebenka': 'PravaRebenkaView',
   '/bezopasnost/zdravoohranenie': 'ZdravoohranenieView',
+  '/bezopasnost/informatsionnaya': 'InformView',
+  '/bezopasnost/pojarnaya': 'PojarnayaView',
+  '/bezopasnost/dorojnaya': 'DorojnayaView',
 
   // О техникуме (/info)
   '/info/maininfo': 'MainView',

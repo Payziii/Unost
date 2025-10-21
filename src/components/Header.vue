@@ -158,7 +158,6 @@ const menuItems = {
         { text: 'Телефоны экстренных служб', route: '/bezopasnost/telefony_ekstrennyh_slujb_' },
         { text: 'Защита прав ребёнка', route: '/bezopasnost/zaschita_prav_rebenka' },
         { text: 'Здравоохранение', route: '/bezopasnost/zdravoohranenie' },
-        { text: 'Педагог-психолог', route: '/bezopasnost/go_i_chs' },
         { text: 'Информационная безопасность', route: '/bezopasnost/informatsionnaya' },
         { text: 'Пожарная безопасность', route: '/bezopasnost/pojarnaya' },
         { text: 'Дорожная безопасность', route: '/bezopasnost/dorojnaya' }
