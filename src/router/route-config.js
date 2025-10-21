@@ -70,7 +70,8 @@ export const routeConfig = {
   '/info/vakansii' : 'VakansiiView',
   '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills':'TsentrView',
   
-
+  // Докуметы
+  '/dokumenty/uchreditelnye_dokumenty': 'UchView',
 
 
 
@@ -95,6 +96,7 @@ export const routeSettings = {
     'students': 'students',
     'structure': 'struktura',
     'bezopasnost': 'bezopasnost',
-    'info': 'info'
+    'info': 'info',
+    'dokumenty': 'dokumenty'
   }
 }
