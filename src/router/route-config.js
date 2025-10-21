@@ -72,6 +72,8 @@ export const routeConfig = {
   '/structure/tsentr_pvidp_': 'PvdpView',
   '/info/kshi': 'kshiView',
   '/info/monitoring': 'MonitoringView',
+  '/info/dopobraz': 'DopObrazView',
+  '/info/giagia': 'GiaGiaView',
   
 
   // Докуметы
@@ -80,7 +82,9 @@ export const routeConfig = {
   '/dokumenty/normativnye_dokumenty': 'normdoc',
   '/dokumenty/razvitie': 'program1822',
   '/dokumenty/modern': 'ProgMod2022',
-  
+  '/dokumenty/nastavnichestvo': 'Nastav',
+  '/dokumenty/informatsiya_o_meropriyatiyah': 'InfoMerop',
+  '/dokumenty/predpisaniya': 'Predpisaniya',
 
 
 

@@ -67,10 +67,10 @@ import File from '@/components/pages/File.vue';
       <Link linkTo="/info/monitoring">
         Мониторинг объективности ГАПОУ СО «ВП МТТ «Юность» с отделением кадетской школы-интернат
       </Link><br/>
-      <Link linkTo="http://вп-юность.рф/svedeniya/obrazovanie/obrazovatelnaya_programma_dopolnitelnogo_obrazovaniya/">
+      <Link linkTo="/info/dopobraz">
         Образовательная программа дополнительного образования
       </Link><br/>
-      <Link linkTo="http://вп-юность.рф/info/kshi/gosudarstvennaya_itogovaya_attestatsiya/">
+      <Link linkTo="/info/giagia">
         Государственная итоговая аттестация
       </Link><br/>
       <Link linkTo="http://вп-юность.рф/food/">Горячее питание</Link><br/>
