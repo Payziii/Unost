@@ -31,11 +31,13 @@ export const routeConfig = {
   '/structure/simvolika': 'AboutUs',
   '/structure/gde_torguyut_smertyu_': 'Smert',
   '/structure/informatsiya_o_dostupnosti_obyektov_uchrejdeniya': 'InfoDostup.vue',
+  '/structure/food': 'FoodView',
   '/structure/raskrytie_informatsii': 'RaskInfo',
   '/structure/profsoyuz': 'Profsouth',
   '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills': 'TsentrWorldSkills',
   '/structure/studencheskiy_sportivnyy_klub': 'ssc',
   '/structure/uchebno-proizvodstvennyy_kompleks': 'UpkView',
+  '/structure/laboratoriya_bezopasnosti_sverdlovskaya_oblast': 'LB',
 
   // Безопасность (/bezopasnost)
   '/bezopasnost/profilaktika_upotrebleniya_pav': 'ProfilaktikaPavView',
@@ -59,6 +61,7 @@ export const routeConfig = {
   '/info/predpisaniya': 'PredpisView',
   '/info/nezavisimaya_otsenka_kachestva_okazaniya_uslug': 'OcenkaView',
   '/info/trudoustroystvo': 'CareerView',
+  '/info/protivodeystvie_korruptsii': 'ProtivodeystvieKorruptsiiView',
   '/info/vakansii' : 'VakansiiView',
 
 
