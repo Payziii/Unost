@@ -39,9 +39,10 @@ import Bold from '@/components/pages/Bold.vue';
 <File file="ПриказМин.pdf" icon>Приказ Минпросвещения РФ "О ведомственных наградах"</File>
 <File file="Коллектиный договор.pdf" icon>Коллективный договор</File>
 <File file="КолДог.pdf" icon>Соглашение МОСО-СОПРНОН на 2021-2023</File>
-<File file="Заслуженный учитель.pdf" icon>Партнеры Екатеринбург</File>
-<File file="ПриказМин.pdf" icon>Федеральный проект Дисконтная карта члена профсоюза"</File>
-<File file="Коллектиный договор.pdf" icon>О вакцинации</File>
+<File file="ПартнёрыЕкб.pdf" icon>Партнеры Екатеринбург</File>
+<File file="ПартнёрыВП.pdf" icon>Партнеры Верхняя Пышма</File>
+<File file="КартаСоюза.pdf" icon>Федеральный проект Дисконтная карта члена профсоюза"</File>
+<File file="ОВакцинации.pdf" icon>О вакцинации</File>
         </Text>
     </Page>
 </template>
