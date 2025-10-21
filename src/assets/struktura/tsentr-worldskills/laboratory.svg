@@ -1,0 +1,27 @@
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0057b8" />
+      <stop offset="100%" stop-color="#008ecc" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)" rx="24" />
+  <g opacity="0.15">
+    <circle cx="140" cy="100" r="90" fill="#ffffff" />
+    <circle cx="660" cy="340" r="120" fill="#ffffff" />
+    <circle cx="610" cy="110" r="70" fill="#ffffff" />
+  </g>
+  <g transform="translate(160 80)" fill="#ffffff">
+    <rect x="0" y="140" width="160" height="120" rx="14" opacity="0.85" />
+    <rect x="180" y="80" width="160" height="180" rx="14" opacity="0.75" />
+    <rect x="360" y="0" width="160" height="260" rx="14" opacity="0.65" />
+  </g>
+  <g fill="#ffffff" font-family="'Montserrat', 'Arial', sans-serif">
+    <text x="400" y="330" font-size="48" font-weight="700" text-anchor="middle">
+      Центр компетенций
+    </text>
+    <text x="400" y="380" font-size="26" text-anchor="middle" opacity="0.85">
+      Практика и демонстрационные экзамены WorldSkills
+    </text>
+  </g>
+</svg>

@@ -33,6 +33,7 @@ export const routeConfig = {
   '/structure/informatsiya_o_dostupnosti_obyektov_uchrejdeniya': 'InfoDostup.vue',
   '/structure/raskrytie_informatsii': 'RaskInfo',
   '/structure/profsoyuz': 'Profsouth',
+  '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills': 'TsentrWorldSkills',
   '/structure/studencheskiy_sportivnyy_klub': 'ssc',
   '/structure/uchebno-proizvodstvennyy_kompleks': 'UpkView',
 
