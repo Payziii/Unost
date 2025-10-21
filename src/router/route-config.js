@@ -72,6 +72,10 @@ export const routeConfig = {
   '/structure/tsentr_pvidp_': 'PvdpView',
   '/info/kshi': 'kshiView',
   '/info/monitoring': 'MonitoringView',
+  '/info/dopobraz': 'DopObrazView',
+  '/info/giagia': 'GiaGiaView',
+  '/info/oge': 'OgeView',
+  '/info/ege': 'EgeView',
   
 
   // Докуметы
@@ -80,8 +84,11 @@ export const routeConfig = {
   '/dokumenty/normativnye_dokumenty': 'normdoc',
   '/dokumenty/razvitie': 'program1822',
   '/dokumenty/modern': 'ProgMod2022',
-  
-
+  '/dokumenty/otchety_po_samoobsledovaniyu': 'OtchPoSam',
+  '/dokumenty/nastavnichestvo': 'Nastav',
+  '/dokumenty/informatsiya_o_meropriyatiyah': 'InfoMerop',
+  '/dokumenty/predpisaniya': 'Predpisaniya',
+  '/dokumenty/dokumenty_po_uchebnoy_i_proizvodstvennoy_praktiki': 'Practica'
 
 
 
