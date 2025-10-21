@@ -77,6 +77,10 @@ export const routeConfig = {
   // Докуметы
   '/dokumenty/uchreditelnye_dokumenty': 'UchView',
   '/dokumenty/lokalnye_akty': 'localacts',
+  '/dokumenty/normativnye_dokumenty': 'normdoc',
+  '/dokumenty/razvitie': 'program1822',
+  '/dokumenty/modern': 'ProgMod2022',
+  
 
 
 
