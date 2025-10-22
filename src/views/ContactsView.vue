@@ -9,7 +9,7 @@ const loading = ref(false);
 const error = ref('');
 const success = ref('');
 
-const API_BASE_URL = 'http://юность.панксквад.рф/api';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 async function submitFeedback() {
   if (!name.value || !email.value || !message.value) {

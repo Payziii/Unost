@@ -20,7 +20,7 @@ const uploadError = ref('')
 const uploadSuccess = ref('')
 const loadingPortfolio = ref(false)
 
-const API_BASE_URL = 'http://юность.панксквад.рф/api'
+const API_BASE_URL = 'http://localhost:5000/api'
 
 // Проверка роли пользователя и редирект для администраторов
 const checkUserRole = () => {

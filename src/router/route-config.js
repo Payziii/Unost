@@ -41,6 +41,8 @@ export const routeConfig = {
   '/structure/federalnyy_proekt_sodeystvie_zanyatosti': 'FederalnyyProektSodeystvieZanyatostiView',
   '/structure/federalnye': 'FederalnyeView',
   '/structure/regionalnie': 'RegionalView',
+  '/structure/korpus_obschestvennyh_nablyudateley': 'KorpusNabludView',
+  '/structure/natsionalnaya_sistema_kvalifikatsiy': 'NacSystemView',
 
   // Безопасность (/bezopasnost)
   '/bezopasnost/profilaktika_upotrebleniya_pav': 'ProfilaktikaPavView',

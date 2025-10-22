@@ -209,7 +209,7 @@
 
 <script>
 // Настройка базового URL для API
-const API_BASE_URL = 'http://юность.панксквад.рф/api';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 export default {
   name: 'LoginView',
