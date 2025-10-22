@@ -1,7 +1,7 @@
 # run.py
 from app import app
 from extensions import db
-from models import User, Group, PortfolioFile, Complaint, Feedback
+from models import User, Group, PortfolioFile, Complaint, Feedback, News
 
 def init_test_data():
     """Инициализация тестовых данных"""
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     with app.app_context():
         try:
             # Импортируем все модели для создания таблиц
-            from models import User, Student, Group, Grade, PortfolioFile, Complaint, Feedback
+            from models import User, Student, Group, Grade, PortfolioFile, Complaint, Feedback, PageContent, News
             
             # Гарантируем, что все таблицы существуют
             print("🛠️ Проверка структуры базы данных...")

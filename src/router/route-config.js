@@ -6,6 +6,7 @@ export const routeConfig = {
   '/profile': 'ProfileView',
   '/kniga-zhalob': 'KnigaZhalob',
   '/admin/kniga-zhalob': 'AdminPanel',
+  '/news/:slug': 'NewsDetailView',
   
   // Абитуриенты (/applicants)
   '/applicants/priem': 'PriemView',
@@ -134,6 +135,7 @@ export const routeSettings = {
     'bezopasnost': 'bezopasnost',
     'info': 'info',
     'dokumenty': 'dokumenty',
-    'kshi': 'kshi'
+    'kshi': 'kshi',
+    'news': 'news'
   }
 }

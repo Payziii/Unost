@@ -1,27 +1,72 @@
-from flask import Blueprint, request, jsonify, send_file
+from flask import Blueprint, request, jsonify, send_file, url_for
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
 from extensions import db
-from models import User, Student, Grade, Group, PortfolioFile, Complaint, Feedback, PageContent
+from models import User, Student, Grade, Group, PortfolioFile, Complaint, Feedback, PageContent, News
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import os
 import uuid
+import re
 from werkzeug.utils import secure_filename
 
 # Настройки для загрузки файлов
 UPLOAD_FOLDER = 'uploads/portfolio'
 ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx'}
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+NEWS_UPLOAD_SUBDIR = os.path.join('uploads', 'news')
+NEWS_ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'webp'}
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def allowed_image(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in NEWS_ALLOWED_EXTENSIONS
+
+
+def get_news_upload_folder():
+    folder = os.path.join(BASE_DIR, NEWS_UPLOAD_SUBDIR)
+    os.makedirs(folder, exist_ok=True)
+    return folder
+
+
+def slugify(value):
+    value = re.sub(r'[^\w\s-]', '', value, flags=re.UNICODE).strip().lower()
+    value = re.sub(r'[-\s]+', '-', value)
+    return value or uuid.uuid4().hex[:8]
+
+
+def generate_unique_slug(title):
+    base_slug = slugify(title)
+    slug = base_slug
+    counter = 2
+
+    while News.query.filter_by(slug=slug).first():
+        slug = f'{base_slug}-{counter}'
+        counter += 1
+
+    return slug
+
+
+def serialize_news(news):
+    image_url = None
+    if news.image_filename:
+        try:
+            image_url = url_for('news.get_news_image', slug=news.slug, _external=True)
+        except RuntimeError:
+            image_url = f'/api/news/{news.slug}/image'
+
+    return news.to_dict(image_url=image_url)
 
 auth_routes = Blueprint('auth', __name__)
 student_routes = Blueprint('students', __name__)
 complaint_routes = Blueprint('complaints', __name__)
 feedback_routes = Blueprint('feedback', __name__)
 content_routes = Blueprint('content', __name__)
+news_routes = Blueprint('news', __name__)
 
 # Аутентификация
 @auth_routes.route('/api/login', methods=['POST'])
@@ -288,6 +333,121 @@ def upsert_page_content(page_path):
 
     except Exception as e:
         db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+# ---------- News management ----------
+
+@news_routes.route('/api/news', methods=['GET'])
+def get_news_items():
+    try:
+        limit = request.args.get('limit', type=int)
+        include_empty = (request.args.get('include_empty', 'false').lower() == 'true')
+        items = News.query.order_by(News.created_at.desc()).all()
+
+        if not include_empty:
+            items = [
+                item for item in items
+                if item.page and (item.page.components or [])
+            ]
+
+        if limit is not None and limit > 0:
+            items = items[:limit]
+
+        return jsonify([serialize_news(item) for item in items])
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@news_routes.route('/api/news/<string:slug>', methods=['GET'])
+def get_news_item(slug):
+    try:
+        news = News.query.filter_by(slug=slug).first()
+        if not news:
+            return jsonify({'error': 'Новости с таким адресом не найдено'}), 404
+
+        return jsonify(serialize_news(news))
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@news_routes.route('/api/news', methods=['POST'])
+@jwt_required()
+def create_news_item():
+    try:
+        current_user_id = get_jwt_identity()
+        user = User.query.get(int(current_user_id))
+
+        if not user or user.role != 'admin':
+            return jsonify({'error': 'У вас нет прав для создания новостей'}), 403
+
+        title = (request.form.get('title') or '').strip()
+        content = (request.form.get('content') or '').strip()
+
+        if not title or not content:
+            return jsonify({'error': 'Заполните название и описание новости'}), 400
+
+        slug = generate_unique_slug(title)
+        page_path = f'/news/{slug}'
+
+        image = request.files.get('image')
+        saved_filename = None
+
+        if image and image.filename:
+            if not allowed_image(image.filename):
+                return jsonify({'error': 'Разрешены только изображения форматов JPG, PNG, GIF или WEBP'}), 400
+
+            upload_folder = get_news_upload_folder()
+            original_filename = secure_filename(image.filename)
+            extension = original_filename.rsplit('.', 1)[1].lower()
+            saved_filename = f"{uuid.uuid4().hex}.{extension}"
+            image_path = os.path.join(upload_folder, saved_filename)
+            image.save(image_path)
+
+        page = PageContent(
+            path=page_path,
+            title=title,
+            components=[]
+        )
+        db.session.add(page)
+        db.session.flush()
+
+        news = News(
+            title=title,
+            slug=slug,
+            content=content,
+            image_filename=saved_filename,
+            page_id=page.id
+        )
+
+        db.session.add(news)
+        db.session.commit()
+
+        return jsonify(serialize_news(news)), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+@news_routes.route('/api/news/<string:slug>/image', methods=['GET'])
+def get_news_image(slug):
+    try:
+        news = News.query.filter_by(slug=slug).first()
+
+        if not news or not news.image_filename:
+            return jsonify({'error': 'Изображение не найдено'}), 404
+
+        file_path = os.path.join(get_news_upload_folder(), news.image_filename)
+
+        if not os.path.exists(file_path):
+            return jsonify({'error': 'Изображение не найдено'}), 404
+
+        return send_file(file_path)
+
+    except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 @student_routes.route('/api/students/portfolio', methods=['POST'])

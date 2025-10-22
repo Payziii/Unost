@@ -232,7 +232,7 @@ const moveSegment = (index, direction) => {
       v-if="!segments.length"
       class="inline-content-empty"
     >
-      No segments yet.
+      Сегментов еще нет...
     </div>
     <div
       v-else
@@ -245,7 +245,7 @@ const moveSegment = (index, direction) => {
       >
         <header class="inline-segment-card__header">
           <h5 class="inline-segment-card__title">
-            {{ segment.type === 'text' ? 'Text' : segment.type }}
+            {{ segment.type === 'text' ? 'Текст' : segment.type === 'Bold' ? 'Жирный текст' : segment.type === 'Highlight' ? 'Выделение' : segment.type === 'Link' ? 'Ссылка' : segment.type }}
           </h5>
           <div class="inline-segment-card__actions">
             <button
@@ -253,7 +253,7 @@ const moveSegment = (index, direction) => {
               class="inline-icon-button"
               :disabled="index === 0"
               @click="moveSegment(index, -1)"
-              aria-label="Move up"
+              aria-label="Поднять"
             >
               ↑
             </button>
@@ -262,7 +262,7 @@ const moveSegment = (index, direction) => {
               class="inline-icon-button"
               :disabled="index === segments.length - 1"
               @click="moveSegment(index, 1)"
-              aria-label="Move down"
+              aria-label="Опустить"
             >
               ↓
             </button>
@@ -270,7 +270,7 @@ const moveSegment = (index, direction) => {
               type="button"
               class="inline-icon-button danger"
               @click="removeSegment(index)"
-              aria-label="Remove"
+              aria-label="Удалить"
             >
               ×
             </button>
@@ -282,7 +282,7 @@ const moveSegment = (index, direction) => {
             <textarea
               v-model="segment.value"
               class="inline-input textarea"
-              placeholder="Text"
+              placeholder="Текст"
               @input="emitChange"
             />
           </template>
@@ -292,7 +292,7 @@ const moveSegment = (index, direction) => {
               v-model="segment.props.content"
               type="text"
               class="inline-input"
-              placeholder="Bold content"
+              placeholder="Жирный текст"
               @input="emitChange"
             />
           </template>
@@ -302,14 +302,14 @@ const moveSegment = (index, direction) => {
               v-model="segment.props.content"
               type="text"
               class="inline-input"
-              placeholder="Highlight content"
+              placeholder="Выделяемый текст"
               @input="emitChange"
             />
             <input
               v-model="segment.props.color"
               type="text"
               class="inline-input"
-              placeholder="Color"
+              placeholder="Цвет"
               @input="emitChange"
             />
             <label class="inline-checkbox">
@@ -318,7 +318,7 @@ const moveSegment = (index, direction) => {
                 type="checkbox"
                 @change="emitChange"
               />
-              <span>Bold text</span>
+              <span>Жирный текст</span>
             </label>
           </template>
 
@@ -327,7 +327,7 @@ const moveSegment = (index, direction) => {
               v-model="segment.props.content"
               type="text"
               class="inline-input"
-              placeholder="Link label"
+              placeholder="Имя ссылки"
               @input="emitChange"
             />
             <input
@@ -341,7 +341,7 @@ const moveSegment = (index, direction) => {
               v-model="segment.props.color"
               type="text"
               class="inline-input"
-              placeholder="Color"
+              placeholder="Цвет"
               @input="emitChange"
             />
           </template>
@@ -350,34 +350,34 @@ const moveSegment = (index, direction) => {
     </div>
 
     <div class="inline-add-segment">
-      <span>Add segment:</span>
+      <span>Добавить сегмент текста:</span>
       <button
         type="button"
         class="inline-secondary-button"
         @click="addSegment('text')"
       >
-        Text
+        Текст
       </button>
       <button
         type="button"
         class="inline-secondary-button"
         @click="addSegment('Bold')"
       >
-        Bold
+        Жирный текст
       </button>
       <button
         type="button"
         class="inline-secondary-button"
         @click="addSegment('Highlight')"
       >
-        Highlight
+        Выделение
       </button>
       <button
         type="button"
         class="inline-secondary-button"
         @click="addSegment('Link')"
       >
-        Link
+        Ссылка
       </button>
     </div>
   </div>

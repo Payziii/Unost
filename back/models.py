@@ -114,3 +114,29 @@ class PageContent(db.Model):
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
+
+
+class News(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    slug = db.Column(db.String(255), unique=True, nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    image_filename = db.Column(db.String(255))
+    page_id = db.Column(db.Integer, db.ForeignKey('page_content.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    page = db.relationship('PageContent', backref=db.backref('news', uselist=False))
+
+    def to_dict(self, image_url=None):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'slug': self.slug,
+            'content': self.content,
+            'page_path': self.page.path if self.page else None,
+            'image_url': image_url,
+            'is_ready': bool(self.page and (self.page.components or [])),
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None
+        }

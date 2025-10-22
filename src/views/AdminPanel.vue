@@ -107,7 +107,7 @@ const fetchNews = async () => {
       return
     }
 
-    const response = await fetch(`${API_BASE_URL}/news`, {
+    const response = await fetch(`${API_BASE_URL}/news?include_empty=true`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -194,12 +194,24 @@ const submitNews = async () => {
     const createdNews = await response.json()
     news.value = [createdNews, ...news.value]
     resetNewsForm()
+
+    const editPath = createdNews.page_path || `/news/${createdNews.slug}`
+    await router.push({
+      path: editPath,
+      query: { edit: 'true', from: 'admin-news' }
+    })
   } catch (err) {
     console.error('Ошибка создания новости:', err)
     newsError.value = err.message
   } finally {
     newsSubmitting.value = false
   }
+}
+
+const openNewsPage = (item) => {
+  if (!item) return
+  const editPath = item.page_path || `/news/${item.slug}`
+  router.push({ path: editPath, query: { edit: 'true' } })
 }
 
 const fetchStats = async () => {
@@ -529,6 +541,10 @@ onMounted(() => {
                 </div>
 
                 <p class="news-content">{{ item.content }}</p>
+                <div class="news-item-actions">
+                  <span v-if="!item.is_ready" class="news-status">Страница ещё не опубликована</span>
+                  <button type="button" class="news-edit-button" @click="openNewsPage(item)">Редактировать страницу</button>
+                </div>
               </article>
             </div>
           </div>
@@ -751,6 +767,36 @@ onMounted(() => {
   color: #2c3e50;
   line-height: 1.6;
   white-space: pre-wrap;
+}
+
+.news-item-actions {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.news-status {
+  font-size: 0.85rem;
+  color: #d97706;
+  font-weight: 600;
+}
+
+.news-edit-button {
+  border: none;
+  background: linear-gradient(90deg, #f97316, #fb923c);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.news-edit-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.35);
 }
 
 .tabs {

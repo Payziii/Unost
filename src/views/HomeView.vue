@@ -1,18 +1,27 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
+import { ref, onMounted, onBeforeUnmount, nextTick, watch } from "vue";
+import { useRouter } from "vue-router";
+import { fetchNewsList } from "@/services/newsService";
 
 const slider = ref(null);
 const runnersCanvas = ref(null);
+const router = useRouter();
+
+const newsItems = ref([]);
+const newsLoading = ref(false);
+const newsError = ref("");
 let index = 0;
 let interval = null;
 let startX = 0;
 let isDragging = false;
+let sliderEventsBound = false;
 
-// переключение на следующий слайд
+// ╨┐╨╡╤А╨╡╨║╨╗╤О╤З╨╡╨╜╨╕╨╡ ╨╜╨░ ╤Б╨╗╨╡╨┤╤Г╤О╤Й╨╕╨╣ ╤Б╨╗╨░╨╣╨┤
 const nextSlide = () => {
   const el = slider.value;
   if (!el) return;
   const total = el.children.length;
+  if (!total) return;
   index = (index + 1) % total;
   el.scrollTo({
     left: index * el.clientWidth,
@@ -20,17 +29,147 @@ const nextSlide = () => {
   });
 };
 
-// переключение на предыдущий слайд
+// ╨┐╨╡╤А╨╡╨║╨╗╤О╤З╨╡╨╜╨╕╨╡ ╨╜╨░ ╨┐╤А╨╡╨┤╤Л╨┤╤Г╤Й╨╕╨╣ ╤Б╨╗╨░╨╣╨┤
 const prevSlide = () => {
   const el = slider.value;
   if (!el) return;
   const total = el.children.length;
+  if (!total) return;
   index = (index - 1 + total) % total;
   el.scrollTo({
     left: index * el.clientWidth,
     behavior: "smooth",
   });
 };
+
+const stopAutoplay = () => {
+  if (interval) {
+    clearInterval(interval);
+    interval = null;
+  }
+};
+
+const startAutoplay = () => {
+  stopAutoplay();
+  const el = slider.value;
+  if (!el) return;
+  const total = el.children.length;
+  if (total <= 1) return;
+  interval = setInterval(nextSlide, 8000);
+};
+
+const resetSliderPosition = (behavior = "auto") => {
+  const el = slider.value;
+  if (!el) return;
+  index = 0;
+  el.scrollTo({
+    left: 0,
+    behavior
+  });
+};
+
+const handleTouchStart = (event) => {
+  if (!slider.value) return;
+  startX = event.touches[0].clientX;
+  isDragging = true;
+  stopAutoplay();
+};
+
+const handleTouchMove = (event) => {
+  if (!isDragging || !slider.value) return;
+  const deltaX = event.touches[0].clientX - startX;
+  slider.value.scrollLeft = index * slider.value.clientWidth - deltaX;
+};
+
+const handleTouchEnd = (event) => {
+  if (!slider.value) return;
+  isDragging = false;
+  const deltaX = event.changedTouches[0].clientX - startX;
+  const el = slider.value;
+  const threshold = el.clientWidth * 0.2;
+  const total = el.children.length;
+
+  if (Math.abs(deltaX) > threshold && total) {
+    if (deltaX > 0) {
+      index = (index - 1 + total) % total;
+    } else {
+      index = (index + 1) % total;
+    }
+  }
+
+  el.scrollTo({
+    left: index * el.clientWidth,
+    behavior: "smooth",
+  });
+
+  startAutoplay();
+};
+
+const bindSliderEvents = () => {
+  const el = slider.value;
+  if (!el || sliderEventsBound) return;
+
+  el.addEventListener("touchstart", handleTouchStart, { passive: true });
+  el.addEventListener("touchmove", handleTouchMove, { passive: true });
+  el.addEventListener("touchend", handleTouchEnd, { passive: true });
+  sliderEventsBound = true;
+};
+
+const unbindSliderEvents = () => {
+  if (!sliderEventsBound) return;
+  const el = slider.value;
+  if (!el) {
+    sliderEventsBound = false;
+    return;
+  }
+  el.removeEventListener("touchstart", handleTouchStart);
+  el.removeEventListener("touchmove", handleTouchMove);
+  el.removeEventListener("touchend", handleTouchEnd);
+  sliderEventsBound = false;
+};
+
+const openNews = (item) => {
+  if (!item) return;
+  if (item.page_path) {
+    router.push(item.page_path);
+    return;
+  }
+  if (item.slug) {
+    router.push(`/news/${item.slug}`);
+  }
+};
+
+const truncate = (text, limit = 140) => {
+  if (!text) return "";
+  return text.length > limit ? `${text.slice(0, limit)}…` : text;
+};
+
+const loadNews = async () => {
+  stopAutoplay();
+  try {
+    newsLoading.value = true;
+    newsError.value = "";
+    const data = await fetchNewsList({ limit: 9 });
+    newsItems.value = Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error("Ошибка загрузки новостей:", error);
+    newsError.value = error.message || "Не удалось загрузить новости";
+    newsItems.value = [];
+  } finally {
+    newsLoading.value = false;
+  }
+};
+
+watch(newsItems, async (items) => {
+  await nextTick();
+  bindSliderEvents();
+  resetSliderPosition(items.length ? "auto" : "smooth");
+  if (items.length > 1) {
+    startAutoplay();
+  } else {
+    stopAutoplay();
+  }
+});
 
 let rafId = 0;
 let lastT = 0;
@@ -48,12 +187,12 @@ const PERF = { maxParticles: 120, gravity: 4, arrowsPerSec: 6 };
 const ORANGE = '#f54900';
 
 const CARTOON = {
-  line: 2,             // единая толщина линий
-  color: ORANGE,       // один цвет -> меньше смен состояния контекста
-  bobAmp: 3,           // подпрыгивание
-  squash: 0.12,        // сквош/стретч
-  arrowWobbleDeg: 6,   // качание стрелочек
-  speedlineChance: 3   // линий скорости в сек. на бегуна
+  line: 2,             // ╨╡╨┤╨╕╨╜╨░╤П ╤В╨╛╨╗╤Й╨╕╨╜╨░ ╨╗╨╕╨╜╨╕╨╣
+  color: ORANGE,       // ╨╛╨┤╨╕╨╜ ╤Ж╨▓╨╡╤В -> ╨╝╨╡╨╜╤М╤И╨╡ ╤Б╨╝╨╡╨╜ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╤П ╨║╨╛╨╜╤В╨╡╨║╤Б╤В╨░
+  bobAmp: 3,           // ╨┐╨╛╨┤╨┐╤А╤Л╨│╨╕╨▓╨░╨╜╨╕╨╡
+  squash: 0.12,        // ╤Б╨║╨▓╨╛╤И/╤Б╤В╤А╨╡╤В╤З
+  arrowWobbleDeg: 6,   // ╨║╨░╤З╨░╨╜╨╕╨╡ ╤Б╤В╤А╨╡╨╗╨╛╤З╨╡╨║
+  speedlineChance: 3   // ╨╗╨╕╨╜╨╕╨╣ ╤Б╨║╨╛╤А╨╛╤Б╤В╨╕ ╨▓ ╤Б╨╡╨║. ╨╜╨░ ╨▒╨╡╨│╤Г╨╜╨░
 };
 
 
@@ -81,7 +220,7 @@ function setupRunners() {
   const w = c.width / dpi;
   const h = c.height / dpi;
   const baseY = Math.round(h * 0.7);
-  const count = Math.max(3, Math.floor(w / 260)); // количество бегунов от ширины
+  const count = Math.max(3, Math.floor(w / 260)); // ╨║╨╛╨╗╨╕╤З╨╡╤Б╤В╨▓╨╛ ╨▒╨╡╨│╤Г╨╜╨╛╨▓ ╨╛╤В ╤И╨╕╤А╨╕╨╜╤Л
   runners = [];
   for (let i = 0; i < count; i++) {
     const size = (0.9 + Math.random() * 0.5) * RUNNER_SCALE;
@@ -124,7 +263,7 @@ function spawnSpeedline(x, y) {
   p.len = 10 + Math.random() * 18;
   p.life = 0.20 + Math.random() * 0.22;
   p.age = 0;
-  p.dy = (Math.random() - 0.5) * 3; // фиксируем наклон один раз
+  p.dy = (Math.random() - 0.5) * 3; // ╤Д╨╕╨║╤Б╨╕╤А╤Г╨╡╨╝ ╨╜╨░╨║╨╗╨╛╨╜ ╨╛╨┤╨╕╨╜ ╤А╨░╨╖
   particles.push(p);
 }
 
@@ -147,7 +286,7 @@ function drawArrow(ctx, p) {
   ctx.rotate(p.angle + Math.sin(p.age * p.wobbleSpeed * 10) * p.wobbleAmp);
   ctx.globalAlpha = a;
 
-  // стрелка только контуром (один проход)
+  // ╤Б╤В╤А╨╡╨╗╨║╨░ ╤В╨╛╨╗╤М╨║╨╛ ╨║╨╛╨╜╤В╤Г╤А╨╛╨╝ (╨╛╨┤╨╕╨╜ ╨┐╤А╨╛╤Е╨╛╨┤)
   ctx.beginPath();
   ctx.moveTo(-p.len * 0.1, 0);
   ctx.lineTo(p.len * 0.35, 0);
@@ -177,13 +316,13 @@ function drawStickman(ctx, x, y, s, t) {
   const armSwing = Math.sin(t) * 1.15;
   const legSwing = Math.sin(t + Math.PI) * 1.2;
 
-  // туловище
+  // ╤В╤Г╨╗╨╛╨▓╨╕╤Й╨╡
   ctx.beginPath();
   ctx.moveTo(0, -6 * s);
   ctx.lineTo(0,  6 * s);
   ctx.stroke();
 
-  // руки
+  // ╤А╤Г╨║╨╕
   ctx.beginPath();
   ctx.moveTo(0, -4 * s);
   ctx.lineTo(Math.cos(armSwing) * arm, -4 * s + Math.sin(armSwing) * arm * 0.32);
@@ -191,7 +330,7 @@ function drawStickman(ctx, x, y, s, t) {
   ctx.lineTo(-Math.cos(armSwing) * arm, -4 * s - Math.sin(armSwing) * arm * 0.32);
   ctx.stroke();
 
-  // ноги
+  // ╨╜╨╛╨│╨╕
   ctx.beginPath();
   ctx.moveTo(0, 6 * s);
   ctx.lineTo(Math.cos(legSwing) * leg, 6 * s + Math.abs(Math.sin(legSwing)) * leg * 0.65);
@@ -199,7 +338,7 @@ function drawStickman(ctx, x, y, s, t) {
   ctx.lineTo(-Math.cos(legSwing) * leg, 6 * s + Math.abs(Math.sin(legSwing)) * leg * 0.65);
   ctx.stroke();
 
-  // голова — только контур (сквош через scale)
+  // ╨│╨╛╨╗╨╛╨▓╨░ тАФ ╤В╨╛╨╗╤М╨║╨╛ ╨║╨╛╨╜╤В╤Г╤А (╤Б╨║╨▓╨╛╤И ╤З╨╡╤А╨╡╨╖ scale)
   ctx.save();
   ctx.translate(0, -10 * s - impact * 0.7 * s);
   ctx.scale(1 + 0.10 * impact, 1 - 0.10 * impact);
@@ -233,20 +372,20 @@ function tick(time) {
   const dt = lastT ? Math.min(0.035, now - lastT) : 0.016;
   lastT = now;
 
-  // очистка (не сбивая DPI-настройки)
+  // ╨╛╤З╨╕╤Б╤В╨║╨░ (╨╜╨╡ ╤Б╨▒╨╕╨▓╨░╤П DPI-╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨╕)
   ctx.save();
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, c.width, c.height);
   ctx.restore();
   ctx.setTransform(dpi, 0, 0, dpi, 0, 0);
 
-  // единые настройки пера на кадр
+  // ╨╡╨┤╨╕╨╜╤Л╨╡ ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨╕ ╨┐╨╡╤А╨░ ╨╜╨░ ╨║╨░╨┤╤А
   ctx.lineJoin = 'round';
   ctx.lineCap  = 'round';
   ctx.strokeStyle = CARTOON.color;
   ctx.lineWidth   = CARTOON.line;
 
-  // бегуны
+  // ╨▒╨╡╨│╤Г╨╜╤Л
   for (const r of runners) {
     r.x += r.speed * dt;
     r.phase += r.phaseSpeed * dt;
@@ -260,7 +399,7 @@ function tick(time) {
     if (r.x > w + 30) r.x = -30 - Math.random() * 60;
   }
 
-  // партиклы
+  // ╨┐╨░╤А╤В╨╕╨║╨╗╤Л
   for (let i = particles.length - 1; i >= 0; i--) {
     const p = particles[i];
     p.age += dt;
@@ -273,7 +412,7 @@ function tick(time) {
 
     if (p.age >= p.life) {
       particles.splice(i, 1);
-      particlePool.push(p); // возврат в пул
+      particlePool.push(p); // ╨▓╨╛╨╖╨▓╤А╨░╤В ╨▓ ╨┐╤Г╨╗
     }
   }
 
@@ -287,12 +426,12 @@ function initRunnersAnimation() {
   resizeRunnersCanvas();
   setupRunners();
 
-  // кэш контекста (desynchronized — hint браузеру)
+  // ╨║╤Н╤И ╨║╨╛╨╜╤В╨╡╨║╤Б╤В╨░ (desynchronized тАФ hint ╨▒╤А╨░╤Г╨╖╨╡╤А╤Г)
   ctx2d = runnersCanvas.value.getContext('2d', { alpha: true, desynchronized: true });
 
   rafId = requestAnimationFrame(tick);
 
-  // пауза, когда канвас не в вьюпорте
+  // ╨┐╨░╤Г╨╖╨░, ╨║╨╛╨│╨┤╨░ ╨║╨░╨╜╨▓╨░╤Б ╨╜╨╡ ╨▓ ╨▓╤М╤О╨┐╨╛╤А╤В╨╡
   io = new IntersectionObserver(([e]) => {
     if (!e) return;
     if (e.isIntersecting) {
@@ -310,47 +449,17 @@ function initRunnersAnimation() {
 onMounted(async () => {
   await nextTick();
   initRunnersAnimation();
-  const el = slider.value;
-  if (!el) return;
-
-  const total = el.children.length;
-  interval = setInterval(nextSlide, 10000);
-
-  // свайпы
-  el.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-    clearInterval(interval);
-  });
-
-  el.addEventListener("touchmove", (e) => {
-    if (!isDragging) return;
-    const deltaX = e.touches[0].clientX - startX;
-    el.scrollLeft = index * el.clientWidth - deltaX;
-  });
-
-  el.addEventListener("touchend", (e) => {
-    isDragging = false;
-    const deltaX = e.changedTouches[0].clientX - startX;
-    if (Math.abs(deltaX) > 50) {
-      const total = el.children.length;
-      if (deltaX > 0) index = Math.max(0, index - 1);
-      else index = Math.min(total - 1, index + 1);
-    }
-    el.scrollTo({
-      left: index * el.clientWidth,
-      behavior: "smooth",
-    });
-    interval = setInterval(nextSlide, 7500);
-  });
+  bindSliderEvents();
+  await loadNews();
 });
 
 onBeforeUnmount(() => {
-  clearInterval(interval);
+  stopAutoplay();
   if (rafId) cancelAnimationFrame(rafId);
   window.removeEventListener('resize', handleResize);
   document.removeEventListener('visibilitychange', onVis);
   if (io) io.disconnect();
+  unbindSliderEvents();
   ctx2d = null;
 });
 
@@ -383,33 +492,52 @@ onBeforeUnmount(() => {
 
       <div class="slider-wrapper">
         <div class="slider" ref="slider">
-          <div class="card">
-            <img src="/images/cards/2.jpg" alt="">
-            <h3>3D модель Юности</h3>
-            <p>Узнайте, как выглядит учебное заведение внутри</p>
-            <div class="baton"><a>Просмотреть</a></div>
-          </div>
-
-          <div class="card">
-            <img src="/images/cards/1.jpg" alt="">
-            <h3>Набор 2025</h3>
-            <p>У вас есть шанс поступить к нам!</p>
-            <div class="baton"><a>Подать документы</a></div>
-          </div>
-
-          <div class="card">
-            <img src="/images/cards/1.jpg" alt="">
-            <h3>Очень интересная новость</h3>
-            <p>
-              Данный текст можно не читать и в нем ничего нет — он лишь показывает длину описания для блока карточки.
-            </p>
-            <div class="baton"><a>Войти в личный кабинет</a></div>
-          </div>
+          <template v-if="newsLoading">
+            <div class="card card--placeholder">
+              <h3>Новости загружаются...</h3>
+              <p>Пожалуйста, подождите.</p>
+              <div class="baton"><button type="button" disabled>Скоро</button></div>
+            </div>
+          </template>
+          <template v-else-if="newsError">
+            <div class="card card--placeholder">
+              <h3>Не удалось загрузить новости</h3>
+              <p>{{ newsError }}</p>
+              <div class="baton"><button type="button" @click="loadNews">Повторить</button></div>
+            </div>
+          </template>
+          <template v-else-if="newsItems.length === 0">
+            <div class="card card--placeholder">
+              <h3>Новости появятся совсем скоро</h3>
+              <p>Мы готовим свежие материалы.</p>
+              <div class="baton"><button type="button" @click="loadNews">Обновить</button></div>
+            </div>
+          </template>
+          <template v-else>
+            <div
+              class="card"
+              v-for="item in newsItems"
+              :key="item.id || item.slug"
+            >
+              <img
+                v-if="item.image_url"
+                :src="item.image_url"
+                :alt="item.title"
+              />
+              <h3>{{ item.title }}</h3>
+              <p>{{ truncate(item.content) }}</p>
+              <div class="baton">
+                <button type="button" @click="openNews(item)">Подробнее</button>
+              </div>
+            </div>
+          </template>
         </div>
 
-        <button class="nav-btn left" @click="prevSlide">‹</button>
-        <button class="nav-btn right" @click="nextSlide">›</button>
+        <button class="nav-btn left" @click="prevSlide" :disabled="newsItems.length <= 1">‹</button>
+        <button class="nav-btn right" @click="nextSlide" :disabled="newsItems.length <= 1">›</button>
       </div>
+
+
     </div>
   </div>
 </template>
@@ -432,7 +560,7 @@ onBeforeUnmount(() => {
   padding: 10px;
 }
 
-/* ====== Десктоп ====== */
+/* ====== ╨Ф╨╡╤Б╨║╤В╨╛╨┐ ====== */
 .title {
   width: 40%;
   margin-top: 50px;
@@ -445,7 +573,7 @@ onBeforeUnmount(() => {
   color: #000;
 }
 
-/* ====== Мобильная адаптация ====== */
+/* ====== ╨Ь╨╛╨▒╨╕╨╗╤М╨╜╨░╤П ╨░╨┤╨░╨┐╤В╨░╤Ж╨╕╤П ====== */
 @media (max-width: 900px) {
   .isp3304 {
     flex-direction: column;
@@ -456,7 +584,7 @@ onBeforeUnmount(() => {
   }
 
   .title {
-    display: none; /* 🔥 Скрываем блок с заголовком и описанием */
+    display: none; /* ЁЯФе ╨б╨║╤А╤Л╨▓╨░╨╡╨╝ ╨▒╨╗╨╛╨║ ╤Б ╨╖╨░╨│╨╛╨╗╨╛╨▓╨║╨╛╨╝ ╨╕ ╨╛╨┐╨╕╤Б╨░╨╜╨╕╨╡╨╝ */
   }
 
   .slider-wrapper {
@@ -474,7 +602,7 @@ onBeforeUnmount(() => {
   }
 
   .nav-btn {
-    display: none; /* 🔥 Скрываем стрелки */
+    display: none; /* ЁЯФе ╨б╨║╤А╤Л╨▓╨░╨╡╨╝ ╤Б╤В╤А╨╡╨╗╨║╨╕ */
   }
 
   .slider {
@@ -503,7 +631,7 @@ onBeforeUnmount(() => {
   }
 }
 
-/* ====== Остальные стили ====== */
+/* ====== ╨Ю╤Б╤В╨░╨╗╤М╨╜╤Л╨╡ ╤Б╤В╨╕╨╗╨╕ ====== */
 @keyframes pulse {
   0% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.05); opacity: 0.8; }
@@ -606,7 +734,33 @@ onBeforeUnmount(() => {
   border-radius: 8px;
 }
 
-/* ==== Мобильная оптимизация ==== */
+.card .baton button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+.card.card--placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.card.card--placeholder .baton {
+  background-color: rgba(245, 73, 0, 0.12);
+  color: var(--black);
+}
+
+.nav-btn[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ==== ╨Ь╨╛╨▒╨╕╨╗╤М╨╜╨░╤П ╨╛╨┐╤В╨╕╨╝╨╕╨╖╨░╤Ж╨╕╤П ==== */
 @media (max-width: 900px) {
   .isp3304 {
     flex-direction: column;
@@ -617,7 +771,7 @@ onBeforeUnmount(() => {
     width: 100%;
   }
 
-  /* Показываем только заголовок h1 */
+  /* ╨Я╨╛╨║╨░╨╖╤Л╨▓╨░╨╡╨╝ ╤В╨╛╨╗╤М╨║╨╛ ╨╖╨░╨│╨╛╨╗╨╛╨▓╨╛╨║ h1 */
   .title {
     width: 100%;
     text-align: center;
@@ -635,7 +789,7 @@ onBeforeUnmount(() => {
     display: none;
   }
 
-  /* Слайдер */
+  /* ╨б╨╗╨░╨╣╨┤╨╡╤А */
   .slider-wrapper {
     width: 100%;
     margin: 0;
@@ -657,7 +811,7 @@ onBeforeUnmount(() => {
   }
 
   .card {
-    flex: 0 0 90%; /* карточка занимает почти весь экран */
+    flex: 0 0 90%; /* ╨║╨░╤А╤В╨╛╤З╨║╨░ ╨╖╨░╨╜╨╕╨╝╨░╨╡╤В ╨┐╨╛╤З╤В╨╕ ╨▓╨╡╤Б╤М ╤Н╨║╤А╨░╨╜ */
     border-radius: 16px;
     height: auto;
     scroll-snap-align: center;
@@ -694,7 +848,7 @@ onBeforeUnmount(() => {
     width: fit-content;
   }
 
-  /* Убираем стрелки */
+  /* ╨г╨▒╨╕╤А╨░╨╡╨╝ ╤Б╤В╤А╨╡╨╗╨║╨╕ */
   .nav-btn {
     display: none;
   }
@@ -704,9 +858,10 @@ onBeforeUnmount(() => {
 
 .runners-canvas {
   width: 100%;
-  height: 170px;        /* должно совпадать с cssH в JS */
+  height: 170px;        /* ╨┤╨╛╨╗╨╢╨╜╨╛ ╤Б╨╛╨▓╨┐╨░╨┤╨░╤В╤М ╤Б cssH ╨▓ JS */
   margin-top: 12px;
   display: block;
-  pointer-events: none; /* чтобы не мешать кликам */
+  pointer-events: none; /* ╤З╤В╨╛╨▒╤Л ╨╜╨╡ ╨╝╨╡╤И╨░╤В╤М ╨║╨╗╨╕╨║╨░╨╝ */
 }
 </style>
+

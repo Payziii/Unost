@@ -87,7 +87,7 @@ export const pageComponentLibrary = [
     label: 'Сетка карточек',
     description: 'Контейнер для карточек с адаптивной сеткой',
     propsSchema: [
-      { name: 'maxCardsPerRow', label: 'Карточек в ряд (0 — авто)', type: 'number', default: 0, min: 0 }
+      { name: 'maxCardsPerRow', label: 'Карточек в ряд (0 — автоматически)', type: 'number', default: 0, min: 0 }
     ],
     collections: [
       {
@@ -128,7 +128,7 @@ export const pageComponentLibrary = [
   {
     type: 'Bold',
     label: 'Жирный текст',
-    description: 'Короткий фрагмент текста с усилением',
+    description: 'Короткий фрагмент полужирного текста',
     propsSchema: [
       { name: 'content', label: 'Текст', type: 'text', required: true, default: '' }
     ]

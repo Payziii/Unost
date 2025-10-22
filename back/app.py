@@ -44,12 +44,13 @@ def create_app():
     os.makedirs(uploads_dir, exist_ok=True)
     print(f"✅ Папка для загрузок создана: {uploads_dir}")
     
-    from routes import auth_routes, student_routes, complaint_routes, feedback_routes, content_routes
+    from routes import auth_routes, student_routes, complaint_routes, feedback_routes, content_routes, news_routes
     app.register_blueprint(auth_routes)
     app.register_blueprint(student_routes)
     app.register_blueprint(complaint_routes)
     app.register_blueprint(feedback_routes)
     app.register_blueprint(content_routes)
+    app.register_blueprint(news_routes)
     
     return app
 

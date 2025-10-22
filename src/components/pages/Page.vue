@@ -271,6 +271,10 @@ const loadContent = async () => {
     loading.value = false
     await updateDefaultTemplate()
     setDocumentTitle(currentTitle.value)
+
+    if (route.query.edit === 'true') {
+      nextTick(() => openEditor())
+    }
   }
 }
 
