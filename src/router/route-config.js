@@ -99,10 +99,13 @@ export const routeConfig = {
   '/dokumenty/nastavnichestvo': 'Nastav',
   '/dokumenty/informatsiya_o_meropriyatiyah': 'InfoMerop',
   '/dokumenty/predpisaniya': 'Predpisaniya',
-  '/dokumenty/dokumenty_po_uchebnoy_i_proizvodstvennoy_praktiki': 'Practica'
+  '/dokumenty/dokumenty_po_uchebnoy_i_proizvodstvennoy_praktiki': 'Practica',
+  
 
-
-
+  //KSHI
+  '/kshi/priholog': 'priholog',
+  '/kshi/roditeli': 'roditely',
+  '/kshi/klassnii_chasy': 'klchas',
   
   
 }
@@ -126,6 +129,7 @@ export const routeSettings = {
     'structure': 'struktura',
     'bezopasnost': 'bezopasnost',
     'info': 'info',
-    'dokumenty': 'dokumenty'
+    'dokumenty': 'dokumenty',
+    'kshi': 'kshi'
   }
 }
