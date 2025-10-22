@@ -1,8 +1,25 @@
 const cloneValue = (value) => {
-  if (typeof structuredClone === 'function') {
-    return structuredClone(value)
+  if (value === undefined) {
+    return undefined
   }
-  return JSON.parse(JSON.stringify(value ?? null))
+
+  if (typeof structuredClone === 'function') {
+    try {
+      return structuredClone(value)
+    } catch (_) {
+      // fall through to JSON clone fallback
+    }
+  }
+
+  if (value === null) {
+    return null
+  }
+
+  try {
+    return JSON.parse(JSON.stringify(value))
+  } catch (_) {
+    return value
+  }
 }
 
 export const pageComponentLibrary = [
