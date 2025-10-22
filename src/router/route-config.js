@@ -101,8 +101,8 @@ export const routeConfig = {
   
 
   //KSHI
-  '/kshi/priholog': 'priholog'
-
+  '/kshi/priholog': 'priholog',
+  '/kshi/roditeli': 'roditely',
 
   
   
