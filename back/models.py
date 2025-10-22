@@ -96,3 +96,21 @@ class Feedback(db.Model):
             'user_agent': self.user_agent,
             'created_at': self.created_at.isoformat() if self.created_at else None
         }
+
+class PageContent(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    path = db.Column(db.String(255), unique=True, nullable=False)
+    title = db.Column(db.String(255))
+    components = db.Column(db.JSON, nullable=False, default=list)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'path': self.path,
+            'title': self.title,
+            'components': self.components or [],
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None
+        }

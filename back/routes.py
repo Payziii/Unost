@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, send_file
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
 from extensions import db
-from models import User, Student, Grade, Group, PortfolioFile, Complaint, Feedback
+from models import User, Student, Grade, Group, PortfolioFile, Complaint, Feedback, PageContent
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import os
@@ -21,6 +21,7 @@ auth_routes = Blueprint('auth', __name__)
 student_routes = Blueprint('students', __name__)
 complaint_routes = Blueprint('complaints', __name__)
 feedback_routes = Blueprint('feedback', __name__)
+content_routes = Blueprint('content', __name__)
 
 # Аутентификация
 @auth_routes.route('/api/login', methods=['POST'])
@@ -231,6 +232,62 @@ def get_portfolio_files():
         return jsonify([file.to_dict() for file in portfolio_files])
     
     except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# ---------- Page content management ----------
+
+@content_routes.route('/api/pages/<path:page_path>', methods=['GET'])
+def get_page_content(page_path):
+    try:
+        normalized_path = page_path if page_path.startswith('/') else f'/{page_path}'
+        page = PageContent.query.filter_by(path=normalized_path).first()
+
+        if not page:
+            return jsonify({
+                'path': normalized_path,
+                'title': None,
+                'components': []
+            }), 200
+
+        return jsonify(page.to_dict()), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@content_routes.route('/api/pages/<path:page_path>', methods=['PUT'])
+@jwt_required()
+def upsert_page_content(page_path):
+    try:
+        current_user_id = get_jwt_identity()
+        user = User.query.get(int(current_user_id))
+
+        if not user or user.role != 'admin':
+            return jsonify({'error': 'Недостаточно прав'}), 403
+
+        data = request.get_json() or {}
+        normalized_path = page_path if page_path.startswith('/') else f'/{page_path}'
+        title = data.get('title')
+        components = data.get('components', [])
+
+        if not isinstance(components, list):
+            return jsonify({'error': 'Поле components должно быть массивом'}), 400
+
+        page = PageContent.query.filter_by(path=normalized_path).first()
+
+        if not page:
+            page = PageContent(path=normalized_path)
+
+        page.title = title
+        page.components = components
+
+        db.session.add(page)
+        db.session.commit()
+
+        return jsonify(page.to_dict()), 200
+
+    except Exception as e:
+        db.session.rollback()
         return jsonify({'error': str(e)}), 500
 
 @student_routes.route('/api/students/portfolio', methods=['POST'])
