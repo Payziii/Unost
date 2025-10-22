@@ -12,7 +12,8 @@ import Bold from '@/components/pages/Bold.vue';
 </script>
 
 <template>
-    <Page title="Профсоюз">
+    <Page title="Локальные акты">
+        <Title>Локальные акты</Title>
         <Text align="justify">
             <File file="Л1.pdf" icon>Положение о порядке и условиях приёма граждан для обучения в КШИ</File>
             <File file="Л2.pdf" icon>Положение о кадетской школе интернат</File>
