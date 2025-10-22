@@ -177,8 +177,8 @@ const menuItems = {
   structure: [
     { text: 'О нас', route: '/structure/simvolika' },
     { text: 'Кадетская школа-интернат', subitems: [
-        { text: 'Образование', route: '/kshi/obrazovanie' },
-        { text: 'Государственная Итоговая Аттестация', route: '/kshi/gia' },
+        { text: 'Образование', route: '/info/kshi' },
+        { text: 'Государственная Итоговая Аттестация', route: '/info/giagia' },
         { text: 'Нормативные документы', route: '/kshi/dokymenty' },
         { text: 'Кадетская жизнь', route: '/kshi/jizn' },
         { text: 'Для родителей', route: '/kshi/roditeli' },
