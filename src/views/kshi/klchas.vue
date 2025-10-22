@@ -14,7 +14,7 @@ import Bold from '@/components/pages/Bold.vue';
 <template>  
     <Page title="Классные часы">
         <Title>Классные часы</Title>
-        <Link LinkTo="https://rospotrebnadzor.ru/about/info/news_time/news_details.php?ELEMENT_ID=13566">Профилактика Коронавируса</Link>
+        <Link linkTo="https://rospotrebnadzor.ru/about/info/news_time/news_details.php?ELEMENT_ID=13566">Профилактика Коронавируса</Link>
         <File file="9a6KsDBf5h8fRb2kzTNNF2dRt.pptx" icon>День памяти и скорби</File>
         <File file="44DT3rGdRHy7Br2kEhFdFh7iD.pptx" icon>75 эпизодов Великой Отечественной войны</File>
         <File file="Kytnb97yfThZDiYKnAb2AGQrK.ppt" icon>Мы помним, чтим, гордимся</File>
