@@ -1,4 +1,6 @@
 <script setup>
+import { computed, useSlots } from 'vue'
+
 const props = defineProps({
   title: {
     type: String,
@@ -11,7 +13,7 @@ const props = defineProps({
   },
   buttonText: {
     type: String,
-    required: false,
+    required: false
   },
   buttonLink: {
     type: String,
@@ -22,13 +24,26 @@ const props = defineProps({
     required: false,
     default: ''
   }
-});
+})
+
+const slots = useSlots()
+const hasSlotContent = computed(() => Boolean(slots.default?.().length))
 </script>
 
 <template>
-  <div class="card">
+  <div
+    class="card"
+    data-page-component="Card"
+    :data-card-title="title"
+    :data-card-button="props.isButton"
+    :data-card-button-text="props.buttonText || ''"
+    :data-card-button-link="props.buttonLink || ''"
+  >
     <h1>{{ title }}</h1>
-    <slot>{{ props.content }}</slot>
+    <template v-if="hasSlotContent">
+      <slot>{{ props.content }}</slot>
+    </template>
+    <div v-else class="card-content" v-html="props.content" />
     <div v-if="isButton" class="baton">
       <a :href="buttonLink" target="_blank">{{ buttonText }}</a>
     </div>

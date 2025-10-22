@@ -1,9 +1,10 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, shallowRef, toRaw, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PageContentRenderer from './PageContentRenderer.vue'
 import PageEditor from '../editor/PageEditor.vue'
 import { fetchPageContent, savePageContent } from '@/services/pageContentService'
+import { sanitizeComponents } from '../editor/componentLibrary'
 
 const props = defineProps({
   title: {
@@ -22,11 +23,230 @@ const error = ref('')
 const editorOpen = ref(false)
 const saving = ref(false)
 
+const defaultContentRef = ref(null)
+const defaultTemplateComponents = shallowRef([])
+
 const isAdmin = computed(() => localStorage.getItem('user_role') === 'admin')
 const routePath = computed(() => route.path)
 const hasCustomContent = computed(() => components.value.length > 0)
 const isEditable = computed(() => routePath.value !== '/')
 const currentTitle = computed(() => pageTitle.value || props.title)
+const deepClone = (value) => {
+  if (value === undefined) {
+    return undefined
+  }
+
+  if (typeof structuredClone === 'function') {
+    try {
+      return structuredClone(value)
+    } catch (_) {
+      // ignore and fallback
+    }
+  }
+
+  if (value === null) {
+    return null
+  }
+
+  try {
+    return JSON.parse(JSON.stringify(value))
+  } catch (_) {
+    return value
+  }
+}
+
+const getPlainComponents = (source) => {
+  if (!Array.isArray(source)) return []
+  return source
+    .map(item => deepClone(toRaw(item)))
+    .filter(item => item !== undefined)
+}
+
+const editorInitialComponents = computed(() => {
+  const source = hasCustomContent.value
+    ? getPlainComponents(components.value)
+    : getPlainComponents(defaultTemplateComponents.value)
+
+  return sanitizeComponents(source)
+})
+
+const toNumber = (value, fallback = 0) => {
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : fallback
+}
+
+const toBoolean = (value) => {
+  if (typeof value === 'boolean') {
+    return value
+  }
+  return String(value).toLowerCase() === 'true'
+}
+
+const getTextContent = (el) => (el?.textContent || '').trim()
+const getInnerHtml = (el) => (el?.innerHTML || '').trim()
+
+const extractAlign = (element) => {
+  if (!element) return 'center'
+  const datasetAlign = element.dataset?.textAlign
+  if (datasetAlign) return datasetAlign
+  const classAlign = Array.from(element.classList || [])
+    .find(className => className.startsWith('text-align-'))
+  return classAlign ? classAlign.replace('text-align-', '') : 'center'
+}
+
+const extractCardItem = (element) => {
+  if (!element) {
+    return {
+      title: '',
+      content: '',
+      isButton: false,
+      buttonText: '',
+      buttonLink: ''
+    }
+  }
+
+  const clone = element.cloneNode(true)
+  const header = clone.querySelector('h1')
+  if (header) header.remove()
+  const buttonWrapper = clone.querySelector('.baton')
+  if (buttonWrapper) buttonWrapper.remove()
+
+  return {
+    title: element.dataset?.cardTitle || getTextContent(element.querySelector('h1')),
+    content: getInnerHtml(clone),
+    isButton: toBoolean(element.dataset?.cardButton),
+    buttonText: element.dataset?.cardButtonText || '',
+    buttonLink: element.dataset?.cardButtonLink || ''
+  }
+}
+
+const extractComponentFromElement = (element) => {
+  if (!(element instanceof HTMLElement)) return null
+
+  const type = element.dataset?.pageComponent
+  if (!type) {
+    const child = Array.from(element.children).find(
+      (node) => node instanceof HTMLElement && node.dataset?.pageComponent
+    )
+    return child ? extractComponentFromElement(child) : null
+  }
+
+  switch (type) {
+    case 'Title':
+      return {
+        type: 'Title',
+        props: {
+          content: getTextContent(element)
+        }
+      }
+    case 'Text':
+      return {
+        type: 'Text',
+        props: {
+          content: getInnerHtml(element),
+          align: extractAlign(element)
+        }
+      }
+    case 'Highlight':
+      return {
+        type: 'Highlight',
+        props: {
+          content: getInnerHtml(element),
+          color: element.dataset?.color || '#ff4800',
+          isBold: toBoolean(element.dataset?.bold)
+        }
+      }
+    case 'Link':
+      return {
+        type: 'Link',
+        props: {
+          content: getInnerHtml(element),
+          linkTo: element.dataset?.linkTo || element.getAttribute('href') || '#',
+          color: element.dataset?.color || '#ff4800'
+        }
+      }
+    case 'File': {
+      const fileLink = element.querySelector('a')
+      const absoluteHref = fileLink?.getAttribute('href') || ''
+      const fileName = element.dataset?.file || absoluteHref.replace(/^.*\/docs\//, '')
+      return {
+        type: 'File',
+        props: {
+          file: fileName,
+          content: getInnerHtml(fileLink),
+          color: element.dataset?.color || '#ff4800',
+          icon: toBoolean(element.dataset?.icon)
+        }
+      }
+    }
+    case 'CardGrid': {
+      const cardElements = Array.from(element.children).filter(
+        (node) => node instanceof HTMLElement && node.dataset?.pageComponent === 'Card'
+      )
+      const items = cardElements.map(extractCardItem)
+      return {
+        type: 'CardGrid',
+        props: {
+          maxCardsPerRow: toNumber(element.dataset?.maxCards, 0),
+          items
+        }
+      }
+    }
+    case 'Card': {
+      const card = extractCardItem(element)
+      return {
+        type: 'Card',
+        props: {
+          title: card.title,
+          content: card.content,
+          isButton: card.isButton,
+          buttonText: card.buttonText,
+          buttonLink: card.buttonLink
+        }
+      }
+    }
+    case 'Bold':
+      return {
+        type: 'Bold',
+        props: {
+          content: getInnerHtml(element)
+        }
+      }
+    case 'TitledImage':
+      return {
+        type: 'TitledImage',
+        props: {
+          src: element.dataset?.src || element.querySelector('img')?.getAttribute('src') || '',
+          alt: element.dataset?.alt || element.querySelector('img')?.getAttribute('alt') || ''
+        }
+      }
+    default:
+      return null
+  }
+}
+
+const collectDefaultTemplate = async () => {
+  await nextTick()
+  const root = defaultContentRef.value
+  if (!root) {
+    defaultTemplateComponents.value = []
+    return
+  }
+
+  const collected = Array.from(root.children)
+    .map((child) => extractComponentFromElement(child))
+    .filter(Boolean)
+
+  defaultTemplateComponents.value = collected.length ? sanitizeComponents(collected) : []
+}
+
+const updateDefaultTemplate = async () => {
+  if (!hasCustomContent.value) {
+    await collectDefaultTemplate()
+  } else {
+    defaultTemplateComponents.value = []
+  }
+}
 
 const setDocumentTitle = (title) => {
   if (title) {
@@ -49,6 +269,7 @@ const loadContent = async () => {
     pageTitle.value = props.title
   } finally {
     loading.value = false
+    await updateDefaultTemplate()
     setDocumentTitle(currentTitle.value)
   }
 }
@@ -72,6 +293,7 @@ const handleSave = async (payload) => {
     components.value = Array.isArray(response?.components) ? response.components : payload.components
     pageTitle.value = response?.title || payload.title || props.title
     editorOpen.value = false
+    await updateDefaultTemplate()
     setDocumentTitle(currentTitle.value)
   } catch (err) {
     console.error('Failed to save page content', err)
@@ -116,7 +338,13 @@ watch(currentTitle, (value) => setDocumentTitle(value))
             v-if="hasCustomContent"
             :components="components"
           />
-          <slot v-else />
+          <div
+            v-else
+            ref="defaultContentRef"
+            class="page-default-content"
+          >
+            <slot />
+          </div>
         </template>
       </div>
     </div>
@@ -145,7 +373,7 @@ watch(currentTitle, (value) => setDocumentTitle(value))
       v-if="editorOpen"
       :open="editorOpen"
       :initial-title="currentTitle"
-      :initial-components="components"
+      :initial-components="editorInitialComponents"
       :saving="saving"
       @cancel="closeEditor"
       @save="handleSave"
@@ -175,6 +403,12 @@ watch(currentTitle, (value) => setDocumentTitle(value))
   box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.08);
   gap: 24px;
   background: #ffffff;
+}
+
+.page-default-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .page-state {

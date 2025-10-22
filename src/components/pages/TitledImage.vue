@@ -13,7 +13,12 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="logo-container">
+  <div
+    class="logo-container"
+    data-page-component="TitledImage"
+    :data-src="src"
+    :data-alt="alt"
+  >
     <img :src="src" :alt="alt" class="logo" />
   </div>
 </template>
