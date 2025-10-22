@@ -4,7 +4,6 @@ import Title from '@/components/pages/Title.vue';
 import Text from '@/components/pages/Text.vue';
 import Highlight from '@/components/pages/Highlight.vue';
 import Link from '@/components/pages/Link.vue';
-import File from '@/components/pages/File.vue';
 </script>
 
 <template>
@@ -64,13 +63,12 @@ import File from '@/components/pages/File.vue';
         
         <Text align="left">
             <Highlight>Федеральные документы:</Highlight><br/>
-            <File file="Указ Президента РФ от 27 июня 2022 № 401.pdf" icon>Указ Президента РФ от 27.06.2022 № 401</File>
-            <File file="Распоряжение Правительства РФ от 18.02.2023 № 399-р.pdf" icon>Распоряжение Правительства РФ от 18.02.2023 № 399-р</File>
-            <File file="План основных мероприятий 2023.pdf" icon>План основных мероприятий Года педагога и наставника</File><br/>
+            • <Link linkTo="https://minobraz.egov66.ru/file/download?id=21600">Указ Президента РФ от 27.06.2022 № 401 «О проведении в Российской Федерации Года педагога и наставника»</Link><br/>
+            • <Link linkTo="https://minobraz.egov66.ru/file/download?id=23072">Распоряжение Правительства РФ от 18.02.2023 № 399-р об утверждении плана основных мероприятий по проведению в Российской Федерации Года педагога и наставника</Link><br/><br/>
             
             <Highlight>Региональные документы:</Highlight><br/>
-            <File file="Указ Губернатора СО от 29.12.2022 № 686-УГ.pdf" icon>Указ Губернатора СО от 29.12.2022 № 686-УГ</File>
-            <File file="План мероприятий СО 2023.pdf" icon>План мероприятий по проведению в СО Года педагога и наставника</File>
+            • <Link linkTo="https://minobraz.egov66.ru/file/download?id=21889">Указ Губернатора Свердловской области от 29.12.2022/№ 686-УГ «О подготовке и проведении Года педагога и наставника в 2023 году в Свердловской области»</Link><br/>
+            • <Link linkTo="https://minobraz.egov66.ru/file/download?id=22231">План основных мероприятий по проведению в Свердловской области Года педагога и наставника в 2023 году (проект)</Link>
         </Text>
 
         <Title>📰 Новости и события</Title>

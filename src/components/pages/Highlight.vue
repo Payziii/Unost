@@ -1,11 +1,11 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue'
 
 const props = defineProps({
-  color: { 
+  color: {
     type: String,
     required: false,
-    default: '#ff4800' 
+    default: '#ff4800'
   },
   isBold: {
     type: Boolean,
@@ -17,19 +17,36 @@ const props = defineProps({
     required: false,
     default: ''
   }
-});
+})
+
+const slots = useSlots()
+const hasSlotContent = computed(() => Boolean(slots.default?.().length))
 
 const paragraphStyles = computed(() => ({
   'font-size': '1.3rem',
-  'color': props.color,
+  color: props.color,
   'font-weight': props.isBold ? '500' : 'normal'
-}));
+}))
 </script>
 
 <template>
-  <span :style="paragraphStyles">
+  <span
+    v-if="hasSlotContent"
+    :style="paragraphStyles"
+    data-page-component="Highlight"
+    :data-color="props.color"
+    :data-bold="props.isBold"
+  >
     <slot>{{ props.content }}</slot>
   </span>
+  <span
+    v-else
+    :style="paragraphStyles"
+    data-page-component="Highlight"
+    :data-color="props.color"
+    :data-bold="props.isBold"
+    v-html="props.content"
+  />
 </template>
 
 <style scoped>

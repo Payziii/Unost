@@ -19,6 +19,8 @@ const hasItems = computed(() => Array.isArray(props.items) && props.items.length
 <template>
   <div
     class="cards"
+    data-page-component="CardGrid"
+    :data-max-cards="maxCardsPerRow"
     :class="{ 'limited-cards': maxCardsPerRow > 0 }"
     :style="maxCardsPerRow > 0 ? { '--max-cards': maxCardsPerRow } : {}"
   >

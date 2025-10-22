@@ -2,15 +2,16 @@
 import Page from '@/components/pages/Page.vue';
 import Title from '@/components/pages/Title.vue';
 import Link from '@/components/pages/Link.vue';
+import File from '@/components/pages/File.vue';
 </script>
 
 <template>
   <Page title="Рейтинг абитуриентов 2024">
-    <div class="text-center mb-4">
-      <Link linkTo="#" class="text-orange-700 text-lg font-semibold underline">
+    <Text align="left">
+      <File file="../docs/отчет_о_выполнении_контрольных_цифр_приема_2024.pdf" icon>
         Отчет о выполнении контрольных цифр приема 2024 г
-      </Link>
-    </div>
+      </File>
+</Text>
 
     <Title level="2">Информация о баллах абитуриентов в 2024</Title>
 

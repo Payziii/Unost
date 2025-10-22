@@ -1,33 +1,54 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue'
 
 const props = defineProps({
   linkTo: {
     type: String,
     required: true
   },
-  color: { 
+  color: {
     type: String,
     required: false,
-    default: '#ff4800' 
+    default: '#ff4800'
   },
   content: {
     type: String,
     required: false,
     default: ''
   }
-});
+})
+
+const slots = useSlots()
+const hasSlotContent = computed(() => Boolean(slots.default?.().length))
 
 const paragraphStyles = computed(() => ({
   'font-size': '1.3rem',
-  'color': props.color,
-}));
+  color: props.color
+}))
 </script>
 
 <template>
-  <a :style="paragraphStyles" :href="linkTo" target="_blank">
+  <a
+    v-if="hasSlotContent"
+    :style="paragraphStyles"
+    :href="linkTo"
+    data-page-component="Link"
+    :data-link-to="linkTo"
+    :data-color="props.color"
+    target="_blank"
+  >
     <slot>{{ props.content }}</slot>
   </a>
+  <a
+    v-else
+    :style="paragraphStyles"
+    :href="linkTo"
+    data-page-component="Link"
+    :data-link-to="linkTo"
+    :data-color="props.color"
+    target="_blank"
+    v-html="props.content"
+  />
 </template>
 
 <style scoped>

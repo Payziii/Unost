@@ -1,4 +1,6 @@
 <script setup>
+import { computed, useSlots } from 'vue'
+
 const props = defineProps({
   align: {
     type: String,
@@ -11,12 +13,27 @@ const props = defineProps({
     default: ''
   }
 })
+
+const slots = useSlots()
+const hasSlotContent = computed(() => Boolean(slots.default?.().length))
 </script>
 
 <template>
-  <p :class="`text-align-${align}`">
+  <p
+    v-if="hasSlotContent"
+    :class="`text-align-${align}`"
+    data-page-component="Text"
+    :data-text-align="align"
+  >
     <slot>{{ props.content }}</slot>
   </p>
+  <p
+    v-else
+    :class="`text-align-${align}`"
+    data-page-component="Text"
+    :data-text-align="align"
+    v-html="props.content"
+  />
 </template>
 
 <style scoped>
