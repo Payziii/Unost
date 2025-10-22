@@ -10,6 +10,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: '#ff4800' 
+  },
+  content: {
+    type: String,
+    required: false,
+    default: ''
   }
 });
 
@@ -21,7 +26,7 @@ const paragraphStyles = computed(() => ({
 
 <template>
   <a :style="paragraphStyles" :href="linkTo" target="_blank">
-    <slot></slot>
+    <slot>{{ props.content }}</slot>
   </a>
 </template>
 

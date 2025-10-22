@@ -11,7 +11,9 @@ def create_app():
     app = Flask(__name__)
     
     basedir = os.path.abspath(os.path.dirname(__file__))
-    database_path = os.path.join(basedir, 'instance', 'unost.db')
+    instance_dir = os.path.join(basedir, 'instance')
+    os.makedirs(instance_dir, exist_ok=True)
+    database_path = os.path.join(instance_dir, 'unost.db')
     
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{database_path}'
     app.config['SECRET_KEY'] = 'super-secret-key-12345-fixed'
@@ -42,11 +44,12 @@ def create_app():
     os.makedirs(uploads_dir, exist_ok=True)
     print(f"✅ Папка для загрузок создана: {uploads_dir}")
     
-    from routes import auth_routes, student_routes, complaint_routes, feedback_routes
+    from routes import auth_routes, student_routes, complaint_routes, feedback_routes, content_routes
     app.register_blueprint(auth_routes)
     app.register_blueprint(student_routes)
     app.register_blueprint(complaint_routes)
     app.register_blueprint(feedback_routes)
+    app.register_blueprint(content_routes)
     
     return app
 

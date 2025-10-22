@@ -1,6 +1,15 @@
+<script setup>
+const props = defineProps({
+  content: {
+    type: String,
+    default: ''
+  }
+})
+</script>
+
 <template>
   <h1>
-    <slot></slot>
+    <slot>{{ props.content }}</slot>
   </h1>
 </template>
 

@@ -1,6 +1,4 @@
 <script setup>
-import { computed } from 'vue';
-
 const props = defineProps({
   src: {
     type: String,
@@ -12,11 +10,6 @@ const props = defineProps({
     default: ''
   }
 });
-
-const paragraphStyles = computed(() => ({
-  'font-size': '1.3rem',
-  'color': props.color,
-}));
 </script>
 
 <template>
