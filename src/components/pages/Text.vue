@@ -1,5 +1,8 @@
 <script setup>
 import { computed, useSlots } from 'vue'
+import Bold from './Bold.vue'
+import Highlight from './Highlight.vue'
+import Link from './Link.vue'
 
 const props = defineProps({
   align: {
@@ -8,14 +11,78 @@ const props = defineProps({
     default: 'center'
   },
   content: {
-    type: String,
+    type: [String, Array],
     required: false,
     default: ''
   }
 })
 
+const inlineComponentMap = {
+  Bold,
+  Highlight,
+  Link
+}
+
 const slots = useSlots()
 const hasSlotContent = computed(() => Boolean(slots.default?.().length))
+
+const inlineSegments = computed(() => {
+  if (hasSlotContent.value || !Array.isArray(props.content)) {
+    return null
+  }
+
+  return props.content.map((segment, index) => {
+    const key = segment?.id ?? `segment-${index}`
+
+    if (typeof segment === 'string') {
+      return {
+        key,
+        type: 'text',
+        value: segment
+      }
+    }
+
+    if (!segment || typeof segment !== 'object') {
+      return {
+        key,
+        type: 'text',
+        value: ''
+      }
+    }
+
+    if (segment.type === 'text' || !segment.type) {
+      const value = segment.value ?? segment.content ?? ''
+      return {
+        key,
+        type: 'text',
+        value: typeof value === 'string' ? value : ''
+      }
+    }
+
+    const inlineComponent = inlineComponentMap[segment.type]
+    if (!inlineComponent) {
+      return {
+        key,
+        type: 'text',
+        value: ''
+      }
+    }
+
+    const propsPayload = segment.props ?? {
+      content: segment.content ?? ''
+    }
+
+    return {
+      key,
+      type: segment.type,
+      component: inlineComponent,
+      props: {
+        ...propsPayload,
+        content: propsPayload.content ?? ''
+      }
+    }
+  })
+})
 </script>
 
 <template>
@@ -26,6 +93,25 @@ const hasSlotContent = computed(() => Boolean(slots.default?.().length))
     :data-text-align="align"
   >
     <slot>{{ props.content }}</slot>
+  </p>
+  <p
+    v-else-if="inlineSegments"
+    :class="`text-align-${align}`"
+    data-page-component="Text"
+    :data-text-align="align"
+  >
+    <template v-for="segment in inlineSegments" :key="segment.key">
+      <component
+        v-if="segment.type !== 'text'"
+        :is="segment.component"
+        v-bind="segment.props"
+      />
+      <span
+        v-else
+        class="text-segment"
+        v-html="segment.value"
+      />
+    </template>
   </p>
   <p
     v-else
@@ -62,5 +148,9 @@ p {
 }
 .text-align-justify {
   text-align: justify;
+}
+
+.text-segment {
+  display: inline;
 }
 </style>

@@ -8,6 +8,7 @@ import {
   normalizeComponents,
   generateId
 } from './componentLibrary'
+import InlineContentBuilder from './InlineContentBuilder.vue'
 
 const props = defineProps({
   open: {
@@ -124,6 +125,59 @@ const moveCollectionItem = (component, collection, index, direction) => {
   component.props[collection.name].splice(targetIndex, 0, item)
 }
 
+const isFieldValueEmpty = (field, value) => {
+  if (value === undefined || value === null) {
+    return true
+  }
+
+  if (typeof value === 'string') {
+    return value.trim().length === 0
+  }
+
+  if (typeof value === 'number') {
+    return Number.isNaN(value)
+  }
+
+  if (Array.isArray(value)) {
+    if (!value.length) {
+      return true
+    }
+
+    return !value.some(segment => {
+      if (segment === null || segment === undefined) {
+        return false
+      }
+
+      if (typeof segment === 'string') {
+        return segment.trim().length > 0
+      }
+
+      if (typeof segment !== 'object') {
+        return false
+      }
+
+      if (!segment.type || segment.type === 'text') {
+        const textValue = segment.value ?? segment.content ?? ''
+        return typeof textValue === 'string' && textValue.trim().length > 0
+      }
+
+      const contentValue = segment.props?.content ?? segment.content ?? ''
+      if (typeof contentValue !== 'string' || contentValue.trim().length === 0) {
+        return false
+      }
+
+      if (segment.type === 'Link') {
+        const linkValue = segment.props?.linkTo ?? segment.linkTo ?? ''
+        return typeof linkValue === 'string' && linkValue.trim().length > 0
+      }
+
+      return true
+    })
+  }
+
+  return false
+}
+
 const validateComponents = () => {
   for (const component of components.value) {
     const definition = getComponentDefinition(component.type)
@@ -134,7 +188,7 @@ const validateComponents = () => {
       if (
         field.required &&
         field.type !== 'checkbox' &&
-        (!value || String(value).trim().length === 0)
+        isFieldValueEmpty(field, value)
       ) {
         throw new Error(`Заполните поле "${field.label}" для компонента "${definition.label}"`)
       }
@@ -148,7 +202,7 @@ const validateComponents = () => {
           if (
             field.required &&
             field.type !== 'checkbox' &&
-            (!value || String(value).trim().length === 0)
+            isFieldValueEmpty(field, value)
           ) {
             throw new Error(
               `Заполните поле "${field.label}" в элементе ${index + 1} "${collection.label}"`
@@ -289,7 +343,14 @@ const handleCancel = () => {
                     <span v-if="field.required" class="required">*</span>
                   </label>
 
-                  <template v-if="field.type === 'textarea'">
+                  <template v-if="component.type === 'Text' && field.name === 'content'">
+                    <InlineContentBuilder
+                      :model-value="component.props[field.name]"
+                      @update:modelValue="value => (component.props[field.name] = value)"
+                    />
+                  </template>
+
+                  <template v-else-if="field.type === 'textarea'">
                     <textarea
                       :id="`${component.id}-${field.name}`"
                       v-model="component.props[field.name]"
