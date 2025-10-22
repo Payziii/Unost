@@ -44,9 +44,9 @@ const hasSlotContent = computed(() => Boolean(slots.default?.().length))
       <slot>{{ props.content }}</slot>
     </template>
     <div v-else class="card-content" v-html="props.content" />
-    <div v-if="isButton" class="baton">
-      <a :href="buttonLink" target="_blank">{{ buttonText }}</a>
-    </div>
+    <a v-if="isButton" :href="buttonLink" target="_blank" class="baton">
+      {{ buttonText }}
+    </a>
   </div>
 </template>
 
