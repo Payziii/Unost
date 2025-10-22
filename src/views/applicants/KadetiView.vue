@@ -16,8 +16,8 @@ import Card from '@/components/pages/Card.vue';
 
 
         <div class="links-container">
-            <File file="https://вп-юность.рф/upload/files/%D0%98%D0%9D%D0%A4%D0%9E%D0%A0%D0%9C%D0%90%D0%A6%D0%98%D0%AF%20%D0%94%D0%9B%D0%AF%20%D0%9F%D0%9E%D0%A1%D0%A2%D0%A3%D0%9F%D0%9B%D0%95%D0%9D%D0%98%D0%AF%20%D0%92%20%D0%9A%D0%A8%D0%98.pdf" icon>документы для поступления</File>
-            <File file="https://вп-юность.рф/upload/files/%D0%9C%D0%B5%D0%B4%D0%B8%D1%86%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BA%D0%B0%D1%80%D1%82%D0%B0.pdf" icon>медкарта</File>
+            <File file="ИНФОРМАЦИЯ ДЛЯ ПОСТУПЛЕНИЯ В КШИ.pdf" icon>Документы для поступления</File>
+            <File file="Медицинская карта.pdf" icon>Медицинская карта</File>
         </div>
 
         <Title>Виртуальный день открытых дверей</Title>
