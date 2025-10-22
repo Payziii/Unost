@@ -23,7 +23,7 @@ const newsSubmitting = ref(false)
 const previewImage = ref('')
 const newsFileInputKey = ref(0)
 
-const API_BASE_URL = 'http://юность.панксквад.рф/api'
+const API_BASE_URL = 'http://localhost:5000/api'
 
 // Функции для работы с жалобами
 const fetchComplaints = async () => {

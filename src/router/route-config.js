@@ -43,6 +43,8 @@ export const routeConfig = {
   '/structure/regionalnie': 'RegionalView',
   '/structure/volonterstvo': 'VolonterstvoView',
   '/structure/sodeistvie': 'SodeistvieView',
+  '/structure/korpus_obschestvennyh_nablyudateley': 'KorpusNabludView',
+  '/structure/natsionalnaya_sistema_kvalifikatsiy': 'NacSystemView',
 
   // Безопасность (/bezopasnost)
   '/bezopasnost/profilaktika_upotrebleniya_pav': 'ProfilaktikaPavView',
