@@ -1,16 +1,21 @@
 <script setup>
-defineProps({
+const props = defineProps({
   align: {
     type: String,
     required: false,
     default: 'center'
+  },
+  content: {
+    type: String,
+    required: false,
+    default: ''
   }
 })
 </script>
 
 <template>
   <p :class="`text-align-${align}`">
-    <slot></slot>
+    <slot>{{ props.content }}</slot>
   </p>
 </template>
 

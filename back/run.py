@@ -2,7 +2,6 @@
 from app import app
 from extensions import db
 from models import User, Group, PortfolioFile, Complaint, Feedback
-from datetime import datetime
 
 def init_test_data():
     """Инициализация тестовых данных"""
@@ -39,15 +38,10 @@ if __name__ == '__main__':
             # Импортируем все модели для создания таблиц
             from models import User, Student, Group, Grade, PortfolioFile, Complaint, Feedback
             
-            # Принудительно удаляем и создаем все таблицы
-            print("🔄 Удаление старых таблиц...")
-            db.drop_all()
-            print("🔄 Создание новых таблиц...")
+            # Гарантируем, что все таблицы существуют
+            print("🛠️ Проверка структуры базы данных...")
             db.create_all()
-            print("✅ Все таблицы базы данных пересозданы")
-            print("✅ Включая таблицу PortfolioFile для портфолио")
-            print("✅ Включая таблицу Complaint для жалоб")
-            print("✅ Включая таблицу Feedback для обратной связи")
+            print("✅ Таблицы готовы к работе")
             
             init_test_data()
             db.session.commit()

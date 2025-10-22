@@ -1,15 +1,39 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+import Card from './Card.vue'
+
+const props = defineProps({
   maxCardsPerRow: {
     type: Number,
     default: 0
+  },
+  items: {
+    type: Array,
+    default: () => []
   }
 })
+
+const hasItems = computed(() => Array.isArray(props.items) && props.items.length > 0)
 </script>
 
 <template>
-  <div class="cards" :class="{ 'limited-cards': maxCardsPerRow > 0 }" :style="maxCardsPerRow > 0 ? { '--max-cards': maxCardsPerRow } : {}">
-    <slot></slot>
+  <div
+    class="cards"
+    :class="{ 'limited-cards': maxCardsPerRow > 0 }"
+    :style="maxCardsPerRow > 0 ? { '--max-cards': maxCardsPerRow } : {}"
+  >
+    <template v-if="hasItems">
+      <Card
+        v-for="(card, index) in props.items"
+        :key="card.id || index"
+        :title="card.title"
+        :isButton="card.isButton"
+        :buttonText="card.buttonText"
+        :buttonLink="card.buttonLink"
+        :content="card.content"
+      />
+    </template>
+    <slot v-else></slot>
   </div>
 </template>
 

@@ -82,6 +82,7 @@ export const routeConfig = {
   '/info/profmainprog': 'MainProfProgrammiView',
   '/info/realiz': 'RealizView',
   '/info/prof': 'ProfObuchView',
+  '/info/koruptprosv': 'KorruptProsView',
 
 
   

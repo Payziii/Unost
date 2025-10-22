@@ -11,6 +11,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  content: {
+    type: String,
+    required: false,
+    default: ''
   }
 });
 
@@ -23,7 +28,7 @@ const paragraphStyles = computed(() => ({
 
 <template>
   <span :style="paragraphStyles">
-    <slot></slot>
+    <slot>{{ props.content }}</slot>
   </span>
 </template>
 

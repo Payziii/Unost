@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     required: true
@@ -16,6 +16,11 @@ defineProps({
   buttonLink: {
     type: String,
     required: false
+  },
+  content: {
+    type: String,
+    required: false,
+    default: ''
   }
 });
 </script>
@@ -23,7 +28,7 @@ defineProps({
 <template>
   <div class="card">
     <h1>{{ title }}</h1>
-    <slot></slot>
+    <slot>{{ props.content }}</slot>
     <div v-if="isButton" class="baton">
       <a :href="buttonLink" target="_blank">{{ buttonText }}</a>
     </div>
