@@ -188,7 +188,10 @@ const menuItems = {
     { text: 'Центр ПВиДП', route: '/structure/tsentr_pvidp_' },
     { text: 'Центр проведения демонстрационных экзаменов ', route: '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills' },
     { text: 'Федеральный проект "Содействие занятости"', route: '/structure/federalnyy_proekt_sodeystvie_zanyatosti' },
-    { text: 'Проектная деятельность', route: '/structure/proektnaya_deyatelnost' },
+    { text: 'Проектная деятельность', subitems: [
+        { text: 'Федеральные проекты', route: '/structure/federalnye' },
+        { text: 'Региональные проекты', route: '/structure/regionalnie' }
+      ]},
     { text: 'Центр профилактики детского дорожно-транспортного травматизма «Лаборатория безопасности»', route: '/structure/laboratoriya_bezopasnosti_sverdlovskaya_oblast' },
     { text: 'Учебно-производственный комплекс', route: '/structure/uchebno-proizvodstvennyy_kompleks' },
     { text: 'Автошкола', route: '/structure/avtoshkola' },
