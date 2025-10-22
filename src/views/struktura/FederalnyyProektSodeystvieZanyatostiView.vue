@@ -9,7 +9,7 @@ import Card from '@/components/pages/Card.vue'
 </script>
 
 <template>
-  <Page title="Федеральный проект \u00abСодействие занятости\u00bb">
+  <Page title="Федеральный проект Содействие занятости">
     <Title>Федеральный проект &laquo;Содействие занятости&raquo;</Title>
 
     <Text align="center">

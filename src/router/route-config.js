@@ -19,7 +19,7 @@ export const routeConfig = {
   '/students/uchebnye_plany': 'UchebplanView',
   '/students/graphici': 'GraphiciView',
   '/students/promezhut': 'promezhutView',
-  '/students/gia': 'GiaView',
+  '/students/gia': 'VGiaView',
   '/students/konkursi': 'KonkursiView',
   '/students/credit': 'CreditView',
   '/students/library': 'LibraryView',
@@ -82,6 +82,7 @@ export const routeConfig = {
   '/info/profmainprog': 'MainProfProgrammiView',
   '/info/realiz': 'RealizView',
   '/info/prof': 'ProfObuchView',
+  '/info/koruptprosv': 'KorruptProsView',
 
 
   
