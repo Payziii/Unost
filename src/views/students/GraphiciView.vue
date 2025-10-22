@@ -26,7 +26,7 @@ import Card from '@/components/pages/Card.vue';
                     title="План-график работы СПО на 2024-2025 уч.год"
                     :isButton="true"
                     buttonText="Открыть"
-                    buttonLink="/docs/grafik_spo_2024_2025.pdf"
+                    buttonLink="../docs/график_спо_2024_2025.pdf"
                     class="schedule-card card-1"
                 >
                     <div class="card-content">
@@ -38,7 +38,7 @@ import Card from '@/components/pages/Card.vue';
                     title="Сводный годовой календарный график учебного процесса на 2024-2025 уч.год"
                     :isButton="true"
                     buttonText="Открыть"
-                    buttonLink="/docs/svodny_grafik_2024_2025.pdf"
+                    buttonLink="../docs/сводный_график_2024_2025.pdf"
                     class="schedule-card card-2"
                 >
                     <div class="card-content">
@@ -50,7 +50,7 @@ import Card from '@/components/pages/Card.vue';
                     title="Графики проведения государственной итоговой аттестации"
                     :isButton="true"
                     buttonText="Открыть"
-                    buttonLink="/docs/grafik_gia_2025.pdf"
+                    buttonLink="../docs/график_гиа_2025.pdf"
                     class="schedule-card card-3"
                 >
                     <div class="card-content">
@@ -58,15 +58,52 @@ import Card from '@/components/pages/Card.vue';
                     </div>
                 </Card>
 
+                <!-- Графики летней промежуточной аттестации - 4 документа -->
                 <Card 
-                    title="График летней промежуточной аттестации"
+                    title="График летней промежуточной аттестации (1 курс)"
                     :isButton="true"
                     buttonText="Открыть"
-                    buttonLink="/docs/grafik_letney_attestacii.pdf"
+                    buttonLink="../docs/график_летней_аттестации_1курс.pdf"
                     class="schedule-card card-4"
                 >
                     <div class="card-content">
-                        <div class="schedule-period">Летний период</div>
+                        <div class="schedule-period">1 курс</div>
+                    </div>
+                </Card>
+
+                <Card 
+                    title="График летней промежуточной аттестации (2 курс)"
+                    :isButton="true"
+                    buttonText="Открыть"
+                    buttonLink="../docs/график_летней_аттестации_2курс.pdf"
+                    class="schedule-card card-5"
+                >
+                    <div class="card-content">
+                        <div class="schedule-period">2 курс</div>
+                    </div>
+                </Card>
+
+                <Card 
+                    title="График летней промежуточной аттестации (3 курс)"
+                    :isButton="true"
+                    buttonText="Открыть"
+                    buttonLink="../docs/график_летней_аттестации_3курс.pdf"
+                    class="schedule-card card-6"
+                >
+                    <div class="card-content">
+                        <div class="schedule-period">3 курс</div>
+                    </div>
+                </Card>
+
+                <Card 
+                    title="График летней промежуточной аттестации (4 курс)"
+                    :isButton="true"
+                    buttonText="Открыть"
+                    buttonLink="../docs/график_летней_аттестации_4курс.pdf"
+                    class="schedule-card card-7"
+                >
+                    <div class="card-content">
+                        <div class="schedule-period">4 курс</div>
                     </div>
                 </Card>
 
@@ -74,35 +111,11 @@ import Card from '@/components/pages/Card.vue';
                     title="График демонстрационного экзамена"
                     :isButton="true"
                     buttonText="Открыть"
-                    buttonLink="/docs/grafik_demo_exam.pdf"
-                    class="schedule-card card-5"
+                    buttonLink="../docs/график_демо_экзамена.pdf"
+                    class="schedule-card card-8"
                 >
                     <div class="card-content">
                         <div class="schedule-period">2024-2025 уч.год</div>
-                    </div>
-                </Card>
-
-                <Card 
-                    title="График консультаций промежуточной аттестации"
-                    :isButton="true"
-                    buttonText="Открыть"
-                    buttonLink="/docs/grafik_konsultaciy_attestacii.pdf"
-                    class="schedule-card card-6"
-                >
-                    <div class="card-content">
-                        <div class="schedule-period">По семестрам</div>
-                    </div>
-                </Card>
-
-                <Card 
-                    title="График консультаций по написанию дипломных работ"
-                    :isButton="true"
-                    buttonText="Открыть"
-                    buttonLink="/docs/grafik_diplomnyh_rabot.pdf"
-                    class="schedule-card card-7 last-card"
-                >
-                    <div class="card-content">
-                        <div class="schedule-period">Выпускной курс</div>
                     </div>
                 </Card>
             </CardGrid>
@@ -141,38 +154,17 @@ import Card from '@/components/pages/Card.vue';
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-/* Цвета при наведении для каждой карточки */
-.card-1:hover {
-    border-color: #4facfe;
-    background: linear-gradient(135deg, #f7fbff 0%, #eff7ff 100%);
-}
-
-.card-2:hover {
-    border-color: #4facfe;
-    background: linear-gradient(135deg, #f7fbff 0%, #eff7ff 100%);
-}
-
-.card-3:hover {
-    border-color: #4facfe;
-    background: linear-gradient(135deg, #f7fbff 0%, #eff7ff 100%);
-}
-
-.card-4:hover {
-    border-color: #4facfe;
-    background: linear-gradient(135deg, #f7fbff 0%, #eff7ff 100%);
-}
-
-.card-5:hover {
-    border-color: #4facfe;
-    background: linear-gradient(135deg, #f7fbff 0%, #eff7ff 100%);
-}
-
-.card-6:hover {
-    border-color: #4facfe;
-    background: linear-gradient(135deg, #f7fbff 0%, #eff7ff 100%);
-}
-
-.card-7:hover {
+/* Цвета при наведении для всех карточек */
+.card-1:hover,
+.card-2:hover,
+.card-3:hover,
+.card-4:hover,
+.card-5:hover,
+.card-6:hover,
+.card-7:hover,
+.card-8:hover,
+.card-9:hover,
+.card-10:hover {
     border-color: #4facfe;
     background: linear-gradient(135deg, #f7fbff 0%, #eff7ff 100%);
 }
@@ -200,31 +192,16 @@ import Card from '@/components/pages/Card.vue';
 }
 
 /* Изменение цвета периода при наведении на карточку */
-.card-1:hover .schedule-period {
-    background: linear-gradient(135deg, #459de6 0%, #3a8ad4 100%);
-}
-
-.card-2:hover .schedule-period {
-    background: linear-gradient(135deg, #459de6 0%, #3a8ad4 100%);
-}
-
-.card-3:hover .schedule-period {
-    background: linear-gradient(135deg, #459de6 0%, #3a8ad4 100%);
-}
-
-.card-4:hover .schedule-period {
-    background: linear-gradient(135deg, #459de6 0%, #3a8ad4 100%);
-}
-
-.card-5:hover .schedule-period {
-    background: linear-gradient(135deg, #459de6 0%, #3a8ad4 100%);
-}
-
-.card-6:hover .schedule-period {
-    background: linear-gradient(135deg, #459de6 0%, #3a8ad4 100%);
-}
-
-.card-7:hover .schedule-period {
+.card-1:hover .schedule-period,
+.card-2:hover .schedule-period,
+.card-3:hover .schedule-period,
+.card-4:hover .schedule-period,
+.card-5:hover .schedule-period,
+.card-6:hover .schedule-period,
+.card-7:hover .schedule-period,
+.card-8:hover .schedule-period,
+.card-9:hover .schedule-period,
+.card-10:hover .schedule-period {
     background: linear-gradient(135deg, #459de6 0%, #3a8ad4 100%);
 }
 
@@ -288,4 +265,7 @@ import Card from '@/components/pages/Card.vue';
 .schedule-card:nth-child(5) { animation-delay: 0.5s; }
 .schedule-card:nth-child(6) { animation-delay: 0.6s; }
 .schedule-card:nth-child(7) { animation-delay: 0.7s; }
+.schedule-card:nth-child(8) { animation-delay: 0.8s; }
+.schedule-card:nth-child(9) { animation-delay: 0.9s; }
+.schedule-card:nth-child(10) { animation-delay: 1.0s; }
 </style>
