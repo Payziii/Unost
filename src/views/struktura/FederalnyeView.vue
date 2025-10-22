@@ -14,7 +14,7 @@ import Link from '@/components/pages/Link.vue';
             • <Link linkTo="/structure/natsionalnaya_sistema_kvalifikatsiy">ФП «Национальная система квалификаций – конструктор карьеры»</Link><br/>
             • <Link linkTo="/applicants/professionalitet">Профессионалитет</Link><br/>
             • <Link linkTo="/structure/volonterstvo">Волонтёрство – среда эффективной социализации студентов ГАПОУ СО ВПМТТ «Юность»</Link><br/>
-            • <Link linkTo="/structure/federalnyy_proekt_sodeystvie_zanyatosti">Федеральный проект "Содействие занятости"</Link>
+            • <Link linkTo="/structure/sodeistvie">Федеральный проект "Содействие занятости"</Link>
         </Text>
     </Page>
 </template>
