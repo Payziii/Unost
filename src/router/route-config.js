@@ -110,6 +110,7 @@ export const routeConfig = {
   '/kshi/priholog': 'priholog',
   '/kshi/roditeli': 'roditely',
   '/kshi/klassnii_chasy': 'klchas',
+  '/kshi/dokymenty': 'normdok',
   
   
 }
