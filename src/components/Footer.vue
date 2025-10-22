@@ -16,6 +16,7 @@ import { ref, onMounted } from 'vue';
             <a href="https://github.com/Ab4kshin" target="_blank">Ab4kshin</a>,
             <a href="https://github.com/LegendaUral" target="_blank">LegendaUral</a>,
             <a href="https://github.com/SenkoBread07" target="_blank">SenkoBread07</a>
+            <a href="https://github.com/dedEfim01" target="_blank">dedEfim01</a>
           </h3>
         </div>
       </div>
