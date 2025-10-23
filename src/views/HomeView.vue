@@ -130,13 +130,14 @@ const unbindSliderEvents = () => {
 
 const openNews = (item) => {
   if (!item) return;
-  if (item.page_path) {
-    router.push(item.page_path);
-    return;
-  }
-  if (item.slug) {
-    router.push(`/news/${item.slug}`);
-  }
+
+  const highlight = item.slug || item.id;
+  const query = highlight ? { highlight: highlight.toString() } : {};
+
+  router.push({
+    path: "/news",
+    query,
+  });
 };
 
 const truncate = (text, limit = 140) => {

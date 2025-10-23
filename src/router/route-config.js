@@ -6,6 +6,7 @@ export const routeConfig = {
   '/profile': 'ProfileView',
   '/kniga-zhalob': 'KnigaZhalob',
   '/admin/kniga-zhalob': 'AdminPanel',
+  '/news': 'NewsListView',
   '/news/:slug': 'NewsDetailView',
   
   // Абитуриенты (/applicants)
