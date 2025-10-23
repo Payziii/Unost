@@ -11,10 +11,13 @@
         </router-link>
 
         <div class="nav-links">
-          <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
-          <DropdownMenu text="Студентам" route="/" :items="menuItems.students" />
-          <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
-          <DropdownMenu text="Структура" route="/" :items="menuItems.structure" />
+          <DropdownMenu
+            v-for="section in dropdownSections"
+            :key="section.id"
+            :text="section.label"
+            :route="section.route || '/'"
+            :items="section.items"
+          />
           <Button text="Контакты" route="/kontakty" />
           <Button 
             text="Личный кабинет" 
@@ -33,10 +36,13 @@
     <!-- Мобильное бургер-меню -->
     <transition name="slide">
       <div class="mobile-menu" v-if="isMenuOpen">
-        <DropdownMenu text="О техникуме" route="/" :items="menuItems.basicInfo" />
-        <DropdownMenu text="Студентам" route="/" :items="menuItems.students" />
-        <DropdownMenu text="Абитуриентам" route="/" :items="menuItems.applicants" />
-        <DropdownMenu text="Структура" route="/" :items="menuItems.structure" />
+        <DropdownMenu
+          v-for="section in dropdownSections"
+          :key="`mobile-${section.id}`"
+          :text="section.label"
+          :route="section.route || '/'"
+          :items="section.items"
+        />
         <Button text="Контакты" route="/kontakty" />
         <Button 
           text="Личный кабинет" 
@@ -54,11 +60,20 @@
 import Button from '@/components/Button.vue';
 import Button2 from '@/components/Button2.vue';
 import DropdownMenu from '@/components/DropdownMenu.vue';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
+import { fetchHeaderNavigation } from '@/services/navigationService';
+import { sanitizeNavigationConfig, NAVIGATION_UPDATE_EVENT } from '@/utils/navigation';
+import { getDefaultNavigationConfig } from '@/config/navigation-defaults.js';
 
 const router = useRouter();
 const isMenuOpen = ref(false);
+const navigationSections = ref(getDefaultNavigationConfig());
+const dropdownSections = computed(() =>
+  navigationSections.value.filter(
+    (section) => Array.isArray(section.items) && section.items.length > 0
+  )
+);
 
 // Реактивные данные для пользователя
 const userRole = ref('');
@@ -71,6 +86,28 @@ const checkAuthStatus = () => {
   const token = localStorage.getItem('token');
   userRole.value = localStorage.getItem('user_role') || '';
   isLoggedIn.value = !!token;
+};
+
+const applyNavigationConfig = (config) => {
+  navigationSections.value = sanitizeNavigationConfig(config);
+};
+
+const loadNavigation = async (force = false) => {
+  try {
+    const config = await fetchHeaderNavigation({ force });
+    applyNavigationConfig(config);
+  } catch (error) {
+    console.error('Не удалось загрузить меню навигации', error);
+    navigationSections.value = getDefaultNavigationConfig();
+  }
+};
+
+const handleNavigationUpdate = (event) => {
+  if (event?.detail) {
+    applyNavigationConfig(event.detail);
+  } else {
+    loadNavigation(true);
+  }
 };
 
 // Вычисляемое свойство для маршрута профиля
@@ -103,106 +140,17 @@ const handleProfileClick = (event) => {
 
 onMounted(() => {
   checkAuthStatus();
+  loadNavigation();
   
   // Слушаем изменения в localStorage для обновления статуса авторизации
   window.addEventListener('storage', checkAuthStatus);
+  window.addEventListener(NAVIGATION_UPDATE_EVENT, handleNavigationUpdate);
 });
 
-const menuItems = {
-  basicInfo: [
-    { text: 'Основные сведения', route: '/info/maininfo' },
-    { text: 'Структура и органы управления образовательной организацией', route: '/info/structure' },
-    { text: 'Документы', subitems: [
-        { text: 'Учредительные документы', route: '/dokumenty/uchreditelnye_dokumenty' },
-        { text: 'Локальные акты', route: '/dokumenty/lokalnye_akty' },
-        { text: 'Нормативные документы', route: '/dokumenty/normativnye_dokumenty' },
-        { text: 'Программа развития 2018-2022 ', route: '/dokumenty/razvitie' },
-        { text: 'Программа модернизации 2020-2022', route: '/dokumenty/modern' },
-        { text: 'Отчеты по самообследованию', route: '/dokumenty/otchety_po_samoobsledovaniyu' },
-        { text: 'Документы по учебной и производственной практики', route: '/dokumenty/dokumenty_po_uchebnoy_i_proizvodstvennoy_praktiki' },
-        { text: 'Мероприятия по устранению замечаний, выполнению предписаний', route: '/dokumenty/predpisaniya' },
-        { text: 'Информация о мероприятиях', route: '/dokumenty/informatsiya_o_meropriyatiyah' },
-        { text: 'Наставничество', route: '/dokumenty/nastavnichestvo' }
-      ]},
-    { text: 'Образование', subitems: [
-        { text: 'Кадетская школа-интернат', route: '/info/kshi' },
-        { text: 'Среднее профессиональное образование', route: '/info/spo' },
-        { text: 'Профессиональное обучение', route: '/info/prof' },
-      ]},
-    { text: 'Руководство', route: '/info/rukovodstvo' },
-    { text: 'Педагогический состав', route: '/info/pedsostav' },
-    { text: 'Образовательные стандарты', route: '/info/standarty' },
-    { text: 'Материально-техническое обеспечение и оснащение образовательного процесса', route: '/info/mto' },
-    { text: 'Доступная среда', route: '/info/dostupnaya_sreda' },
-    { text: 'Платные образовательные услуги', route: '/info/platnye_obrazovatelnye_uslugi' },
-    { text: 'Финансово-хозяйственная деятельность', route: '/info/fhd' },
-    { text: 'Вакантные места для приема (перевода)', route: '/info/vakantnye_mesta' },
-    { text: 'Стипендии и меры поддержки обучающихся ', route: '/info/matpodderjka' },
-    { text: 'Международное сотрудничество ', route: '/info/sotsialnye_partnery_' },
-    { text: 'Предписания органов, осуществляющих государственный контроль (надзор)', route: '/info/predpisaniya' },
-    { text: 'Независимая оценка качества', route: '/info/nezavisimaya_otsenka_kachestva_okazaniya_uslug' },
-    { text: 'Центр карьеры', route: '/info/trudoustroystvo' },
-    { text: 'Вакансии', route: '/info/vakansii' },
-    { text: 'Противодействие коррупции', route: '/info/protivodeystvie_korruptsii' }
-  ],
-  students: [
-    { text: 'Расписание занятий', route: '/students/raspisanie_zanyatiy' },
-    { text: 'Учебные планы', route: '/students/uchebnye_plany' },
-    { text: 'Графики', route: '/students/graphici' },
-    { text: 'Промежуточная аттестация', route: '/students/promezhut' },
-    { text: 'Государственная итоговая аттестация', route: '/students/gia' },
-    { text: 'Конкурсы и олимпиады', route: '/students/konkursi' },
-    { text: 'Образовательный кредит', route: '/students/credit' },
-    { text: 'Доступ к библиотечным и электронным образовательным ресурсам', route: '/students/library' },
-    { text: 'Полезные ссылки', route: '/students/links' },
-    { text: 'Педагог и наставник 2023', route: '/students/pedagog' },
-    { text: 'Комплексная безопасность', subitems: [
-        { text: 'Профилактика употребления ПАВ', route: '/bezopasnost/profilaktika_upotrebleniya_pav' },
-        { text: 'Материалы по профилактики экстремизма', route: '/bezopasnost/ekstremistskie_materialy' },
-        { text: 'Телефоны экстренных служб', route: '/bezopasnost/telefony_ekstrennyh_slujb_' },
-        { text: 'Защита прав ребёнка', route: '/bezopasnost/zaschita_prav_rebenka' },
-        { text: 'Здравоохранение', route: '/bezopasnost/zdravoohranenie' },
-        { text: 'Информационная безопасность', route: '/bezopasnost/informatsionnaya' },
-        { text: 'Пожарная безопасность', route: '/bezopasnost/pojarnaya' },
-        { text: 'Дорожная безопасность', route: '/bezopasnost/dorojnaya' }
-      ]},
-  ],
-  applicants: [
-    { text: 'Рейтинг', route: '/applicants/reyting_abiturientov' },
-    { text: 'Профессионалитет', route: '/applicants/professionalitet' },
-    { text: 'Правила приема', route: '/applicants/priem' },
-    { text: 'Кадетская школа-интернат', route: '/applicants/kadetskaya_shkola-internat' },
-    { text: 'Часто задаваемые вопросы', route: '/applicants/faq' }
-  ],
-  structure: [
-    { text: 'О нас', route: '/structure/simvolika' },
-    { text: 'Кадетская школа-интернат', subitems: [
-        { text: 'Образование', route: '/info/kshi' },
-        { text: 'Государственная Итоговая Аттестация', route: '/info/giagia' },
-        { text: 'Нормативные документы', route: '/kshi/dokymenty' },
-        { text: 'Кадетская жизнь', route: '/kshi/jizn' },
-        { text: 'Для родителей', route: '/kshi/roditeli' },
-        { text: 'Классные часы', route: '/kshi/klassnii_chasy' },
-        { text: 'Педагог-психолог', route: '/kshi/priholog' }
-      ]},
-    { text: 'Центр ПВиДП', route: '/structure/tsentr_pvidp_' },
-    { text: 'Центр проведения демонстрационных экзаменов ', route: '/structure/tsentr_provedeniya_demonstratsionnyh_ekzamenov_world_skills' },
-    { text: 'Федеральный проект "Содействие занятости"', route: '/structure/federalnyy_proekt_sodeystvie_zanyatosti' },
-    { text: 'Проектная деятельность', subitems: [
-        { text: 'Федеральные проекты', route: '/structure/federalnye' },
-        { text: 'Региональные проекты', route: '/structure/regionalnie' }
-      ]},
-    { text: 'Центр профилактики детского дорожно-транспортного травматизма «Лаборатория безопасности»', route: '/structure/laboratoriya_bezopasnosti_sverdlovskaya_oblast' },
-    { text: 'Учебно-производственный комплекс', route: '/structure/uchebno-proizvodstvennyy_kompleks' },
-    { text: 'Автошкола', route: '/structure/avtoshkola' },
-    { text: 'Студенческий спортивный клуб', route: '/structure/studencheskiy_sportivnyy_klub' },
-    { text: 'Профсоюз', route: '/structure/profsoyuz' },
-    { text: 'Раскрытие информации', route: '/structure/raskrytie_informatsii' },
-    { text: 'Организация питания', route: '/structure/food' },
-    { text: 'Информация о доступности объектов Учреждения', route: '/structure/informatsiya_o_dostupnosti_obyektov_uchrejdeniya' },
-    { text: '«Сообщи, где торгуют смертью»', route: '/structure/gde_torguyut_smertyu_' }
-  ]
-};
+onBeforeUnmount(() => {
+  window.removeEventListener('storage', checkAuthStatus);
+  window.removeEventListener(NAVIGATION_UPDATE_EVENT, handleNavigationUpdate);
+});
 </script>
 
 <style scoped>

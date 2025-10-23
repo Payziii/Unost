@@ -29,7 +29,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['cancel', 'save'])
+const emit = defineEmits(['cancel', 'preview', 'save'])
 
 const editorTitle = ref(props.initialTitle)
 const selectedType = ref('')
@@ -81,6 +81,18 @@ const removeComponent = (index) => {
 const moveComponent = (index, direction) => {
   const targetIndex = index + direction
   if (targetIndex < 0 || targetIndex >= components.value.length) return
+  const [item] = components.value.splice(index, 1)
+  components.value.splice(targetIndex, 0, item)
+}
+
+const setComponentOrder = (index, value) => {
+  const parsed = Number.parseInt(value, 10)
+  if (!Number.isFinite(parsed)) return
+  const targetIndex = Math.min(
+    Math.max(parsed - 1, 0),
+    components.value.length - 1
+  )
+  if (targetIndex === index) return
   const [item] = components.value.splice(index, 1)
   components.value.splice(targetIndex, 0, item)
 }
@@ -227,6 +239,13 @@ const handleSave = () => {
   }
 }
 
+const handlePreview = () => {
+  emit('preview', {
+    title: editorTitle.value,
+    components: sanitizeComponents(components.value)
+  })
+}
+
 const handleCancel = () => {
   emit('cancel')
 }
@@ -303,6 +322,15 @@ const handleCancel = () => {
                   </p>
                 </div>
                 <div class="component-card__actions">
+                  <input
+                    type="number"
+                    class="component-order-input"
+                    :value="index + 1"
+                    :min="1"
+                    :max="components.length"
+                    @change="setComponentOrder(index, $event.target.value)"
+                    aria-label="Порядковый номер компонента"
+                  />
                   <button
                     type="button"
                     class="icon-button"
@@ -536,6 +564,14 @@ const handleCancel = () => {
           </button>
           <button
             type="button"
+            class="secondary-button"
+            :disabled="saving"
+            @click="handlePreview"
+          >
+            Предпросмотр
+          </button>
+          <button
+            type="button"
             class="primary-button"
             :disabled="saving"
             @click="handleSave"
@@ -707,6 +743,21 @@ const handleCancel = () => {
 .component-card__actions {
   display: flex;
   gap: 6px;
+  align-items: center;
+}
+
+.component-order-input {
+  width: 56px;
+  padding: 4px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.component-order-input:focus {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.2);
 }
 
 .icon-button {

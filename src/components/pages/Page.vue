@@ -22,6 +22,11 @@ const loading = ref(false)
 const error = ref('')
 const editorOpen = ref(false)
 const saving = ref(false)
+const previewOpen = ref(false)
+const previewState = ref({
+  title: '',
+  components: []
+})
 
 const defaultContentRef = ref(null)
 const defaultTemplateComponents = shallowRef([])
@@ -31,6 +36,13 @@ const routePath = computed(() => route.path)
 const hasCustomContent = computed(() => components.value.length > 0)
 const isEditable = computed(() => routePath.value !== '/')
 const currentTitle = computed(() => pageTitle.value || props.title)
+const previewTitle = computed(() => {
+  const title = previewState.value.title
+  if (typeof title === 'string' && title.trim().length > 0) {
+    return title
+  }
+  return currentTitle.value
+})
 const deepClone = (value) => {
   if (value === undefined) {
     return undefined
@@ -284,6 +296,23 @@ const openEditor = () => {
 
 const closeEditor = () => {
   editorOpen.value = false
+  previewOpen.value = false
+}
+
+const handlePreview = (payload) => {
+  const nextComponents = Array.isArray(payload?.components)
+    ? payload.components
+    : []
+
+  previewState.value = {
+    title: typeof payload?.title === 'string' ? payload.title : '',
+    components: nextComponents
+  }
+  previewOpen.value = true
+}
+
+const closePreview = () => {
+  previewOpen.value = false
 }
 
 const handleSave = async (payload) => {
@@ -297,6 +326,7 @@ const handleSave = async (payload) => {
     components.value = Array.isArray(response?.components) ? response.components : payload.components
     pageTitle.value = response?.title || payload.title || props.title
     editorOpen.value = false
+    previewOpen.value = false
     await updateDefaultTemplate()
     setDocumentTitle(currentTitle.value)
   } catch (err) {
@@ -319,6 +349,7 @@ watch(
     if (editorOpen.value) {
       editorOpen.value = false
     }
+    previewOpen.value = false
     loadContent()
   }
 )
@@ -380,8 +411,40 @@ watch(currentTitle, (value) => setDocumentTitle(value))
       :initial-components="editorInitialComponents"
       :saving="saving"
       @cancel="closeEditor"
+      @preview="handlePreview"
       @save="handleSave"
     />
+
+    <teleport to="body">
+      <div
+        v-if="previewOpen"
+        class="page-preview-overlay"
+        @click.self="closePreview"
+      >
+        <div class="page-preview-modal">
+          <header class="page-preview-header">
+            <h2 class="page-preview-title">{{ previewTitle }}</h2>
+            <button
+              type="button"
+              class="page-preview-close"
+              @click="closePreview"
+              aria-label="Закрыть предпросмотр"
+            >
+              &times;
+            </button>
+          </header>
+          <div class="page-preview-body">
+            <PageContentRenderer
+              v-if="previewState.components.length"
+              :components="previewState.components"
+            />
+            <p v-else class="page-preview-empty">
+              Контент страницы отсутствует
+            </p>
+          </div>
+        </div>
+      </div>
+    </teleport>
   </div>
 </template>
 
@@ -455,6 +518,73 @@ watch(currentTitle, (value) => setDocumentTitle(value))
 .page-editor-hint {
   color: #6b7280;
   font-size: 0.9rem;
+}
+
+.page-preview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  z-index: 2100;
+}
+
+.page-preview-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  width: min(960px, 100%);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.page-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #ececec;
+  gap: 16px;
+}
+
+.page-preview-title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.page-preview-close {
+  border: none;
+  background: transparent;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #6b7280;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.page-preview-close:hover {
+  color: #f97316;
+  transform: scale(1.05);
+}
+
+.page-preview-body {
+  padding: 24px;
+  overflow-y: auto;
+  max-height: calc(90vh - 80px);
+  background: #f9fafb;
+}
+
+.page-preview-empty {
+  margin: 0;
+  text-align: center;
+  color: #6b7280;
+  font-size: 1rem;
 }
 
 @media (max-width: 1024px) {

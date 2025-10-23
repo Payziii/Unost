@@ -58,7 +58,14 @@ function generateRouteName(path) {
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: generateRoutes()
+  routes: [
+    ...generateRoutes(),
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'custom-page',
+      component: () => import('@/views/CustomPageView.vue')
+    }
+  ]
 })
 
 // Защита маршрутов
