@@ -192,15 +192,7 @@
           </div>
         </form>
 
-        <div class="login-footer">
-          <p class="support-text">
-            Возникли проблемы? 
-            <a href="mailto:bolastovo77@mail.ru" class="support-link">Обратитесь в поддержку</a>
-          </p>
-          <p class="contact-info">
-            Телефон: +7 (34368) 5-44-86
-          </p>
-        </div>
+        
       </div>
     </div>
   </div>
