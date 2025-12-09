@@ -43,7 +43,7 @@ const navigationSuccess = ref('')
 const sectionPageSelections = ref({})
 const collapsedSections = ref({})
 
-const API_BASE_URL = 'http://localhost:5000/api'
+const API_BASE_URL = 'http://юность.панксквад.рф/api'
 const CREATED_PAGES_STORAGE_KEY = 'unost.admin.createdPages'
 const routeSuggestionId = 'navigation-route-suggestions'
 const createdPages = ref([])
