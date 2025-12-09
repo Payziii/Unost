@@ -8,7 +8,7 @@ import {
 } from '@/utils/navigation'
 import { getDefaultNavigationConfig } from '@/config/navigation-defaults.js'
 
-const DEFAULT_API_BASE_URL = 'http://localhost:5000/api'
+const DEFAULT_API_BASE_URL = 'http://юность.панксквад.рф/api'
 const API_BASE_URL = import.meta.env?.VITE_API_BASE_URL ?? DEFAULT_API_BASE_URL
 const NAVIGATION_ENDPOINT = `${API_BASE_URL}/navigation/header`
 
