@@ -34,10 +34,10 @@ def create_app():
     jwt.init_app(app)
     
     CORS(app, 
-         origins=["http://юность.панксквад.рф", "https://юность.панксквад.рф", "http://localhost:5173", "http://127.0.0.1:5173"],
+         origins=["*"],
          methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
          allow_headers=["Content-Type", "Authorization", "Access-Control-Allow-Headers"],
-         supports_credentials=True)
+         supports_credentials=False)
     
     # Создаем папку для загрузок портфолио
     uploads_dir = os.path.join(basedir, 'uploads', 'portfolio')
