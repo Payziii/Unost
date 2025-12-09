@@ -11,19 +11,17 @@
         </router-link>
 
         <div class="nav-links">
-          <DropdownMenu
-            v-for="section in dropdownSections"
-            :key="section.id"
-            :text="section.label"
-            :route="section.route || '/'"
-            :items="section.items"
-          />
+          <template v-for="section in navigationSections" :key="section.id">
+
+            <DropdownMenu v-if="hasValidSubItems(section)" :text="section.label" :route="section.route || '/'"
+              :items="section.items" />
+
+            <Button v-else :text="section.label" :route="section.route || '#'" />
+
+          </template>
+
           <Button text="Контакты" route="/kontakty" />
-          <Button 
-            text="Личный кабинет" 
-            :route="profileRoute" 
-            @click="handleProfileClick"
-          />
+          <Button text="Личный кабинет" :route="profileRoute" @click="handleProfileClick" />
         </div>
 
         <button class="burger" @click="toggleMenu">☰</button>
@@ -36,20 +34,17 @@
     <!-- Мобильное бургер-меню -->
     <transition name="slide">
       <div class="mobile-menu" v-if="isMenuOpen">
-        <DropdownMenu
-          v-for="section in dropdownSections"
-          :key="`mobile-${section.id}`"
-          :text="section.label"
-          :route="section.route || '/'"
-          :items="section.items"
-        />
+        <template v-for="section in navigationSections" :key="`mobile-${section.id}`">
+
+          <DropdownMenu v-if="hasValidSubItems(section)" :text="section.label" :route="section.route || '/'"
+            :items="section.items" />
+
+          <Button v-else :text="section.label" :route="section.route || '#'" />
+
+        </template>
+
         <Button text="Контакты" route="/kontakty" />
-        <Button 
-          text="Личный кабинет" 
-          :route="profileRoute" 
-          @click="handleProfileClick"
-        />
-        <!-- Мобильная версия кнопки "Подать заявку" -->
+        <Button text="Личный кабинет" :route="profileRoute" @click="handleProfileClick" />
         <Button2 class="mobile-apply" text="Подать заявку" route="/novosti" />
       </div>
     </transition>
@@ -69,11 +64,14 @@ import { getDefaultNavigationConfig } from '@/config/navigation-defaults.js';
 const router = useRouter();
 const isMenuOpen = ref(false);
 const navigationSections = ref(getDefaultNavigationConfig());
-const dropdownSections = computed(() =>
-  navigationSections.value.filter(
-    (section) => Array.isArray(section.items) && section.items.length > 0
-  )
-);
+
+const hasValidSubItems = (section) => {
+  if (!Array.isArray(section.items)) return false;
+  
+  if (section.items.length === 0) return false;
+
+  return section.items.some(item => item && Object.keys(item).length > 0);
+};
 
 // Реактивные данные для пользователя
 const userRole = ref('');
