@@ -140,6 +140,18 @@ const openNews = (item) => {
   });
 };
 
+const openNaprav = () => {
+  router.push({
+    path: "/students/uchebnye_plany"
+  })
+}
+
+const openInfo = () => {
+  router.push({
+    path: "/info/maininfo"
+  })
+}
+
 const truncate = (text, limit = 140) => {
   if (!text) return "";
   return text.length > limit ? `${text.slice(0, limit)}…` : text;
@@ -481,10 +493,10 @@ onBeforeUnmount(() => {
           </p>
         </div>
         <div class="btns">
-          <div class="button1">
+          <div class="button1" @click="openNaprav">
             <p>Наши направления</p>
           </div>
-          <div class="button2">
+          <div class="button2" @click="openInfo">
             <p>Узнать больше</p>
           </div>
         </div>
