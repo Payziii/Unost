@@ -53,7 +53,7 @@ const fetchComplaints = async () => {
   try {
     loading.value = true
     const token = localStorage.getItem('token')
-    
+
     if (!token) {
       router.push('/login')
       return
@@ -88,7 +88,7 @@ const fetchFeedback = async () => {
   try {
     feedbackLoading.value = true
     const token = localStorage.getItem('token')
-    
+
     if (!token) {
       router.push('/login')
       return
@@ -321,11 +321,11 @@ const storeCreatedPages = (pages) => {
   try {
     const sanitized = Array.isArray(pages)
       ? pages
-          .map((item) => ({
-            path: normalizeRoutePath(item?.path || ''),
-            title: typeof item?.title === 'string' ? item.title : ''
-          }))
-          .filter((item) => item.path)
+        .map((item) => ({
+          path: normalizeRoutePath(item?.path || ''),
+          title: typeof item?.title === 'string' ? item.title : ''
+        }))
+        .filter((item) => item.path)
       : []
 
     if (sanitized.length === 0) {
@@ -534,7 +534,8 @@ const saveNavigationConfig = async () => {
     navigationSuccess.value = result?.persisted
       ? 'Меню сохранено.'
       : 'Меню сохранено локально (ответ сервера отсутствует).'
-  } catch (error) {    console.error('Не удалось сохранить меню:', error)
+  } catch (error) {
+    console.error('Не удалось сохранить меню:', error)
     navigationError.value = error?.message || 'Не удалось сохранить изменения'
   } finally {
     navigationSaving.value = false
@@ -836,6 +837,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+
   <head>
     <title>Панель администратора</title>
   </head>
@@ -857,34 +859,19 @@ onBeforeUnmount(() => {
       <div class="admin-card">
         <!-- Вкладки -->
         <div class="tabs">
-          <button 
-            @click="activeTab = 'complaints'" 
-            :class="['tab-button', { 'active': activeTab === 'complaints' }]"
-          >
+          <button @click="activeTab = 'complaints'" :class="['tab-button', { 'active': activeTab === 'complaints' }]">
             Книга жалоб
           </button>
-          <button 
-            @click="activeTab = 'feedback'" 
-            :class="['tab-button', { 'active': activeTab === 'feedback' }]"
-          >
+          <button @click="activeTab = 'feedback'" :class="['tab-button', { 'active': activeTab === 'feedback' }]">
             Формы обратной связи
           </button>
-          <button
-            @click="activeTab = 'news'"
-            :class="['tab-button', { 'active': activeTab === 'news' }]"
-          >
+          <button @click="activeTab = 'news'" :class="['tab-button', { 'active': activeTab === 'news' }]">
             Новости
           </button>
-          <button
-            @click="activeTab = 'pages'"
-            :class="['tab-button', { 'active': activeTab === 'pages' }]"
-          >
+          <button @click="activeTab = 'pages'" :class="['tab-button', { 'active': activeTab === 'pages' }]">
             Страницы
           </button>
-          <button
-            @click="activeTab = 'navigation'"
-            :class="['tab-button', { 'active': activeTab === 'navigation' }]"
-          >
+          <button @click="activeTab = 'navigation'" :class="['tab-button', { 'active': activeTab === 'navigation' }]">
             Навигация
           </button>
         </div>
@@ -914,6 +901,59 @@ onBeforeUnmount(() => {
 
         <!-- Содержимое вкладок -->
         <div class="content-section">
+          <div v-if="activeTab === 'pages'" class="tab-content">
+            <div class="section-header">
+              <h2 class="section-title">Создание новой страницы</h2>
+            </div>
+
+            <form class="page-form" @submit.prevent="submitPageForm">
+              <div class="form-group">
+                <label for="page-title">Заголовок страницы</label>
+                <input id="page-title" v-model="pageForm.title" type="text" placeholder="Например: О нас" />
+              </div>
+
+              <div class="form-group">
+                <label for="page-path">Адрес страницы (Path) *</label>
+                <input id="page-path" v-model="pageForm.path" type="text" placeholder="Например: /about" required />
+                <p class="field-hint">Адрес должен начинаться с / и содержать латинские буквы</p>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="submit-button" :disabled="pageSubmitting">
+                  {{ pageSubmitting ? 'Создание...' : 'Создать страницу' }}
+                </button>
+              </div>
+            </form>
+
+            <div v-if="pageSuccess" class="success-message">
+              {{ pageSuccess }}
+            </div>
+
+            <div v-if="pageError" class="error-message">
+              {{ pageError }}
+            </div>
+
+            <div class="page-hint">
+              <p><strong>Как это работает:</strong></p>
+              <p>1. Создайте страницу, указав путь (например, <code>/studentam</code>).</p>
+              <p>2. После создания вы будете перенаправлены в редактор контента.</p>
+              <p>3. Чтобы добавить ссылку на эту страницу в меню, перейдите во вкладку "Навигация".</p>
+            </div>
+
+            <div v-if="createdPages.length > 0" class="data-list" style="margin-top: 2rem;">
+              <h3 class="news-title" style="margin-bottom: 1rem;">Созданные страницы</h3>
+              <div v-for="page in createdPages" :key="page.path" class="data-item">
+                <div class="data-header">
+                  <span class="news-title">{{ page.title || 'Без заголовка' }}</span>
+                  <span class="data-date">{{ page.path }}</span>
+                </div>
+                <div class="news-item-actions">
+                  <button class="news-edit-button"
+                    @click="$router.push({ path: page.path, query: { edit: 'true' } })">Редактировать</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- Вкладка жалоб -->
           <div v-if="activeTab === 'complaints'" class="tab-content">
             <div class="section-header">
@@ -922,7 +962,7 @@ onBeforeUnmount(() => {
             </div>
 
             <div v-if="loading" class="loading">Загрузка жалоб...</div>
-            
+
             <div v-else-if="error" class="error-message">
               {{ error }}
               <button @click="fetchComplaints" class="retry-button">Попробовать снова</button>
@@ -933,11 +973,7 @@ onBeforeUnmount(() => {
             </div>
 
             <div v-else class="data-list">
-              <div 
-                v-for="item in complaints" 
-                :key="item.id" 
-                class="data-item"
-              >
+              <div v-for="item in complaints" :key="item.id" class="data-item">
                 <div class="data-header">
                   <div class="data-meta">
                     <span class="data-id">#{{ item.id }}</span>
@@ -947,11 +983,11 @@ onBeforeUnmount(() => {
                     IP: {{ item.ip_address }}
                   </div>
                 </div>
-                
+
                 <div class="data-text">
                   {{ item.complaint_text }}
                 </div>
-                
+
                 <div class="data-footer">
                   <div class="user-agent">
                     {{ item.user_agent }}
@@ -965,28 +1001,16 @@ onBeforeUnmount(() => {
             <div class="section-header">
               <h2 class="section-title">Меню навигации</h2>
               <div class="section-actions">
-                <button
-                  type="button"
-                  class="refresh-button"
-                  @click="loadNavigationConfig"
-                  :disabled="navigationLoading"
-                >
+                <button type="button" class="refresh-button" @click="loadNavigationConfig"
+                  :disabled="navigationLoading">
                   Обновить
                 </button>
-                <button
-                  type="button"
-                  class="secondary-button"
-                  @click="resetNavigationDraft"
-                  :disabled="navigationLoading || navigationSaving || !navigationHasChanges"
-                >
+                <button type="button" class="secondary-button" @click="resetNavigationDraft"
+                  :disabled="navigationLoading || navigationSaving || !navigationHasChanges">
                   Сбросить изменения
                 </button>
-                <button
-                  type="button"
-                  class="secondary-button"
-                  @click="applyDefaultNavigation"
-                  :disabled="navigationLoading || navigationSaving"
-                >
+                <button type="button" class="secondary-button" @click="applyDefaultNavigation"
+                  :disabled="navigationLoading || navigationSaving">
                   Вернуть по умолчанию
                 </button>
               </div>
@@ -999,28 +1023,15 @@ onBeforeUnmount(() => {
               <div v-if="navigationSuccess" class="success-message">{{ navigationSuccess }}</div>
 
               <datalist :id="routeSuggestionId">
-                <option
-                  v-for="option in routeSuggestionOptions"
-                  :key="option"
-                  :value="option"
-                />
+                <option v-for="option in routeSuggestionOptions" :key="option" :value="option" />
               </datalist>
 
               <div class="navigation-toolbar">
-                <button
-                  type="button"
-                  class="submit-button"
-                  @click="addNavigationSection"
-                  :disabled="navigationSaving"
-                >
+                <button type="button" class="submit-button" @click="addNavigationSection" :disabled="navigationSaving">
                   Добавить раздел
                 </button>
-                <button
-                  type="button"
-                  class="secondary-button"
-                  @click="saveNavigationConfig"
-                  :disabled="navigationSaving || navigationDraft.length === 0 || !navigationHasChanges"
-                >
+                <button type="button" class="secondary-button" @click="saveNavigationConfig"
+                  :disabled="navigationSaving || navigationDraft.length === 0 || !navigationHasChanges">
                   {{ navigationSaving ? 'Сохраняем...' : 'Сохранить изменения' }}
                 </button>
               </div>
@@ -1029,49 +1040,27 @@ onBeforeUnmount(() => {
                 Разделов пока нет. Нажмите «Добавить раздел», чтобы начать формирование меню.
               </div>
 
-              <div
-                v-for="(section, sectionIndex) in navigationDraft"
-                :key="getSectionKey(section, sectionIndex)"
-                class="navigation-section-card"
-              >
+              <div v-for="(section, sectionIndex) in navigationDraft" :key="getSectionKey(section, sectionIndex)"
+                class="navigation-section-card">
                 <div class="navigation-section-header">
-                  <input
-                    v-model="section.label"
-                    type="text"
-                    class="navigation-section-title"
-                    placeholder="Название раздела"
-                  />
+                  <input v-model="section.label" type="text" class="navigation-section-title"
+                    placeholder="Название раздела" />
                   <div class="navigation-section-controls">
-                    <button
-                      type="button"
-                      class="icon-button"
+                    <button type="button" class="icon-button"
                       @click="toggleSectionCollapse(getSectionKey(section, sectionIndex))"
-                    :title="isSectionCollapsed(getSectionKey(section, sectionIndex)) ? 'Развернуть раздел' : 'Свернуть раздел'"
-                    :aria-label="isSectionCollapsed(getSectionKey(section, sectionIndex)) ? 'Развернуть раздел' : 'Свернуть раздел'"
-                  >
-                    {{ isSectionCollapsed(getSectionKey(section, sectionIndex)) ? '▸' : '▾' }}
-                  </button>
-                    <button
-                      type="button"
-                      class="icon-button"
-                      @click="moveNavigationSection(sectionIndex, -1)"
-                      :disabled="sectionIndex === 0"
-                    >
+                      :title="isSectionCollapsed(getSectionKey(section, sectionIndex)) ? 'Развернуть раздел' : 'Свернуть раздел'"
+                      :aria-label="isSectionCollapsed(getSectionKey(section, sectionIndex)) ? 'Развернуть раздел' : 'Свернуть раздел'">
+                      {{ isSectionCollapsed(getSectionKey(section, sectionIndex)) ? '▸' : '▾' }}
+                    </button>
+                    <button type="button" class="icon-button" @click="moveNavigationSection(sectionIndex, -1)"
+                      :disabled="sectionIndex === 0">
                       ↑
                     </button>
-                    <button
-                      type="button"
-                      class="icon-button"
-                      @click="moveNavigationSection(sectionIndex, 1)"
-                      :disabled="sectionIndex === navigationDraft.length - 1"
-                    >
+                    <button type="button" class="icon-button" @click="moveNavigationSection(sectionIndex, 1)"
+                      :disabled="sectionIndex === navigationDraft.length - 1">
                       ↓
                     </button>
-                    <button
-                      type="button"
-                      class="danger-button"
-                      @click="removeNavigationSection(sectionIndex)"
-                    >
+                    <button type="button" class="danger-button" @click="removeNavigationSection(sectionIndex)">
                       Удалить
                     </button>
                   </div>
@@ -1079,160 +1068,91 @@ onBeforeUnmount(() => {
 
                 <div class="navigation-route-group">
                   <label>Переход по клику (необязательно)</label>
-                  <input
-                    v-model="section.route"
-                    :list="routeSuggestionId"
-                    type="text"
-                    placeholder="/path или https://..."
-                    @blur="normalizeSectionRoute(sectionIndex)"
-                  />
+                  <input v-model="section.route" :list="routeSuggestionId" type="text"
+                    placeholder="/path или https://..." @blur="normalizeSectionRoute(sectionIndex)" />
                 </div>
 
                 <transition name="fade">
                   <div v-if="!isSectionCollapsed(getSectionKey(section, sectionIndex))">
                     <div class="navigation-items">
-                      <div
-                        v-for="(item, itemIndex) in section.items"
-                        :key="`${getSectionKey(section, sectionIndex)}-${itemIndex}`"
-                        class="navigation-item-card"
-                      >
+                      <div v-for="(item, itemIndex) in section.items"
+                        :key="`${getSectionKey(section, sectionIndex)}-${itemIndex}`" class="navigation-item-card">
                         <div class="navigation-item-header">
-                          <input
-                            v-model="item.text"
-                            type="text"
-                            class="navigation-item-title"
-                            placeholder="Название пункта"
-                          />
+                          <input v-model="item.text" type="text" class="navigation-item-title"
+                            placeholder="Название пункта" />
                           <div class="navigation-item-actions">
-                            <button
-                              type="button"
-                              class="icon-button"
-                              @click="moveNavigationItem(sectionIndex, itemIndex, -1)"
-                              :disabled="itemIndex === 0"
-                            >
+                            <button type="button" class="icon-button"
+                              @click="moveNavigationItem(sectionIndex, itemIndex, -1)" :disabled="itemIndex === 0">
                               ↑
                             </button>
-                            <button
-                              type="button"
-                              class="icon-button"
+                            <button type="button" class="icon-button"
                               @click="moveNavigationItem(sectionIndex, itemIndex, 1)"
-                              :disabled="itemIndex === section.items.length - 1"
-                            >
+                              :disabled="itemIndex === section.items.length - 1">
                               ↓
                             </button>
-                            <button
-                              type="button"
-                              class="link-button"
-                              @click="addNavigationSubitem(sectionIndex, itemIndex)"
-                            >
+                            <button type="button" class="link-button"
+                              @click="addNavigationSubitem(sectionIndex, itemIndex)">
                               Добавить подменю
                             </button>
-                            <button
-                              type="button"
-                              class="danger-button"
-                              @click="removeNavigationItem(sectionIndex, itemIndex)"
-                            >
+                            <button type="button" class="danger-button"
+                              @click="removeNavigationItem(sectionIndex, itemIndex)">
                               Удалить
                             </button>
                           </div>
                         </div>
 
-                        <div
-                          v-if="!item.subitems || item.subitems.length === 0"
-                          class="navigation-route-group"
-                        >
+                        <div v-if="!item.subitems || item.subitems.length === 0" class="navigation-route-group">
                           <label>Ссылка</label>
-                          <input
-                            v-model="item.route"
-                            :list="routeSuggestionId"
-                            type="text"
-                            placeholder="/path или https://..."
-                            @blur="normalizeItemRoute(sectionIndex, itemIndex)"
-                          />
+                          <input v-model="item.route" :list="routeSuggestionId" type="text"
+                            placeholder="/path или https://..." @blur="normalizeItemRoute(sectionIndex, itemIndex)" />
                         </div>
 
                         <div v-else class="navigation-subitems">
-                          <div
-                            v-for="(subitem, subIndex) in item.subitems"
+                          <div v-for="(subitem, subIndex) in item.subitems"
                             :key="`${getSectionKey(section, sectionIndex)}-${itemIndex}-${subIndex}`"
-                            class="navigation-subitem-row"
-                          >
-                            <input
-                              v-model="subitem.text"
-                              type="text"
-                              placeholder="Название пункта"
-                            />
-                            <input
-                              v-model="subitem.route"
-                              :list="routeSuggestionId"
-                              type="text"
+                            class="navigation-subitem-row">
+                            <input v-model="subitem.text" type="text" placeholder="Название пункта" />
+                            <input v-model="subitem.route" :list="routeSuggestionId" type="text"
                               placeholder="/path или https://..."
-                              @blur="normalizeSubitemRoute(sectionIndex, itemIndex, subIndex)"
-                            />
+                              @blur="normalizeSubitemRoute(sectionIndex, itemIndex, subIndex)" />
                             <div class="navigation-subitem-actions">
-                              <button
-                                type="button"
-                                class="icon-button"
+                              <button type="button" class="icon-button"
                                 @click="moveNavigationSubitem(sectionIndex, itemIndex, subIndex, -1)"
-                                :disabled="subIndex === 0"
-                              >
+                                :disabled="subIndex === 0">
                                 ↑
                               </button>
-                              <button
-                                type="button"
-                                class="icon-button"
+                              <button type="button" class="icon-button"
                                 @click="moveNavigationSubitem(sectionIndex, itemIndex, subIndex, 1)"
-                                :disabled="subIndex === item.subitems.length - 1"
-                              >
+                                :disabled="subIndex === item.subitems.length - 1">
                                 ↓
                               </button>
-                              <button
-                                type="button"
-                                class="danger-button"
-                                @click="removeNavigationSubitem(sectionIndex, itemIndex, subIndex)"
-                              >
+                              <button type="button" class="danger-button"
+                                @click="removeNavigationSubitem(sectionIndex, itemIndex, subIndex)">
                                 Удалить
                               </button>
                             </div>
                           </div>
-                          <button
-                            type="button"
-                            class="link-button"
-                            @click="addNavigationSubitem(sectionIndex, itemIndex)"
-                          >
+                          <button type="button" class="link-button"
+                            @click="addNavigationSubitem(sectionIndex, itemIndex)">
                             Добавить подменю
                           </button>
                         </div>
                       </div>
 
                       <div class="navigation-item-toolbar">
-                        <button
-                          type="button"
-                          class="link-button"
-                          @click="addNavigationItem(sectionIndex)"
-                        >
+                        <button type="button" class="link-button" @click="addNavigationItem(sectionIndex)">
                           Добавить пункт
                         </button>
                         <div v-if="createdPages.length" class="navigation-custom-page">
-                          <select
-                            v-model="sectionPageSelections[getSectionKey(section, sectionIndex)]"
-                            class="select-input"
-                          >
+                          <select v-model="sectionPageSelections[getSectionKey(section, sectionIndex)]"
+                            class="select-input">
                             <option value="">Выберите созданную страницу</option>
-                            <option
-                              v-for="page in createdPages"
-                              :key="page.path"
-                              :value="page.path"
-                            >
+                            <option v-for="page in createdPages" :key="page.path" :value="page.path">
                               {{ page.title ? `${page.title} (${page.path})` : page.path }}
                             </option>
                           </select>
-                          <button
-                            type="button"
-                            class="link-button"
-                            @click="addCustomPageToSection(sectionIndex)"
-                            :disabled="!sectionPageSelections[getSectionKey(section, sectionIndex)]"
-                          >
+                          <button type="button" class="link-button" @click="addCustomPageToSection(sectionIndex)"
+                            :disabled="!sectionPageSelections[getSectionKey(section, sectionIndex)]">
                             Добавить страницу в пункт
                           </button>
                         </div>
@@ -1252,35 +1172,20 @@ onBeforeUnmount(() => {
             <form class="news-form" @submit.prevent="submitNews">
               <div class="form-group">
                 <label for="news-title">Заголовок *</label>
-                <input
-                  id="news-title"
-                  v-model="newsForm.title"
-                  type="text"
-                  placeholder="Введите заголовок новости"
-                  required
-                />
+                <input id="news-title" v-model="newsForm.title" type="text" placeholder="Введите заголовок новости"
+                  required />
               </div>
 
               <div class="form-group">
                 <label for="news-content">Текст новости *</label>
-                <textarea
-                  id="news-content"
-                  v-model="newsForm.content"
-                  rows="6"
-                  placeholder="Введите текст новости"
-                  required
-                />
+                <textarea id="news-content" v-model="newsForm.content" rows="6" placeholder="Введите текст новости"
+                  required />
               </div>
 
               <div class="form-group">
                 <label for="news-image">Изображение</label>
-                <input
-                  id="news-image"
-                  :key="newsFileInputKey"
-                  type="file"
-                  accept="image/*"
-                  @change="handleImageUpload"
-                />
+                <input id="news-image" :key="newsFileInputKey" type="file" accept="image/*"
+                  @change="handleImageUpload" />
                 <p class="field-hint">Поддерживаются изображения в формате JPG, PNG или GIF</p>
               </div>
 
@@ -1305,11 +1210,7 @@ onBeforeUnmount(() => {
             <div v-else-if="news.length === 0" class="no-data">Новости не найдены</div>
 
             <div v-else class="news-list">
-              <article
-                v-for="item in news"
-                :key="item.id"
-                class="news-item"
-              >
+              <article v-for="item in news" :key="item.id" class="news-item">
                 <div class="news-header">
                   <h3 class="news-title">{{ item.title }}</h3>
                   <div class="news-meta">{{ formatDate(item.created_at) }}</div>
@@ -1322,7 +1223,8 @@ onBeforeUnmount(() => {
                 <p class="news-content">{{ item.content }}</p>
                 <div class="news-item-actions">
                   <span v-if="!item.is_ready" class="news-status">Страница ещё не опубликована</span>
-                  <button type="button" class="news-edit-button" @click="openNewsPage(item)">Редактировать страницу</button>
+                  <button type="button" class="news-edit-button" @click="openNewsPage(item)">Редактировать
+                    страницу</button>
                 </div>
               </article>
             </div>
@@ -1381,7 +1283,8 @@ onBeforeUnmount(() => {
   gap: 1rem;
 }
 
-.back-button, .logout-button {
+.back-button,
+.logout-button {
   background: transparent;
   color: white;
   border: 2px solid white;
@@ -1392,7 +1295,8 @@ onBeforeUnmount(() => {
   transition: all 0.3s ease;
 }
 
-.back-button:hover, .logout-button:hover {
+.back-button:hover,
+.logout-button:hover {
   background: white;
   color: #2c3e50;
 }
@@ -1490,7 +1394,7 @@ onBeforeUnmount(() => {
   margin: 0;
 }
 
-.page-hint p + p {
+.page-hint p+p {
   margin-top: 0.75rem;
 }
 
