@@ -671,6 +671,7 @@ onBeforeUnmount(() => {
   width: 200px;
   height: 50px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .button1 {
